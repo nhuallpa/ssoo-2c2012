@@ -1,0 +1,1232 @@
+Host: 'plnx0093', OS: 'LIN X64', Release: '2.6.18-164.el5', SAS Version: '9.02.02M3P04132010', Command: '/sasbin/SAS/SASFoundation/9.2/sasexe/sas -noterminal -netencryptalgorithm SASProprietary -metaserver plnx0093.moltec.com.ar -metaport 8561 -metarepository Foundation -objectserver -objectserverparms "protocol=bridge spawned spp=48684 cid=2985 classfactory=15931E31-667F-11D5-8804-00C04F35AC8C server=OMSOBJ:SERVERCOMPONENT/A52WVCED.AV000006 cel=credentials dnsMatch=plnx0093.moltec.com.ar multiuser port=8623 lb saslangrunas=client"' 
+2012-08-01T11:25:25,202 INFO  [00000008] :x304490 - Reserved IPv6 port 8623 for server listen (connection 1). 
+2012-08-01T11:25:25,205 INFO  [00000008] :x304490 - New out call client connection (2) for user x304490.  Encryption level is Credentials using encryption algorithm SASPROPRIETARY.  Peer IP address and port are [10.75.100.107]:8561. 
+2012-08-01T11:25:25,267 INFO  [00000062] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,285 INFO  [00000069] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,285 INFO  [00000073] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,289 INFO  [00000092] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,289 INFO  [00000095] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,292 INFO  [00000114] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,293 INFO  [00000117] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,296 INFO  [00000136] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,297 INFO  [00000139] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,301 INFO  [00000158] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,302 INFO  [00000161] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,306 INFO  [00000180] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,306 INFO  [00000183] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,311 INFO  [00000202] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,312 INFO  [00000205] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,317 INFO  [00000224] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,318 INFO  [00000227] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,323 INFO  [00000246] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,323 INFO  [00000249] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,482 INFO  [00000272] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,482 INFO  [00000275] :x304490 - New out call client using cached connection (2) for user x304490. 
+2012-08-01T11:25:25,497       [00000295] :x304490 - SAS Stored Process Server Version 9.2 ( Build 156 ) 
+2012-08-01T11:25:25,517 INFO  [00000295] :x304490 - Activated listen on IPv6 port 8623 (connection 1). 
+2012-08-01T11:25:25,533 INFO  [00000301] :x304490 - New client connection (3) to the object spawner daemon.  Peer IP address and port are [10.75.100.107]:48684. 
+2012-08-01T11:25:25,541 INFO  [00000310] :x304490 - New out call client connection (5) for user u1559@moltec.  Encryption level is Credentials using encryption algorithm SASPROPRIETARY.  Peer IP address and port are [10.75.100.107]:8561. 
+2012-08-01T11:25:25,542 INFO  [00000310] :u1559@moltec - New client connection (4) accepted from server port 8623 for SAS token user u1559@moltec.  Encryption level is Credentials using encryption algorithm SASPROPRIETARY.  Peer IP address and port are [::ffff:10.75.100.108]:41437. 
+2012-08-01T11:25:25,547 INFO  [00000321] 4:u1559@moltec - STP: Sending cost=101 to Load Balancer. Context Cost=100 STP Session Cost=1 
+2012-08-01T11:25:25,564 INFO  [00000326] 4:u1559@moltec - STP: 1: Executing /sasbin/SAS/SASFoundation/9.2/sasstp/ma ma_publish.sas 
+2012-08-01T11:25:39,880 INFO  [00000326] 4:u1559@moltec - STP: 1: Execution Complete.  Status=4 
+2012-08-01T11:25:39,883 INFO  [00000326] 4:u1559@moltec - =============== STP Context 1 Log =============== 
+2012-08-01T11:25:39,883 INFO  [00000326] 4:u1559@moltec - 1                                                                                                                        The SAS System                                                                                          11:25 Wednesday, August 1, 2012 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - NOTE: Copyright (c) 2002-2008 by SAS Institute Inc., Cary, NC, USA.  
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - NOTE: SAS (r) Proprietary Software 9.2 (TS2M3)  
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -       Licensed to moltec ARGENTINA S.A, Site 70091382. 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - NOTE: This session is executing on the Linux 2.6.18-164.el5 (LIN X64) platform. 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - You are running SAS 9. Some SAS 8 files will be automatically converted  
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - by the V9 engine; others are incompatible.  Please see  
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - http://support.sas.com/rnd/migration/planning/platform/64bit.html 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - PROC MIGRATE will preserve current SAS file attributes and is  
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - recommended for converting all your SAS libraries from any  
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - SAS 8 release to SAS 9.  For details and examples, please see 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - http://support.sas.com/rnd/migration/index.html 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - This message is contained in the SAS news file, and is presented upon 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - initialization.  Edit the file "news" in the "misc/base" directory to 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - display site-specific news and information in the program log. 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - The command line option "-nonews" will prevent this display. 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - NOTE: SAS Initialization used (Total process time): 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - NOTE: The autoexec file, /sasbin/config/Lev1/SASApp/StoredProcessServer/autoexec.sas, was executed at server initialization. No server log was specified.  Add the log option to the server startup command to see details of the autoexec execution (refer to  
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -       "Specifying Logging Options" under "Server Startup Command" in the Server Administrator's Guide). 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec - >>> SAS Macro Variables: 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  BUSINESSCONTEXT=Marketing moltec 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  CAMPAIGNID=QFGJ0KOFAYLLMAAA 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  CAMPAIGNNAME=Arnet 6M  con Play Sin Telpin 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  CLEANPUBLISH=N 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  INPUTTABLELIST= 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  MADEBUG=N 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  MATABLES=libname MATables list; 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  MAVERSION=5.3 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  MAX_CONCUR_PROCS=1 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  MP_FLG=N 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  PURPOSE=CAMPAIGN 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  REPORTLIB=LIBNAME CDMODEL ORACLE  DBINDEX=YES  DIRECT_EXE=DELETE  PATH=zoom  SCHEMA=A000428  USER=X305081  PASSWORD="{SAS002}0A01545A0545A09F028B7B9B57A87B0604834DF1"; 
+ 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  SYSDBMSG= 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  SYSDBRC=0 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  TABLENAMES=CI_CAMPAIGN,CI_CAMPAIGN_CHAR_UDF,CI_CAMPAIGN_DATE_UDF,CI_CAMPAIGN_NUM_UDF,CI_CAMPAIGN_STATUS,CI_CAMP_CHECKLIST_ITEM,CI_CELL_PACKAGE,CI_CHANGE_LOG,CI_COMMUNICATION,CI_COMMUNICATION_CHAR_UDF,CI_COMMUNICATION_DATE_UDF,CI_COMMUNICATION_NUM_UDF,CI_C 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -      OMMUNICATION_STATUS,CI_MARKETING_CELL,CI_PACKAGE,CI_PACKAGE_X_TREATMENT,CI_TREATMENT 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  _APSLIST=reportlib,mp_flg,matables,madebug,tablenames,cleanpublish,campaignid,campaignname,inputtablelist,purpose,businesscontext,maversion,max_concur_procs,_result,_archive_path,_metaperson,_metauser,_program,_metafolder,_client,_USERNAME,_SECUREUSERNAME 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  _ARCHIVE_PATH=TEMPFILE 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  _CLIENT=StoredProcessService 9.2; JVM 1.5.0_12; SunOS (x86) 5.10 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  _METAFOLDER=/System/Applications/SAS Customer Intelligence/Customer Intelligence 5.3/Stored Processes/ 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  _METAPERSON=Jose Castro 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  _METAUSER=u1559@moltec 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  _PROGRAM=/System/Applications/SAS Customer Intelligence/Customer Intelligence 5.3/Stored Processes/MAPublish 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  _REPLAY="&_URL?_sessionid=BC449000-DBE4-11E1-8001-383230313132&_program=replay&_entry=&_TMPCAT.." 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  _RESULT=PACKAGE_TO_ARCHIVE 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  _SECUREUSERNAME=u1559 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  _TMPCAT=APSWORK.TCAT0001 
+2012-08-01T11:25:39,884 INFO  [00000326] 4:u1559@moltec -  _USERNAME=u1559 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 1          options nosource source2 center notes nodate nonumber ls=195 formchar='|----|+|---+=|-/\<>*' pagesize=40 noovp nomprint nomlogic nosymbolgen; title; footnote; 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - NOTE: %INCLUDE (level 1) file /sasbin/SAS/SASFoundation/9.2/sasstp/ma/ma_publish.sas is file /sasbin/SAS/SASFoundation/9.2/sasstp/ma/ma_publish.sas. 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 3         +/*****************************************************************/ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 4         +/* Copyright (c) 2007 - 2009 by SAS Institute Inc., Cary, NC,USA.*/ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 5         +/*                     All Rights Reserved.                      */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 6         +/*       This software is protected by copyright laws and        */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 7         +/*                    international treaties                     */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 8         +/*                                                               */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 9         +/*               U.S. Government Restricted Rights               */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 10        +/* Use, duplication, or disclosure of this software and related  */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 11        +/*    documentation by the U.S. government is subject to the     */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 12        +/*  Agreement with SAS Institute and the restrictions set forth  */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 13        +/*       in FAR 52.227-19, Commercial Computer Software -        */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 14        +/*                Restricted Rights ( June 1987 )                */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 15        +/*                                                               */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 16        +/*****************************************************************/ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 17        +/*******************************************************************************************/ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 18        +/* NAME: ma_publish.sas                                                                    */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 19        +/* VERSION: 5.3.M2.1                                                                       */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 20        +/* DESCRIPTION:  This stored process is used to publish the report model                   */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 21        +/*               ReportLib - Report Database libname statement.                            */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 22        +/* Parameters:                                                                             */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 23        +/*            reportlib - libname statement for publish tables                             */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 24        +/*            campaignid - A new value CampaignGroup is expected in this variable to       */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 25        +/*                         publish only the Campaign Group tables                          */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 26        +/*            purpose - CAMPAIGN/CAMPAIGN_DELETION/CAMPAIGN_GROUP/COMMUNICATION_EXPORT/    */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 27        +/*                      TREATMENT_DELETE                                                   */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 28        +/*                      CAMPAIGN: Publish full Campaign                                    */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 29        +/*                      CAMPAIGN_DELETION: Update Campaign Delete flag and DTTM columns    */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 30        +/*                      CAMPAIGN_GROUP: Publish only Camapign Groups                       */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 31        +/*                      COMMUNICATION_EXPORT: Update Export/RUN/Last Modified DTTM in comm */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 32        +/*                      TREATMENT_DELETION: Update Treatment Delete Flag                   */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 33        +/* PRODUCT: MA                                                                             */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 34        +/* USAGE: ma_publish                                                                       */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 35        +/*                                                                                         */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 36        +/*******************************************************************************************/ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 37        +/*******************************************************************************************/ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 38        +/*                                                                                         */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 39        +/* History:                                                                                */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 40        +/* DATE       Defect No  Comments                                                          */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 41        +/* 01Sep2008   S0506508   Added campaignid part of global var for Campaign Group publish   */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 42        +/*                                                                                         */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 43        +/* 14Oct2008   S0504678   Added PURPOSE variable which will inform the type of process     */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 44        +/*                                                                                         */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 45        +/* 09Jun2009   S0492899   Added cleanpublish var to enable the data model refresh process  */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 46        +/*                                                                                         */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 47        +/* 02Feb2010  S0616965   Clear any open library connection                                 */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 48        +/*******************************************************************************************/ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 49        + 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 50        +/* Initialize the variable which could have null values */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 51        +%global reportlib campaignid purpose cleanpublish; 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 52        + 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 53        +/* This keeps the main.html out off the result package */ 
+2012-08-01T11:25:39,885 INFO  [00000326] 4:u1559@moltec - 54        +filename temp temp; 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - 55        +%let _ODSOPTIONS=%str(body=temp); 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - 56        + 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - 57        +*ProcessBody; 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - 58        + 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - 59        +/* Reset syscc to truely reflect any errors happen in this stored process */ 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - 60        +%let SYSCC=0; 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - 61        + 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - 62        +%stpbegin; 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - WARNING: UUID is not guaranteed to be unique. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - 63        + 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - 64        +/* Setting up the system options based on the MADEBUG global macro variable */ 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - 65        +%maspinit; 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: Libref=   MATABLES  
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       Scope=    Object Server 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       Engine=   BASE 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       Physical Name= /sasbin/config/Lev1/Applications/SASCustomerIntelligence5.3/Data/MATables 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       Filename= /sasbin/config/Lev1/Applications/SASCustomerIntelligence5.3/Data/MATables 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       Inode Number= 13123675 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       Access Permission= rwxrwxrwx 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       Owner Name= x304486 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       File Size (bytes)= 569344 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: Libref CDMODEL was successfully assigned as follows:  
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       Engine:        ORACLE  
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       Physical Name: zoom 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: Libref PUBMETA was successfully assigned as follows:  
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       Engine:        XML  
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec -       Physical Name: PUBMETA 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMPAIGN to WORK.CI_CAMPAIGN (memtype=DATA). 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set PUBMETA.CI_CAMPAIGN. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN has 1 observations and 25 variables. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMPAIGN_CHAR_UDF to WORK.CI_CAMPAIGN_CHAR_UDF (memtype=DATA). 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: There were 8 observations read from the data set PUBMETA.CI_CAMPAIGN_CHAR_UDF. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_CHAR_UDF has 8 observations and 4 variables. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMPAIGN_DATE_UDF to WORK.CI_CAMPAIGN_DATE_UDF (memtype=DATA). 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set PUBMETA.CI_CAMPAIGN_DATE_UDF. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_DATE_UDF has 2 observations and 4 variables. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMPAIGN_GROUP to WORK.CI_CAMPAIGN_GROUP (memtype=DATA). 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CAMPAIGN_GROUP. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_GROUP has 0 observations and 16 variables. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMPAIGN_GROUP_CHAR_UDF to WORK.CI_CAMPAIGN_GROUP_CHAR_UDF (memtype=DATA). 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CAMPAIGN_GROUP_CHAR_UDF. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_GROUP_CHAR_UDF has 0 observations and 4 variables. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMPAIGN_GROUP_DATE_UDF to WORK.CI_CAMPAIGN_GROUP_DATE_UDF (memtype=DATA). 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CAMPAIGN_GROUP_DATE_UDF. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_GROUP_DATE_UDF has 0 observations and 4 variables. 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMPAIGN_GROUP_NUM_UDF to WORK.CI_CAMPAIGN_GROUP_NUM_UDF (memtype=DATA). 
+2012-08-01T11:25:39,886 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CAMPAIGN_GROUP_NUM_UDF. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_GROUP_NUM_UDF has 0 observations and 4 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMPAIGN_NUM_UDF to WORK.CI_CAMPAIGN_NUM_UDF (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 6 observations read from the data set PUBMETA.CI_CAMPAIGN_NUM_UDF. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_NUM_UDF has 6 observations and 4 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMPAIGN_STATUS to WORK.CI_CAMPAIGN_STATUS (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 11 observations read from the data set PUBMETA.CI_CAMPAIGN_STATUS. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_STATUS has 11 observations and 2 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMP_CHECKLIST_CHAR_UDF to WORK.CI_CAMP_CHECKLIST_CHAR_UDF (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CAMP_CHECKLIST_CHAR_UDF. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_CHECKLIST_CHAR_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMP_CHECKLIST_DATE_UDF to WORK.CI_CAMP_CHECKLIST_DATE_UDF (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CAMP_CHECKLIST_DATE_UDF. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_CHECKLIST_DATE_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMP_CHECKLIST_ITEM to WORK.CI_CAMP_CHECKLIST_ITEM (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 5 observations read from the data set PUBMETA.CI_CAMP_CHECKLIST_ITEM. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_CHECKLIST_ITEM has 5 observations and 4 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMP_CHECKLIST_NUM_UDF to WORK.CI_CAMP_CHECKLIST_NUM_UDF (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CAMP_CHECKLIST_NUM_UDF. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_CHECKLIST_NUM_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMP_GRP_CHECKLIST_ITEM to WORK.CI_CAMP_GRP_CHECKLIST_ITEM (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CAMP_GRP_CHECKLIST_ITEM. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_GRP_CHECKLIST_ITEM has 0 observations and 4 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMP_GRP_CLIST_CHAR_UDF to WORK.CI_CAMP_GRP_CLIST_CHAR_UDF (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CAMP_GRP_CLIST_CHAR_UDF. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_GRP_CLIST_CHAR_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMP_GRP_CLIST_DATE_UDF to WORK.CI_CAMP_GRP_CLIST_DATE_UDF (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CAMP_GRP_CLIST_DATE_UDF. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_GRP_CLIST_DATE_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMP_GRP_CLIST_NUM_UDF to WORK.CI_CAMP_GRP_CLIST_NUM_UDF (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CAMP_GRP_CLIST_NUM_UDF. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_GRP_CLIST_NUM_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CAMP_GRP_X_MO_OPT_SCENARIO to WORK.CI_CAMP_GRP_X_MO_OPT_SCENARIO (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CAMP_GRP_X_MO_OPT_SCENARIO. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_GRP_X_MO_OPT_SCENARIO has 0 observations and 2 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CELL_PACKAGE to WORK.CI_CELL_PACKAGE (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set PUBMETA.CI_CELL_PACKAGE. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CELL_PACKAGE has 2 observations and 18 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CHANGE_LOG to WORK.CI_CHANGE_LOG (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set PUBMETA.CI_CHANGE_LOG. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CHANGE_LOG has 1 observations and 5 variables. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CHANGE_TYPE to WORK.CI_CHANGE_TYPE (memtype=DATA). 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,887 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CHANGE_TYPE. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CHANGE_TYPE has 0 observations and 2 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_COMMUNICATION to WORK.CI_COMMUNICATION (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set PUBMETA.CI_COMMUNICATION. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_COMMUNICATION has 2 observations and 18 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_COMMUNICATION_CHAR_UDF to WORK.CI_COMMUNICATION_CHAR_UDF (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set PUBMETA.CI_COMMUNICATION_CHAR_UDF. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_COMMUNICATION_CHAR_UDF has 2 observations and 4 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_COMMUNICATION_DATE_UDF to WORK.CI_COMMUNICATION_DATE_UDF (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 6 observations read from the data set PUBMETA.CI_COMMUNICATION_DATE_UDF. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_COMMUNICATION_DATE_UDF has 6 observations and 4 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_COMMUNICATION_NUM_UDF to WORK.CI_COMMUNICATION_NUM_UDF (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set PUBMETA.CI_COMMUNICATION_NUM_UDF. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_COMMUNICATION_NUM_UDF has 2 observations and 4 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_COMMUNICATION_STATUS to WORK.CI_COMMUNICATION_STATUS (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 7 observations read from the data set PUBMETA.CI_COMMUNICATION_STATUS. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_COMMUNICATION_STATUS has 7 observations and 2 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CONTACT_HISTORY_STATUS to WORK.CI_CONTACT_HISTORY_STATUS (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CONTACT_HISTORY_STATUS. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CONTACT_HISTORY_STATUS has 0 observations and 2 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_CONTROL_GROUP_TYPE to WORK.CI_CONTROL_GROUP_TYPE (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_CONTROL_GROUP_TYPE. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CONTROL_GROUP_TYPE has 0 observations and 2 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_MARKETING_CELL to WORK.CI_MARKETING_CELL (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set PUBMETA.CI_MARKETING_CELL. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_MARKETING_CELL has 2 observations and 5 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_MO_OPTIMIZATION_SCENARIO to WORK.CI_MO_OPTIMIZATION_SCENARIO (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_MO_OPTIMIZATION_SCENARIO. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_MO_OPTIMIZATION_SCENARIO has 0 observations and 8 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_PACKAGE to WORK.CI_PACKAGE (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set PUBMETA.CI_PACKAGE. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_PACKAGE has 2 observations and 3 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_PACKAGE_X_TREATMENT to WORK.CI_PACKAGE_X_TREATMENT (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set PUBMETA.CI_PACKAGE_X_TREATMENT. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_PACKAGE_X_TREATMENT has 2 observations and 3 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_RESPONSE to WORK.CI_RESPONSE (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_RESPONSE. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_RESPONSE has 0 observations and 2 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_RESPONSE_CHANNEL_RESPONSE to WORK.CI_RESPONSE_CHANNEL_RESPONSE (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_RESPONSE_CHANNEL_RESPONSE. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_RESPONSE_CHANNEL_RESPONSE has 0 observations and 3 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_RESPONSE_TYPE to WORK.CI_RESPONSE_TYPE (memtype=DATA). 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_RESPONSE_TYPE. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_RESPONSE_TYPE has 0 observations and 2 variables. 
+2012-08-01T11:25:39,888 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_RESPONSE_X_CELL_PACKAGE to WORK.CI_RESPONSE_X_CELL_PACKAGE (memtype=DATA). 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_RESPONSE_X_CELL_PACKAGE. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_RESPONSE_X_CELL_PACKAGE has 0 observations and 4 variables. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_TREATMENT to WORK.CI_TREATMENT (memtype=DATA). 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set PUBMETA.CI_TREATMENT. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_TREATMENT has 1 observations and 9 variables. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_TREATMENT_CHAR_UDF to WORK.CI_TREATMENT_CHAR_UDF (memtype=DATA). 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_TREATMENT_CHAR_UDF. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_TREATMENT_CHAR_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_TREATMENT_DATE_UDF to WORK.CI_TREATMENT_DATE_UDF (memtype=DATA). 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_TREATMENT_DATE_UDF. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_TREATMENT_DATE_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: Copying PUBMETA.CI_TREATMENT_NUM_UDF to WORK.CI_TREATMENT_NUM_UDF (memtype=DATA). 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: BUFSIZE is not cloned when copying across different engines. System Option for BUFSIZE was used. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set PUBMETA.CI_TREATMENT_NUM_UDF. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_TREATMENT_NUM_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE COPY used (Total process time): 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -       real time           0.40 seconds 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -       cpu time            0.41 seconds 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: Libref PUBMETA has been deassigned. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - MASTSPUB Start Time -    01AUG2012:11:25:26.27 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set CDMODEL.CI_CAMPAIGN_STATUS. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CAMPAIGN_STATUS has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: There were 11 observations read from the data set WORK.CI_CAMPAIGN_STATUS. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -       real time           0.20 seconds 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set CDMODEL.CI_COMMUNICATION_STATUS. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_COMMUNICATION_STATUS has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: There were 7 observations read from the data set WORK.CI_COMMUNICATION_STATUS. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -       real time           0.19 seconds 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CHANGE_TYPE has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CHANGE_TYPE. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -       real time           0.14 seconds 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CONTROL_GROUP_TYPE has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CONTROL_GROUP_TYPE. 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -       real time           0.11 seconds 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,889 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - MASTSPUB end Time -    01AUG2012:11:25:26.93 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: No rows were updated in WORK.CI_TREATMENT. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: Table WORK.TMT_DIST_CD created, with 1 rows and 1 columns. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: 1 row was updated in CDMODEL.CI_TREATMENT. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       real time           0.34 seconds 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set CDMODEL.CI_TREATMENT. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_TREATMENT has been updated.  There were 1 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.CI_TREATMENT. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       real time           0.11 seconds 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_TREATMENT_CHAR_UDF has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_TREATMENT_CHAR_UDF. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       real time           0.19 seconds 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       cpu time            0.02 seconds 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_TREATMENT_NUM_UDF has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_TREATMENT_NUM_UDF. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       real time           0.17 seconds 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_TREATMENT_DATE_UDF has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_TREATMENT_DATE_UDF. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       real time           0.16 seconds 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_TREATMENT_CHAR_UDF. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       WHERE (treatment_hash_val='S') and (char_ext_column_nm not = ' '); 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_TREATMENT_CHAR_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: Input data set is empty. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_TREATMENT_CHAR_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,890 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_TREATMENT_CHAR_UDF. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CHAR_UDF_TRANS has 1 observations and 1 variables. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE TRANSPOSE used (Total process time): 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_TREATMENT_NUM_UDF. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       WHERE (treatment_hash_val='S') and (num_ext_column_nm not = ' '); 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_TREATMENT_NUM_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: Input data set is empty. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_TREATMENT_NUM_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_TREATMENT_NUM_UDF. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.NUM_UDF_TRANS has 1 observations and 1 variables. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE TRANSPOSE used (Total process time): 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_TREATMENT_DATE_UDF. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       WHERE (treatment_hash_val='S') and (date_ext_column_nm not = ' '); 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_TREATMENT_DATE_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: Input data set is empty. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_TREATMENT_DATE_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_TREATMENT_DATE_UDF. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.DT_UDF_TRANS has 1 observations and 1 variables. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE TRANSPOSE used (Total process time): 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.CHAR_UDF_TRANS. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CHAR_UDF_TRANS has 1 observations and 1 variables. 
+2012-08-01T11:25:39,891 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.NUM_UDF_TRANS. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.NUM_UDF_TRANS has 1 observations and 1 variables. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.DT_UDF_TRANS. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.DT_UDF_TRANS has 1 observations and 1 variables. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.CHAR_UDF_TRANS. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.NUM_UDF_TRANS. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.DT_UDF_TRANS. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.TRANSPOSED_TBL has 0 observations and 1 variables. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - MATRNUDF macro End Time -    01AUG2012:11:25:27.95 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - MAPTPUB macro Start Time -    01AUG2012:11:25:27.95 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set CDMODEL.CI_PACKAGE. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_PACKAGE has been updated.  There were 0 observations rewritten, 2 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_PACKAGE. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       real time           0.25 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set CDMODEL.CI_PACKAGE_X_TREATMENT. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_PACKAGE_X_TREATMENT has been updated.  There were 0 observations rewritten, 2 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_PACKAGE_X_TREATMENT. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       real time           0.17 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - MAPTPUB macro end Time -    01AUG2012:11:25:28.38 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: There were 8 observations read from the data set WORK.CI_CAMPAIGN_CHAR_UDF. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_CHAR_UDF has 8 observations and 5 variables. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CAMPCUDFBASE has 8 observations and 4 variables. 
+2012-08-01T11:25:39,892 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: There were 6 observations read from the data set WORK.CI_CAMPAIGN_NUM_UDF. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_NUM_UDF has 6 observations and 5 variables. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CAMPNUDFBASE has 6 observations and 4 variables. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_CAMPAIGN_DATE_UDF. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_DATE_UDF has 2 observations and 5 variables. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CAMPDUDFBASE has 2 observations and 4 variables. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_COMMUNICATION_CHAR_UDF. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_COMMUNICATION_CHAR_UDF has 2 observations and 5 variables. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.COMMCUDFBASE has 2 observations and 4 variables. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_COMMUNICATION_NUM_UDF. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_COMMUNICATION_NUM_UDF has 2 observations and 5 variables. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.COMMNUDFBASE has 2 observations and 4 variables. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: There were 6 observations read from the data set WORK.CI_COMMUNICATION_DATE_UDF. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_COMMUNICATION_DATE_UDF has 6 observations and 5 variables. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.COMMDUDFBASE has 6 observations and 4 variables. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_COMMUNICATION. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_COMMUNICATION has 2 observations and 19 variables. 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - Start Time -    01AUG2012:11:25:28.40 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,893 INFO  [00000326] 4:u1559@moltec - NOTE: Table WORK.CCPT_NEW_CCC created, with 2 rows and 20 columns. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: Table WORK.CCPT_EXISTING_PKCD created, with 0 rows and 19 columns. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       real time           0.44 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       cpu time            0.06 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_CELL_PACKAGE. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CELL_PACKAGE has 2 observations and 18 variables. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CCPT_NEW_CCC. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CCPT_NEW_CCC has 2 observations and 20 variables. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: Input data set is empty. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CCPT_EXISTING_PKCD has 0 observations and 19 variables. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_CELL_PACKAGE. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CCPT_NEW_CCC. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CELL_PACKAGE_TREATMENT_CNT has 2 observations and 20 variables. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CCPT_EXISTING_PKCD. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_CELL_PACKAGE_TREATMENT_CNT. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CELL_PACKAGE_TREATMENT_CNT has 2 observations and 20 variables. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.CI_CAMPAIGN. 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec - NOTE: The file CAMPSRC is: 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       Catalog Name=WORK.CIPUBLISH.CAMP_PUBLISH.SOURCE, 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       Catalog Page Size=4096, 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       Number of Catalog Pages=4, 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       Created=Wednesday, August 01, 2012 11:25:28 AM, 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       Last Modified=Wednesday, August 01, 2012 11:25:28 AM, 
+2012-08-01T11:25:39,894 INFO  [00000326] 4:u1559@moltec -       Filename=/saswork/temp/SAS_workBA8100002009_plnx0093.moltec.com.ar/SAS_work5F5300002009_plnx0093.moltec.com.ar/cipublish.sas7bcat, 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       Release Created=9.0202M3,Host Created=Linux, 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       Inode Number=24936641, 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       Access Permission=rw-rw-r--,Owner Name=x304490, 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       File Size (bytes)=12288 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: 792 records were written to the file CAMPSRC. 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       The minimum record length was 1. 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       The maximum record length was 209. 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.CI_CAMPAIGN. 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       real time           0.04 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       cpu time            0.05 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: No rows were updated in CDMODEL.CI_CAMPAIGN. 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       real time           0.16 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - 0 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: No rows were updated in CDMODEL.CI_CAMPAIGN. 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: 1 row was inserted into CDMODEL.CI_CAMPAIGN. 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       real time           0.34 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       cpu time            0.02 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_COMMUNICATION. 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.COMMSUBSET has 2 observations and 19 variables. 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_COMMUNICATION has 0 observations and 19 variables. 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: 2 rows were inserted into CDMODEL.CI_COMMUNICATION. 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       real time           0.74 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: 2 rows were inserted into CDMODEL.CI_COMMUNICATION_CHAR_UDF. 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       real time           0.69 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: 2 rows were updated in WORK.CI_COMMUNICATION_CHAR_UDF. 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,895 INFO  [00000326] 4:u1559@moltec - NOTE: 2 rows were inserted into CDMODEL.CI_COMMUNICATION_NUM_UDF. 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -       real time           0.77 seconds 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: 2 rows were updated in WORK.CI_COMMUNICATION_NUM_UDF. 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: 6 rows were inserted into CDMODEL.CI_COMMUNICATION_DATE_UDF. 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -       real time           0.90 seconds 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: 6 rows were updated in WORK.CI_COMMUNICATION_DATE_UDF. 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: Variable insertflag is uninitialized. 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_MARKETING_CELL. 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CAMPCELLSUBSET has 2 observations and 7 variables. 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_MARKETING_CELL has 0 observations and 7 variables. 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: 2 rows were inserted into CDMODEL.CI_MARKETING_CELL. 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -       real time           0.64 seconds 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: There were 8 observations read from the data set WORK.CI_CAMPAIGN_CHAR_UDF. 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CAMPCUDFSUBSET has 8 observations and 5 variables. 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_CHAR_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,896 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: 8 rows were inserted into CDMODEL.CI_CAMPAIGN_CHAR_UDF. 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -       real time           0.73 seconds 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: There were 6 observations read from the data set WORK.CI_CAMPAIGN_NUM_UDF. 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CAMPNUDFSUBSET has 6 observations and 5 variables. 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_NUM_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: 6 rows were inserted into CDMODEL.CI_CAMPAIGN_NUM_UDF. 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -       real time           0.69 seconds 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_CAMPAIGN_DATE_UDF. 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CAMPDUDFSUBSET has 2 observations and 5 variables. 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMPAIGN_DATE_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: 2 rows were inserted into CDMODEL.CI_CAMPAIGN_DATE_UDF. 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -       real time           0.64 seconds 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,897 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_CELL_PACKAGE. 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CCPSUBSET has 2 observations and 19 variables. 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CELL_PACKAGE has 0 observations and 19 variables. 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: 2 rows were inserted into CDMODEL.CI_CELL_PACKAGE. 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -       real time           0.24 seconds 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_CELL_PACKAGE_TREATMENT_CNT. 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CCPTSUBSET has 2 observations and 21 variables. 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CELL_PACKAGE_TREATMENT_CNT has 0 observations and 21 variables. 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: 2 rows were inserted into CDMODEL.CI_CELL_PACKAGE_TREATMENT_CNT. 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SQL used (Total process time): 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -       real time           0.61 seconds 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.CI_CHANGE_LOG. 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CHANGE_LOG has 1 observations and 5 variables. 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set CDMODEL.CI_CHANGE_LOG. 
+2012-08-01T11:25:39,898 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CHANGE_LOG has been updated.  There were 0 observations rewritten, 1 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.CI_CHANGE_LOG. 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       real time           0.26 seconds 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - Start Time -    01AUG2012:11:25:36.43 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_MARKETING_CELL has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_MARKETING_CELL. 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       real time           0.13 seconds 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - end Time -    01AUG2012:11:25:36.56 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - NOTE: The file COMMSRC is: 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       Catalog Name=WORK.CIPUBLISH.COMM_PUBLISH.SOURCE, 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       Catalog Page Size=4096, 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       Number of Catalog Pages=11, 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       Created=Wednesday, August 01, 2012 11:25:28 AM, 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       Last Modified=Wednesday, August 01, 2012 11:25:28 AM, 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       Filename=/saswork/temp/SAS_workBA8100002009_plnx0093.moltec.com.ar/SAS_work5F5300002009_plnx0093.moltec.com.ar/cipublish.sas7bcat, 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       Release Created=9.0202M3,Host Created=Linux, 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       Inode Number=24936641, 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       Access Permission=rw-rw-r--,Owner Name=x304490, 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       File Size (bytes)=49152 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - NOTE: 0 records were written to the file COMMSRC. 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_COMMUNICATION. 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       real time           0.03 seconds 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       cpu time            0.03 seconds 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CAMPAIGN_CHAR_UDF has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CAMPAIGN_CHAR_UDF. 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,899 INFO  [00000326] 4:u1559@moltec -       real time           0.16 seconds 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CAMPAIGN_NUM_UDF has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CAMPAIGN_NUM_UDF. 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -       real time           0.12 seconds 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CAMPAIGN_DATE_UDF has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CAMPAIGN_DATE_UDF. 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -       real time           0.13 seconds 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: There were 7 observations read from the data set WORK.CAMPCUDFBASE. 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -       WHERE char_ext_column_nm not = ' '; 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CAMPCUDFBASE has 7 observations and 4 variables. 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: There were 7 observations read from the data set WORK.CAMPCUDFBASE. 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CAMPCUDFBASE has 7 observations and 4 variables. 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: There were 7 observations read from the data set WORK.CAMPCUDFBASE. 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,900 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CHAR_UDF_TRANS has 1 observations and 8 variables. 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE TRANSPOSE used (Total process time): 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: There were 6 observations read from the data set WORK.CAMPNUDFBASE. 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -       WHERE num_ext_column_nm not = ' '; 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CAMPNUDFBASE has 6 observations and 4 variables. 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: There were 6 observations read from the data set WORK.CAMPNUDFBASE. 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CAMPNUDFBASE has 6 observations and 4 variables. 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: There were 6 observations read from the data set WORK.CAMPNUDFBASE. 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.NUM_UDF_TRANS has 1 observations and 7 variables. 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE TRANSPOSE used (Total process time): 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CAMPDUDFBASE. 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -       WHERE date_ext_column_nm not = ' '; 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CAMPDUDFBASE has 2 observations and 4 variables. 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CAMPDUDFBASE. 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CAMPDUDFBASE has 2 observations and 4 variables. 
+2012-08-01T11:25:39,901 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CAMPDUDFBASE. 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.DT_UDF_TRANS has 1 observations and 3 variables. 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE TRANSPOSE used (Total process time): 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.CHAR_UDF_TRANS. 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CHAR_UDF_TRANS has 1 observations and 8 variables. 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.NUM_UDF_TRANS. 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.NUM_UDF_TRANS has 1 observations and 7 variables. 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.DT_UDF_TRANS. 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.DT_UDF_TRANS has 1 observations and 3 variables. 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.CHAR_UDF_TRANS. 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.NUM_UDF_TRANS. 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.DT_UDF_TRANS. 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.TRANSPOSED_TBL has 1 observations and 16 variables. 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,902 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - WARNING: Multiple lengths were specified for the variable CAMP_EXEC_WEEK by input data set(s). This may cause truncation of data. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - WARNING: Multiple lengths were specified for the variable CAMP_FRECUENCY by input data set(s). This may cause truncation of data. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - WARNING: Multiple lengths were specified for the variable SEGMENT by input data set(s). This may cause truncation of data. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - WARNING: Multiple lengths were specified for the variable CAMPAIGN_TYPE by input data set(s). This may cause truncation of data. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - WARNING: Multiple lengths were specified for the variable PRODUCT by input data set(s). This may cause truncation of data. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - WARNING: Multiple lengths were specified for the variable ACTIVITY by input data set(s). This may cause truncation of data. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - WARNING: Multiple lengths were specified for the variable PROD_DET by input data set(s). This may cause truncation of data. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set CDMODEL.CI_CAMPAIGN_EXT. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CAMPAIGN_EXT has been updated.  There were 0 observations rewritten, 1 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.TRANSPOSED_TBL. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec -       real time           0.23 seconds 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - MATRNUDF macro End Time -    01AUG2012:11:25:37.29 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set CDMODEL.CI_CAMP_CHECKLIST_ITEM. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CAMP_CHECKLIST_ITEM has been updated.  There were 0 observations rewritten, 5 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - NOTE: There were 5 observations read from the data set WORK.CI_CAMP_CHECKLIST_ITEM. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec -       real time           0.28 seconds 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CAMP_CHECKLIST_CHAR_UDF has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CAMP_CHECKLIST_CHAR_UDF. 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,903 INFO  [00000326] 4:u1559@moltec -       real time           0.14 seconds 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CAMP_CHECKLIST_NUM_UDF has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CAMP_CHECKLIST_NUM_UDF. 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -       real time           0.14 seconds 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CAMP_CHECKLIST_DATE_UDF has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CAMP_CHECKLIST_DATE_UDF. 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -       real time           0.13 seconds 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CAMP_CHECKLIST_CHAR_UDF. 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -       WHERE char_ext_column_nm not = ' '; 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_CHECKLIST_CHAR_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: Input data set is empty. 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_CHECKLIST_CHAR_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CAMP_CHECKLIST_CHAR_UDF. 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CHAR_UDF_TRANS has 1 observations and 2 variables. 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE TRANSPOSE used (Total process time): 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,904 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CAMP_CHECKLIST_NUM_UDF. 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -       WHERE num_ext_column_nm not = ' '; 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_CHECKLIST_NUM_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: Input data set is empty. 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_CHECKLIST_NUM_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CAMP_CHECKLIST_NUM_UDF. 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.NUM_UDF_TRANS has 1 observations and 2 variables. 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE TRANSPOSE used (Total process time): 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CAMP_CHECKLIST_DATE_UDF. 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -       WHERE date_ext_column_nm not = ' '; 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_CHECKLIST_DATE_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: Input data set is empty. 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CI_CAMP_CHECKLIST_DATE_UDF has 0 observations and 5 variables. 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,905 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CAMP_CHECKLIST_DATE_UDF. 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.DT_UDF_TRANS has 1 observations and 2 variables. 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE TRANSPOSE used (Total process time): 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.CHAR_UDF_TRANS. 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CHAR_UDF_TRANS has 1 observations and 2 variables. 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.NUM_UDF_TRANS. 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.NUM_UDF_TRANS has 1 observations and 2 variables. 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.DT_UDF_TRANS. 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.DT_UDF_TRANS has 1 observations and 2 variables. 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.CHAR_UDF_TRANS. 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.NUM_UDF_TRANS. 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set WORK.DT_UDF_TRANS. 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.TRANSPOSED_TBL has 0 observations and 2 variables. 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,906 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - MATRNUDF macro End Time -    01AUG2012:11:25:38.02 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - macomudf Start Time -    01AUG2012:11:25:38.02 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set CDMODEL.CI_COMMUNICATION_CHAR_UDF. 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_COMMUNICATION_CHAR_UDF has been updated.  There were 2 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_COMMUNICATION_CHAR_UDF. 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -       real time           0.16 seconds 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set CDMODEL.CI_COMMUNICATION_NUM_UDF. 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_COMMUNICATION_NUM_UDF has been updated.  There were 2 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CI_COMMUNICATION_NUM_UDF. 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -       real time           0.14 seconds 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set CDMODEL.CI_COMMUNICATION_DATE_UDF. 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_COMMUNICATION_DATE_UDF has been updated.  There were 6 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: There were 6 observations read from the data set WORK.CI_COMMUNICATION_DATE_UDF. 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -       real time           0.20 seconds 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - macomudf end Time -    01AUG2012:11:25:38.54 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.COMMCUDFBASE. 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec -       WHERE char_ext_column_nm not = ' '; 
+2012-08-01T11:25:39,907 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.COMMCUDFBASE has 2 observations and 4 variables. 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.COMMCUDFBASE. 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.COMMCUDFBASE has 2 observations and 4 variables. 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.COMMCUDFBASE. 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CHAR_UDF_TRANS has 2 observations and 2 variables. 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE TRANSPOSE used (Total process time): 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.COMMNUDFBASE. 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -       WHERE num_ext_column_nm not = ' '; 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.COMMNUDFBASE has 2 observations and 4 variables. 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.COMMNUDFBASE. 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.COMMNUDFBASE has 2 observations and 4 variables. 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.COMMNUDFBASE. 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.NUM_UDF_TRANS has 2 observations and 2 variables. 
+2012-08-01T11:25:39,908 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE TRANSPOSE used (Total process time): 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: There were 6 observations read from the data set WORK.COMMDUDFBASE. 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -       WHERE date_ext_column_nm not = ' '; 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.COMMDUDFBASE has 6 observations and 4 variables. 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: There were 6 observations read from the data set WORK.COMMDUDFBASE. 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.COMMDUDFBASE has 6 observations and 4 variables. 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: There were 6 observations read from the data set WORK.COMMDUDFBASE. 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.DT_UDF_TRANS has 2 observations and 4 variables. 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE TRANSPOSE used (Total process time): 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CHAR_UDF_TRANS. 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.CHAR_UDF_TRANS has 2 observations and 2 variables. 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.NUM_UDF_TRANS. 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.NUM_UDF_TRANS has 2 observations and 2 variables. 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,909 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.DT_UDF_TRANS. 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.DT_UDF_TRANS has 2 observations and 4 variables. 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - NOTE: PROCEDURE SORT used (Total process time): 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.CHAR_UDF_TRANS. 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.NUM_UDF_TRANS. 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.DT_UDF_TRANS. 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - NOTE: The data set WORK.TRANSPOSED_TBL has 2 observations and 6 variables. 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - WARNING: Multiple lengths were specified for the variable CODIGO_MKD by input data set(s). This may cause truncation of data. 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - NOTE: There were 1 observations read from the data set CDMODEL.CI_COMMUNICATION_EXT. 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_COMMUNICATION_EXT has been updated.  There were 0 observations rewritten, 2 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - NOTE: There were 2 observations read from the data set WORK.TRANSPOSED_TBL. 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -       real time           0.36 seconds 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - MATRNUDF macro End Time -    01AUG2012:11:25:38.93 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec - Start Time -    01AUG2012:11:25:38.93 
+2012-08-01T11:25:39,910 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CELL_PACKAGE has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CELL_PACKAGE. 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -       real time           0.13 seconds 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_CELL_PACKAGE_TREATMENT_CNT has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_CELL_PACKAGE_TREATMENT_CNT. 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -       real time           0.15 seconds 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - end Time -    01AUG2012:11:25:39.23 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - Start Time -    01AUG2012:11:25:39.23 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_RESPONSE has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_RESPONSE. 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -       real time           0.13 seconds 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_RESPONSE_TYPE has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_RESPONSE_TYPE. 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -       real time           0.13 seconds 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_RESPONSE_X_CELL_PACKAGE has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_RESPONSE_X_CELL_PACKAGE. 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -                                                                                           The SAS System 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -       real time           0.17 seconds 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,911 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec - NOTE: The data set CDMODEL.CI_RESPONSE_CHANNEL_RESPONSE has been updated.  There were 0 observations rewritten, 0 observations added and 0 observations deleted. 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec - NOTE: There were 0 observations read from the data set WORK.CI_RESPONSE_CHANNEL_RESPONSE. 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec -       real time           0.14 seconds 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec -       cpu time            0.01 seconds 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec - end Time -    01AUG2012:11:25:39.83 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec - /saswork/temp/SAS_workBA8100002009_plnx0093.moltec.com.ar/SAS_work5F5300002009_plnx0093.moltec.com.ar/bc541000-dbe4-11e1-8001-383230313132/status.txt 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec - NOTE: The file "/saswork/temp/SAS_workBA8100002009_plnx0093.moltec.com.ar/SAS_work5F5300002009_plnx0093.moltec.com.ar/bc541000-dbe4-11e1-8001-383230313132/status.txt" is: 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec -       Filename=/saswork/temp/SAS_workBA8100002009_plnx0093.moltec.com.ar/SAS_work5F5300002009_plnx0093.moltec.com.ar/bc541000-dbe4-11e1-8001-383230313132/status.txt, 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec -       Owner Name=x304490,Group Name=sas, 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec -       Access Permission=rw-rw-r--, 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec -       Last Modified=Wed Aug  1 11:25:39 2012, 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec -       File Size (bytes)=0 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec - NOTE: 3 records were written to the file "/saswork/temp/SAS_workBA8100002009_plnx0093.moltec.com.ar/SAS_work5F5300002009_plnx0093.moltec.com.ar/bc541000-dbe4-11e1-8001-383230313132/status.txt". 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec -       The minimum record length was 2. 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec -       The maximum record length was 7. 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec - NOTE: DATA statement used (Total process time): 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec -       real time           0.00 seconds 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec -       cpu time            0.00 seconds 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec -        
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec - NOTE: Libref CDMODEL has been deassigned. 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec - NOTE: Fileref TEMP has been deassigned. 
+2012-08-01T11:25:39,912 INFO  [00000326] 4:u1559@moltec - =============== STP Context 1 Log End =============== 
+2012-08-01T11:25:39,963 INFO  [00000367] 4:u1559@moltec - STP: 1: Context Close 
+2012-08-01T11:25:39,970 INFO  [00000367] 4:u1559@moltec - STP: Sending cost=0 to Load Balancer. Context Cost=0 STP Session Cost=0 
+2012-08-01T11:25:39,970 INFO  [00000375] 4:x304490 - Client connection 4 for user u1559@moltec closed. 
+2012-08-01T11:25:39,971 INFO  [00000375] 4:x304490 - Client connection 5 for user u1559@moltec closed. 
+2012-08-01T14:25:39,989 DEBUG [00000379] 3:x304490 - START Perf.ARM.IOM.StoredProcessServer.ServerAdministration.StopServer 0 0  
+2012-08-01T14:25:39,990       [00000379] 3:x304490 - STP: Stored Process Server Shutdown Complete. 
+2012-08-01T14:25:39,991 DEBUG [00000379] 3:x304490 - STOP Perf.ARM.IOM.StoredProcessServer.ServerAdministration.StopServer 0 0  
+2012-08-01T14:25:39,991 INFO  [00000010] :x304490 - Bridge PE SAM listen thread is exiting (0). 
+2012-08-01T14:25:39,991 INFO  [00000007] :x304490 - Bridge protocol engine has quiesced. 
+2012-08-01T14:25:39,991 INFO  [00000007] :x304490 - Bridge protocol engine is unloading. 
+2012-08-01T14:25:39,991 INFO  [00000007] :x304490 - Client connection 2 for user x304490 closed. 
+2012-08-01T14:25:39,991 INFO  [00000007] :x304490 - Client connection 3 for user x304490 closed. 
