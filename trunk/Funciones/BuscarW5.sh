@@ -21,7 +21,7 @@ verificarIni() {
 # Verificar que no halla otro BuscarCorriendo
 	if [ -z "$SECUENCIA2" ] 
 	then
-		loguear "Sistema no instalado"
+		loguear "Sistema no instalado. Falta definir SECUENCIA2"
 		exit 1
 	fi
 
