@@ -6,6 +6,19 @@ PROCDIR=../PROCDIR
 RECHDIR=../RECHDIR
 CICLO=$SECUENCIA2
 
+
+function validarProceso {
+	echo ---------- la variable es $1
+	if [ $(ps -a | grep $1 | grep -v grep | wc -l | tr -s "\n") -gt 2 ]; then
+		MYPID=`pidof -x $1`
+		echo "$1 ya esta siendo ejecutado [${MYPID}]"
+		CORRIENDO=true
+	else 
+		# El proceso no esta corriendo
+		echo "OK"
+	fi
+}
+
 loguear() {
 	echo "$1"
 }
@@ -17,19 +30,21 @@ marcarInicio() {
 
 verificarIni() {
 
-# Verificar q ambiente este inicializado
-# Verificar que no halla otro BuscarCorriendo
+	#inicializo las variables para usarlas
+	PROCESO=`basename $0`
+	CORRIENDO=false
+
+	# Verificar q ambiente este inicializado
 	if [ -z "$SECUENCIA2" ] 
 	then
 		loguear "Sistema no instalado. Falta definir SECUENCIA2"
 		exit 1
 	fi
 
-	EJECUTANDO=$(ps | grep -c 'BuscarW5')
-	if [ $EJECUTANDO -eq 2 ] 
-	then
-		PS_ID=`pidof bash`
-	else	
+	loguear "Chequeando si el proceso ya esta siendo ejecutado..."
+	export CORRIENDO
+	validarProceso $PROCESO
+	if $CORRIENDO; then	
 		loguear "BuscarW5 ya se esta ejecutando"
 		exit 1
 	fi
@@ -43,18 +58,32 @@ grabarResultado(){
 	echo "result: $resultado"
 	return 0
 }
+finalizarProceso(){
+	loguear "Fin del Ciclo: $CICLO"
+	loguear "Cantidad de Archivos con Hallasgos: XXX"
+	loguear "Cantidad de Archivos sin hallasgos: ZZZ"
+	loguear "Cantidad de Archivos sin Patron: YY"
+	let SECUENCIA2=SECUENCIA2+1
+	export SECUENCIA2
+}
 
-registrarLineas(){
-	local archivo=$1 
-	local exp=$2 
-	local desde=$3 
-	local hasta=$4
-	local cantHallasgos=$5
-
+procesarLineas(){
+	local archivo=$1
+	local hallasgos=$2 
+	local exp=$3
+	local desde=$4
+	local hasta=$5
 	echo "registrar lineas"
 }
+procesarCaracteres(){
+	local archivo=$1
+	local hallasgos=$2 
+	local exp=$3
+	local desde=$4
+	local hasta=$5
+	echo "registrar caracteres"
+}
 registrarGlobales() {
-	local ciclo=$1
 	local archivo=$2 
 	local hallasgo=$3 
 	local exp=$4 
@@ -71,7 +100,6 @@ marcarInicio
 for file in $(ls $ACEPDIR)
 do
 	loguear "Archivo a procesar: $file"
-
 	YA_PROC=$(ls -1 "$PROCDIR" | grep -c "$file")
 	if [ "$YA_PROC" -eq 1 ] 
 	then
@@ -79,7 +107,6 @@ do
 		./MoverW5.sh "$ACEPDIR/$file" "$RECHDIR"
 	else
 		sistema=$(echo $file | cut -f1 -d'_') 
-#		echo $sistema
 		TIENE_PAT=$(grep -c "^[^,]*,[^,]*,$sistema,*" "$ARCHPATRONES")
 		if [ "$TIENE_PAT" -eq 0 ]
 		then
@@ -92,19 +119,15 @@ do
 				PAT_DESDE=$(echo "$regMae" | cut -f3 -d',')
 				PAT_HASTA=$(echo "$regMae" | cut -f4 -d',')
 				PAT_RE=$(grep "^$PAT_ID," "$ARCHPATRONES" | cut -f2 -d',' | sed 's/'\''//g' )
+				hallasgos=$(grep -c "$PAT_RE" $ACEPDIR"/"$file)
 				if [ "$PAT_CON" = "linea" ]; then 
-					echo "************* por linea"
-					echo "patron: $PAT_RE"
-					hallasgos=$(grep -c "$PAT_RE" $ACEPDIR"/"$file)
-					echo "aciertos: $hallasgos en " $ACEPDIR"/"$file
-					registrarLineas $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $hallasgos
-					registrarGlobales $CICLO $file $hallasgos $PAT_EP $PAT_CON $PAT_DESDE $PAT_HASTA
-				fi
-				if [ "$PAT_CON" = "caracter" ]; then
-					echo "************* por caracter"	
-				fi
+					procesarLineas $file $hallasgos "$PAT_RE" $PAT_DESDE $PAT_HASTA 
+				else
+					procesarCaracteres $file $hallasgos "$PAT_RE" $PAT_DESDE $PAT_HASTA 
+				fi		
+				registrarGlobales $file $hallasgos $PAT_RE $PAT_CON $PAT_DESDE $PAT_HASTA
 			done
 		fi
 	fi
 done
-
+finalizarProceso
