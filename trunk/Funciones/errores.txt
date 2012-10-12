@@ -1,0 +1,7 @@
+Codigo_de_error tipo cant_argumentos mensaje
+1 E 1 El archivo @@1 no existe.
+2 E 0 Formato de invocación inválido.
+3 E 1 El directorio @@1 no existe.
+4 E 1 La variable @@1 no esta inicializada.
+5 SE 3 @@1 mas @@2 es igual a @@3 y distinto de @@1
+6 SE 1 Sistema no instalado
