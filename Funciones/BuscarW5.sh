@@ -6,21 +6,19 @@ PROCDIR=../PROCDIR
 RECHDIR=../RECHDIR
 CICLO=$SECUENCIA2
 
+loguear() {
+	echo "$1"
+}
 
 function validarProceso {
-	echo ---------- la variable es $1
 	if [ $(ps -a | grep $1 | grep -v grep | wc -l | tr -s "\n") -gt 2 ]; then
 		MYPID=`pidof -x $1`
-		echo "$1 ya esta siendo ejecutado [${MYPID}]"
+		loguear "$1 ya esta siendo ejecutado [${MYPID}]"
 		CORRIENDO=true
 	else 
 		# El proceso no esta corriendo
-		echo "OK"
+		loguear "OK"
 	fi
-}
-
-loguear() {
-	echo "$1"
 }
 
 marcarInicio() {
@@ -29,7 +27,6 @@ marcarInicio() {
 }
 
 verificarIni() {
-
 	#inicializo las variables para usarlas
 	PROCESO=`basename $0`
 	CORRIENDO=false
@@ -58,11 +55,12 @@ grabarResultado(){
 	echo "result: $resultado"
 	return 0
 }
+
 finalizarProceso(){
 	loguear "Fin del Ciclo: $CICLO"
 	loguear "Cantidad de Archivos con Hallasgos: XXX"
 	loguear "Cantidad de Archivos sin hallasgos: ZZZ"
-	loguear "Cantidad de Archivos sin Patron: YY"
+	loguear "Cantidad de Archivos sin Patron: $1"
 	let SECUENCIA2=SECUENCIA2+1
 	export SECUENCIA2
 }
@@ -82,6 +80,20 @@ procesarCaracteres(){
 	local desde=$4
 	local hasta=$5
 	echo "registrar caracteres"
+	L_CANT_HALLASGOS=0
+	while read -r linea  
+	do
+		ENCONTRO=$(echo "$linea" | grep -c "$exp")
+		if [ "$ENCONTRO" -eq 1 ] 
+		then
+			echo "$desde - $hasta"
+			echo "$linea"
+			var=$linea
+			RESULTADO=${var2:desde:hasta}
+			loguear $RESULTADO
+		fi
+	done < $ACEPDIR"/"$archivo
+
 }
 registrarGlobales() {
 	local archivo=$2 
@@ -96,6 +108,9 @@ registrarGlobales() {
 
 verificarIni
 marcarInicio
+CANT_CON_HALLASGOS=0
+CANT_SIN_HALLASGOS=0
+CANT_SIN_PATRON=0
 
 for file in $(ls $ACEPDIR)
 do
@@ -111,6 +126,7 @@ do
 		if [ "$TIENE_PAT" -eq 0 ]
 		then
 			loguear "No hay patrones aplicables a este archivo: $file"
+			let CANT_SIN_PATRON=CANT_SIN_PATRON+1		
 		else
 			for regMae in $(grep $sistema $ARCHPATRONES | cut -f 1,4-6 -d',')
 			do
@@ -130,4 +146,4 @@ do
 		fi
 	fi
 done
-finalizarProceso
+finalizarProceso $CANT_SIN_PATRON
