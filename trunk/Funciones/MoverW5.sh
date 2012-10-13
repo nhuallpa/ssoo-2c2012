@@ -53,7 +53,7 @@ origenFamilia=$(basename $origen)
 #Copio el archivo: primero me fijo si existen archivos con el nombre_de_familia.<SEC> en destino
 archivosfamilia=$destino"/"$origenFamilia".*"
 
-ls -1 $archivosfamilia > /dev/null
+ls -1 $archivosfamilia > /dev/null 2>&1
 HAY_FAMILIA=$?
 
 #Si HAY_FAMILIA es distinto de 0, no existe ningun archivo de la familia.<SEC> => SEC=0
