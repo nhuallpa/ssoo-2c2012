@@ -8,17 +8,16 @@
 # Exit Codes
 # 0 - Se ha instalado correctamente
 # 1 - No se ha realizado la instalacion
-# 2 - La instalacion no se ha completado
+# 2 - 
 
-LOGFILE="InstalaW5.log"		#archivo de log
 USER=`whoami`		#devuelve usuario actual del sistema
 COMMAND=`ps -p $PPID -o comm=`	#obtengo nombre del comando que lo invoco
-
 GROUP="../deploy"
 
-INSTALAW5_SETUPDIR="$GRUPO/confdir"
-INSTALAW5_sETUPFILE="$SETUPDIR/InstalaW5.temp"
-INSTALAW5_TEMPFILE="$SETUPDIR/InstalaW5.conf"
+INSTALAW5_CONFDIR="$GROUP/confdir"
+INSTALAW5_sETUPFILE="$INSTALAW5_CONFDIR/InstalaW5.temp"
+INSTALAW5_TEMPFILE="$INSTALAW5_CONFDIR/InstalaW5.conf"
+INSTALAW5_LOGFILE="$INSTALAW5_CONFDIR/InstalaW5.log"		#archivo de log
 
 INSTALAW5_STATE_COMPLETE="DONE"
 INSTALAW5_STATE_INCOMPLETE="PARTIAL"
@@ -28,11 +27,16 @@ INSTALAW5_STATE_FRESHINSTALL="FRESH"
 #---------- Funciones de bajo nivel ----------
 
 ## Funcion de log - CONSOLIDAR CON LoguearW5
-function log {
+function logOnly  {
 	DATE=`date '+%x %X '` 		#devuelve la fecha del sistema dd/MM/yy hh:mm:ss
-	echo "$DATE-$USER-$COMANDO-$1" >>$LOGFILE 		#Copio todo en el archivo 
+	echo "$DATE-$USER-$COMMAND-$1" >> "$INSTALAW5_LOGFILE"
+}
+function log {
+	logOnly "$1"
 	echo "$1"
 }
+
+
 
 ## Funcion que verifica si existe y directorio, y sino, lo crea
 function createDirIfNotExist {
@@ -41,17 +45,18 @@ function createDirIfNotExist {
 
 ## Muestra el mensaje de bienvenida
 function hello {
+	log "Comando InstalaW5 Inicio de Ejecución"
 	log "TP SO7508 Segundo Cuatrimestre 2012. Tema W Copyright © Grupo 04"
 }
 
 ## Obtiene los componentes que se han instalado
 function getInstalledComponentsFromFile {
-
+	log "getInstalledComponents"
 }
 
 ## Espera a que el usuario ingrese S o N. Guarda el resultado en una variable llamada replyYesOrNo
 function waitForYesOrNo {
-
+	log "waitForYesOrNo"
 }
 
 #---------- Funciones de alto nivel ----------
@@ -66,12 +71,12 @@ function isPerlIstalled {
 	then
 		if [ -z "$perl_version" ]
 		then
-			errorMsg="Para instalar W-FIVE es necesario contar con Perl $required_version o superior instalado. Efectúe su instalación e inténtelo nuevamente. Proceso de Instalación Cancelado.";
-			logMsg "$errorMsg";
+			log "Para instalar W-FIVE es necesario contar con Perl $required_version o superior instalado. Efectúe su instalación e inténtelo nuevamente.";
+			log "Proceso de Instalación Cancelado.";
 		fi
 		exit 1;
 	else
-		errorMsg="Version de Perl instalada: $perl_version";
+		errorMsg="Perl Version: $perl_version";
 		log "$errorMsg";
 	fi
 }
@@ -123,13 +128,75 @@ function getLastInstallationState {
 
 }
 
+
+## STEP 4 - Muestra la informacion de la instalacion
+function showInstallInformation {
+	
+	GROUPFullPath=$(readlink -f "$GROUP")
+	CONFDIRFullPath=$(readlink -f "$INSTALAW5_CONFDIR")
+
+	log "Directorio de Trabajo para la instalacion: $GROUPFullPath"
+	GROUPContent=`ls -c $GROUP`
+	log "Contenido del directorio de trabajo: $GROUPContent"
+
+	log "Librería del Sistema: $CONFDIRFullPath"
+	CONFDIRContent=`ls -c $INSTALAW5_CONFDIR`
+	log "Contenido del directorio: $CONFDIRContent"	
+
+
+	log "Estado de la instalacion: PENDIENTE
+
+	Para completar la instalación Ud. Deberá:
+	
+	1) Definir el directorio de instalación de los ejecutables
+	2) Definir el directorio de instalación de los archivos maestros
+	3) Definir el directorio de arribo de archivos externos
+	4) Definir el espacio mínimo libre para el arribo de archivos externos
+	5) Definir el directorio de grabación de los archivos externos rechazados
+	6) Definir el directorio de grabación de los logs de auditoria
+	7) Definir la extensión y tamaño máximo para los archivos de log
+	8) Definir el directorio de grabación de los reportes de salida"
+}
+
+## STEP 5 - definir directorio de instalacion de ejecutables
+function defineBINDir {
+	# Espera por que el usuario ingrese un directorio valido
+
+	validInput="0"
+	while [ "$validInput" != "1" ] ; do
+
+		log "Defina el directorio ($GROUP/bin):"; read userbindir
+		
+		if [ "$directorio" != "" ]; then
+			validInput=`validarString $userbindir`
+			if [ "$validInput" = "1" ]; then
+				logOnly "El usuario ingreso '$GROUP$userbindir' como directorio de trabajo para 'bin'"
+				BINDIR=$GROUP$userbindir;
+    			else
+	      			echo $validInput
+				logOnly	 "$validInput"		
+	   		fi
+  		else
+    			validInput="1"
+			logOnly "El usuario quiere mantener $BINDIR como directorio para 'bin'"
+  		fi
+	done
+}
+
+## Setea los valores por defecto para las variables
+function setDefaultValues {
+	BINDIR="$GROUP/bin"
+}
+
 ## Funcion principal
-function startInstallWFIVE {
+function startInstallWFIVE {	
+	# Crea el directirio donde estaran los archivos de instalacion (configuracion y temporal), si este no existe
+	createDirIfNotExist $INSTALAW5_CONFDIR
+
 	# Inicia la instalacion
 	hello
 
-	# Crea el directirio donde estaran los archivos de instalacion (configuracion y temporal), si este no existe
-	createDirIfNotExist $INSTALAW5_SETUPDIR
+	# Verificar si es una sola instancia	
 
 	# obtiene el estado de la ultima instalacion
 	
@@ -141,7 +208,17 @@ function startInstallWFIVE {
 	case "$lastInstallationState" in
 
 		"$INSTALAW5_STATE_FRESHINSTALL")
+			#PRE 
+			setDefaultValues
 
+			#STEP 3 Chequear que PERL este instalado
+			isPerlIstalled  #Si no esta instalado, esta funcion sale con error 1
+			
+			#STEP 4 Brinda la informacion de la instalacion
+			showInstallInformation
+			
+			#STEP 5 Definir BINDIR
+			defineBINDir
 		;;
 
 		"$INSTALAW5_STATE_INCOMPLETE")
@@ -159,9 +236,9 @@ function startInstallWFIVE {
 
 			if ( "$replyYesOrNo" == "YES")
 				then
-				
+				echo "A"
 			else 
-
+				echo "B"
 			fi
 			
 			
