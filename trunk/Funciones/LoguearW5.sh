@@ -135,7 +135,7 @@ function escribir_log {
   then
     str="$1-$2"
   else
-    if [ $# -eq 4 ] 
+    if [ $# -eq 3 ] 
     then
       str="$1-$2-$3"
     fi
