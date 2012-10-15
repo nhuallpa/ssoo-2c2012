@@ -59,9 +59,7 @@ fi
 FECHA=`date '+%x %X '` 		#devuelve la fecha del sistema dd/MM/yy hh:mm:ss
 USUARIO=`whoami`		#devuelve usuario actual del sistema
 COMANDO=$1			#obtengo nombre del comando que lo invoco
-echo $COMANDO
 FILE=$LOGDIR/$COMANDO.$LOGEXT	#nombre del archivo logger a generar
-echo $FILE
 
 #------------ Funciones --------------#
 
