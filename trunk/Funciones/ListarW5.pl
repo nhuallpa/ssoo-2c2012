@@ -1,21 +1,11 @@
+# Verifica que las variables de ambiente PROCDIR, REPODIR y MAEDIR estén disponibles.
+
 BEGIN{
-	# Declaro las variables que se usan como separadores.
-	$SEPARADOR_GLOBALES = ',';
-	$SEPARADOR_DETALLADOS = '\+-#-\+';
-	$SEPARADOR_MAESTRO = ',';
-	$SEPARADOR_SISTEMAS = ",";
+	$VARIABLES_DE_AMBIENTE_DEFINIDAS = 1;
 
-	$NOMBRE_DETALLADOS = "resultados";
-	$ARCH_GLOBALES = "rglobales";
-
-	# Verifica que las variables de ambiente PROCDIR, REPODIR y MAEDIR estén disponibles.
-
-	$existe_procdir = exists($ENV{PROCDIR});
-	$existe_repodir = exists($ENV{REPODIR});
-	$existe_maedir	= exists($ENV{MAEDIR});
-
-
-	$VARIABLES_AMBIENTE_DEFINIDAS = 0;
+	my $existe_procdir = exists($ENV{PROCDIR});
+	my $existe_repodir = exists($ENV{REPODIR});
+	my $existe_maedir  = exists($ENV{MAEDIR});
 
 	if ( ! ( $existe_procdir and $existe_repodir and $existe_maedir ) ) {
 
@@ -23,17 +13,34 @@ BEGIN{
 		print "No se encuentra declarada la variable de ambiente REPODIR.\n" if ( !$existe_repodir);
 		print "No se encuentra declarada la variable de ambiente MAEDIR.\n"  if ( !$existe_maedir);
 
-	} else { 
-
-		$VARIABLES_DE_AMBIENTE_DEFINIDAS = 1;
+		$VARIABLES_DE_AMBIENTE_DEFINIDAS = 0;
 	}
 }
+
+# -----------------------------------------------------------------------------#
+# Invocación al programa principal.
+
+&main(\@ARGV) if( $VARIABLES_DE_AMBIENTE_DEFINIDAS eq 1 );
+
 
 # -----------------------------------------------------------------------------#
 # NOTA: Sólo sirve para comandos del tipo "-X" donde X es un caracter. Se genera
 # una cadena que contiene todas las opciones seleccionadas.
 
-if ( $VARIABLES_DE_AMBIENTE_DEFINIDAS eq 1 ) {
+sub main {
+
+	my @ARGV = @{ shift @_ };
+
+	# Declaro las variables que se usan como separadores.
+	local $SEPARADOR_GLOBALES = ',';
+	local $SEPARADOR_DETALLADOS = '\+-#-\+';
+	local $SEPARADOR_MAESTRO = ',';
+	local $SEPARADOR_SISTEMAS = ",";
+
+	local $NOMBRE_DETALLADOS = "resultados";
+	local $ARCH_GLOBALES = "rglobales";
+
+	# Inicio del script.
 
 	foreach (@ARGV) {
 	 if ( length($_) == 2 and  $_ =~ /^-/ ) {
@@ -95,6 +102,10 @@ sub imprimirAyuda() {
 }
 
 # -----------------------------------------------------------------------------#
+# Invoca a la subrutina correspondiente a la opción seleccionada dentro de los
+# resultados detallados.
+#
+# parámetro 1: indica si se debe persistir la información cuando vale 1.
 
 sub filtroResultadosDetallados {
 
@@ -117,7 +128,12 @@ sub filtroResultadosDetallados {
 }
 
 # -----------------------------------------------------------------------------#
-# Selecciono una opción de una lista de opciones.
+# Selecciona una opción de un arreglo de opciones pasada por parámetro, se
+# valida que la opción ingresada sea válida.
+#
+# parámetro 1: recibe un arreglo que muestra por pantalla.
+#
+# devuele: el valor seleccionado.
 
 sub seleccionarOpcion {
 	$cant = @_;
@@ -140,6 +156,12 @@ sub seleccionarOpcion {
 }
 
 # -----------------------------------------------------------------------------#
+# Recibe una arreglo de opciones de la cual se puede seleccionar uno o más
+# elementos.
+#
+# parámetro 1: un arreglo de opciones.
+#
+# devuelve: un arreglo de los valores seleccionado.
 
 sub seleccionarOpciones {
 
@@ -182,35 +204,56 @@ sub seleccionarOpciones {
 }
 
 # -----------------------------------------------------------------------------#
+# Define el nombre del archivo de salida en base al último archivo de salida que
+# fue previamente definidio.
+#
+# devuelve: el nombre del nuevo archivo de salida.
 
 sub nombreArchivoDeSalida {
-
-	opendir(DIRH,$ENV{"REPODIR"}) || die "ERROR al abrir el directorio.\n";
-
-	$numero = 0;
-
-	while ( $archivo = readdir(DIRH) ) {
 	
-		if ( $archivo =~ /^salida_[0-9][0-9][0-9]$/ ) {
+	my $directorio = $ENV{REPODIR};
 
-			$archivo =~ s/salida_(.*)/\1/g;
-			$numero = $archivo if ( $archivo > $numero );
+	my $numero = 0;
+
+	if ( opendir(DIRH, $directorio) ) {
+
+		while ( my $archivo = readdir(DIRH) ) {
+	
+			if ( $archivo =~ /^salida_[0-9][0-9][0-9]$/ ) {
+
+				$archivo =~ s/salida_(.*)/\1/g;
+				$numero = $archivo if ( $archivo > $numero );
+			}
 		}
+
+		closedir(DIRH);
+
+		++$numero;
+
+		if ($numero < 10 ) {
+			$numero = "00".$numero;
+
+		} else { if ($numero < 100 ) {
+			$numero = "0".$numero;
+		}}
+
 	}
 
-	++$numero;
+	else {
 
-	if ($numero < 10 ) {
-		$numero = "00".$numero;
+		print "ERROR al abrir el directorio: ".$directorio.".\n";
+	}
 
-	} else { if ($numero < 100 ) {
-		$numero = "0".$numero;
-	}}
-
-	return "salida_".$numero;
+	return $directorio."/salida_".$numero;;
 }
 
 # -----------------------------------------------------------------------------#
+# Resuelve la consulta y muesta por pantalla los resultados obtenidos. De ser
+# indicado persiste la información a un archivo de salida.
+#
+# parámetro 1: indica si debe persistirse a disco.
+# parámetro 2: hash.
+# parámtero 3: mensajes a ser mostrados.
 
 sub resolverConsulta {
 
@@ -229,7 +272,12 @@ sub resolverConsulta {
 	# Listo el conjunto de elementos por pantalla y/o archivo.
 	if ($persistir == 1 ) {
 		$nombreArchivo = nombreArchivoDeSalida();
-		open(FH,">$nombreArchivo") || die "No se pudo crear el archivo de salida.\n";
+
+		if ( ! (open(FH,">$nombreArchivo") ) ) {
+
+			$persistir = 0;
+			print "No se pudo crear el archivo de salida.\n";
+		}
 	}
 
 	if ( $persistir eq 1 ) {
@@ -304,11 +352,17 @@ sub resolverConsulta {
 }
 
 # -----------------------------------------------------------------------------#
+# Filtra el archivo de resultados detallados por el patrón ingresado.
+#
+# parámetro 1: indica si debe persisitirse a un archivo la salida al valer 1.
 
 sub filtrarPorPatron {
-	$persistir = @_[0];
 
-	$valido = 0;
+	my $persistir = @_[0];
+
+	# Solicita se ingrese un patrón por entrada estándar.
+
+	my $valido = 0;
 	while ( $valido eq 0 ) {
 
 		print "Ingrese el patrón a buscar.\n";
@@ -319,20 +373,20 @@ sub filtrarPorPatron {
 		} else {
 			print "\nERROR: debe ingresar un valor numérico.\n";
 		}
-	}	
+	}
 	
 
-	#Genero el hash a partir del patron pasado por parámetro.
+	#Genero un hash a partir del patrón pasado por parámetro.
 
-	$archivosEncontrados = 0;
-	$aciertos = 0;
-	$dir = $ENV{"PROCDIR"};	
+	my $archivosEncontrados = 0;
+	my $aciertos = 0;
+	my $procdir = $ENV{"PROCDIR"};	
 
-	if ( opendir(DirH, "$dir" ) ) {
+	if ( opendir(DirH, $procdir) ) {
 
 		while ( $archivo = readdir(DirH) ) {
 
-			$archivo_actual = $dir."/".$archivo;
+			my $archivo_actual = $procdir."/".$archivo;
 
 			if ( $archivo =~ /^$NOMBRE_DETALLADOS\.$patron[^~]?$/ and -r $archivo_actual ) {
 
@@ -340,7 +394,6 @@ sub filtrarPorPatron {
 
 				open(FH, "<$archivo_actual");
 
-				$i = 0;
 				while ( $linea = <FH> ) {
 					chop ($linea);
 
@@ -355,25 +408,31 @@ sub filtrarPorPatron {
 		}
 
 		closedir(DirH);
-	}
 
-	if ( $archivosEncontrados == 0 ) {
- 	  	print "No se encontraron archivos para el patrón: ".$patron.".\n";
+		# Muestro por pantalla los resultados obtenidos.
 
-	} else {
-
-		if ( $aciertos > 0 ) {
-
-			print "\nSeleccione una opción de la lista\n\n";			
-
-			push (@mensajes, "Filtrado por el patrón: ".$patron);;
-			push (@mensajes, "   Archivo\tNúmero de ciclo\n");
-			resolverConsulta( $persistir, \%hash, \@mensajes ) if ( $archivosEncontrados != 0 );
+		if ( $archivosEncontrados == 0 ) {
+	 	  	print "No se encontraron archivos para el patrón: ".$patron.".\n";
 
 		} else {
 
-			print "No se encontraron coincidencias.\n"; 
+			if ( $aciertos > 0 ) {
+
+				print "\nSeleccione una opción de la lista\n\n";			
+
+				push (@mensajes, "Filtrado por el patrón: ".$patron);;
+				push (@mensajes, "   Archivo\tNúmero de ciclo\n");
+				resolverConsulta( $persistir, \%hash, \@mensajes ) if ( $archivosEncontrados != 0 );
+
+			} else {
+
+				print "No se encontraron coincidencias.\n"; 
+			}
 		}
+
+	} else {
+
+		print "ERROR: No se encuentra el directorio de la variable de ambiente PROCDIR: ".$procdir."\n";
 	}
 
 	return 0;
@@ -414,7 +473,6 @@ sub filtrarPorCiclo {
 						
 				$patron = substr($archivo, index($archivo, ".") + 1);
 
-				$i = 0;
 				while ( $linea = <FH> ) {
 					chop ($linea);
 
@@ -433,24 +491,28 @@ sub filtrarPorCiclo {
 		}
 
 		close(DirH);
-	}
 
-	if ( $archivosEncontrados == 0 ) {
-		print "No se encontraron archivos.\n";
-
-	} else {
-
-		if ( $aciertos > 0 ) {
-			print "\nSeleccione una opción de la lista\n\n";
-
-			push (@mensajes, "Filtrado por el ciclo: ".$cicloBuscado);
-			push (@mensajes, "   Archivo\tPatrón\n");
-			resolverConsulta( $persistir, \%hash, \@mensajes ) if ( $archivosEncontrados != 0 );
+		if ( $archivosEncontrados == 0 ) {
+			print "No se encontraron archivos.\n";
 
 		} else {
 
-			print "No se encontraron coincidencias.\n";
+			if ( $aciertos > 0 ) {
+				print "\nSeleccione una opción de la lista\n\n";
+
+				push (@mensajes, "Filtrado por el ciclo: ".$cicloBuscado);
+				push (@mensajes, "   Archivo\tPatrón\n");
+				resolverConsulta( $persistir, \%hash, \@mensajes ) if ( $archivosEncontrados != 0 );
+
+			} else {
+
+				print "No se encontraron coincidencias.\n";
+			}
 		}
+
+	} else {
+
+		print "ERROR: No se encuentra el directorio de la variable de ambiente PROCDIR: ".$procdir."\n";
 	}
 
 	return 0;
@@ -502,24 +564,28 @@ sub filtrarPorArchivo {
 			}
 		}
 		close(DirH);
-	}
 
-	if ( $archivosEncontrados == 0 ) {
- 	  	print "No se encontraron archivos.\n";
-
-	} else {
-
-		if ( $aciertos > 0 ) {
-			print "\nSeleccione una opción de la lista\n\n";
-
-			push (@mensajes, "Filtrado por el nombre de archivo: ".$nombreArchivo);
-			push(@mensajes, "   Patron\n");	
-			resolverConsulta( $persistir, \%hash, \@mensajes ) if ( $aciertos != 0 );
+		if ( $archivosEncontrados == 0 ) {
+	 	  	print "No se encontraron archivos.\n";
 
 		} else {
 
-			print "No se encontraron coincidencias.\n";
+			if ( $aciertos > 0 ) {
+				print "\nSeleccione una opción de la lista\n\n";
+
+				push (@mensajes, "Filtrado por el nombre de archivo: ".$nombreArchivo);
+				push(@mensajes, "   Patron\n");	
+				resolverConsulta( $persistir, \%hash, \@mensajes ) if ( $aciertos != 0 );
+
+			} else {
+
+				print "No se encontraron coincidencias.\n";
+			}
 		}
+
+	} else {
+
+		print "ERROR: No se encuentra el directorio de la variable de ambiente PROCDIR: ".$procdir."\n";
 	}
 
 	return 0;
@@ -529,8 +595,6 @@ sub filtrarPorArchivo {
 
 ################################################################################
 # RESULTADOS GLOBALES                                                          #
-
-
 
 sub filtroResultadosGlobales {
 
@@ -609,6 +673,7 @@ sub imprimirResultados {
 	if ( $persistir == 1 ) {
 
 		$nombreArchivo = nombreArchivoDeSalida();
+
 		open( FH, ">$nombreArchivo") || die "No se pudo crear el archivo de salida.\n";
 
 		print FH $expr;
@@ -743,7 +808,7 @@ sub filtrarPorRango {
 
 		$valor = $hash{$_};
 
-		if ( $valor > $limite_inferior and $valor < $limite_superior ) {
+		if ( $valor >= $limite_inferior and $valor <= $limite_superior ) {
 
 			print " $_\t$valor\n";
 			++$hallazgos;
@@ -766,7 +831,7 @@ sub filtrarPorRango {
 
 				$valor = $hash{$_};
 
-				if ( $valor > $limite_inferior and $valor < $limite_superior ) {
+				if ( $valor >= $limite_inferior and $valor <= $limite_superior ) {
 
 					print FH " $_\t$valor\n";
 					++$hallazgos;
@@ -992,6 +1057,8 @@ sub validarExpresion {
 	return	$tipoExpresion;
 }
 
+
+# -----------------------------------------------------------------------------#
 sub validarPatrones {
 
 	my $validez = 0;
@@ -1019,13 +1086,39 @@ sub validarPatrones {
 
 		if ( $patrones =~ /^*$/ ) {
 
+			my $dir = $ENV{MAEDIR};
+
+			opendir( DH, $dir ) || die "No se encuentra el directorio de la variable de ambiente MAEDIR: ".$dir."\n";
+
+			if ( -r $dir."/patrones" ) {
+
+				open( FH, $dir."/patrones" );
+
+				while ( $linea = <FH> ) {
+
+					chop($linea);
+
+					if ( length($linea) > 0 ) {
+
+						@campos = split($SEPARADOR_PATRONES,$linea);
+						push (@patrones, $campos[0] );
+					}
+				}
+				close ( FH );
+			} else {
+				die "No se puede leer el archivo de patrones.\n";
+			}
+
+			closedir(DH);
+
 			$validez = 1;
-			$patrones = "";
 		}
 
 	}
 	return @patrones;
 }
+
+# -----------------------------------------------------------------------------#
 
 sub validarSistemas {
 
@@ -1035,14 +1128,15 @@ sub validarSistemas {
 	$validez = 0;
 	while ( $validez eq 0 ) {
 
-		print "Ingrese una lista de sistemas serparados por \"$SEP\"\n";
+		print "Ingrese una lista de sistemas serparados por \"$SEP\" o * para todos los sistemas.\n";
 		chop ( $sistemas = <STDIN> );
 
 		@sistemas = split($SEP, $sistemas);
 
-		if ( $sistemas =~ /^*$/ ) {
+		if ( $sistemas =~ /^\*$/ ) {
 
-			$validez = 1 
+			$validez = 1;
+			push( @sistemas, $_) foreach ( keys (%hashSistemas) );
 		}
 
 		else {
@@ -1052,8 +1146,10 @@ sub validarSistemas {
 
 				$_ =~ s/^ *([^ ].*[^ ]) *$/\1/;
 				if ( exists( $hashSistemas{$_} ) ) {
+
 					++$cant;	
 				} else {
+
 					print "ERROR: ".$_." no es un sistema registrado.\n";
 				}
 			}
@@ -1066,6 +1162,7 @@ sub validarSistemas {
 	return @sistemas;
 }
 
+# -----------------------------------------------------------------------------#
 sub cargarSistemas {
 
 	my $hash = shift (@_);
@@ -1096,7 +1193,7 @@ sub cargarSistemas {
 }
 
 
-
+# -----------------------------------------------------------------------------#
 sub validarArchivos {
 	$SEP = ",";
 
@@ -1119,6 +1216,7 @@ sub validarArchivos {
 	return @archivos;
 }
 
+# -----------------------------------------------------------------------------#
 sub resolverConsultaGlobal {
 
 	my $seleccion = shift (@_);
@@ -1136,133 +1234,160 @@ sub resolverConsultaGlobal {
 		local @archivos = &validarArchivos if ( $operando eq "a" );
 	}
 
+	print "\n\n";
+
 	my $dir = $ENV{PROCDIR};
 
-	opendir( dirHandler, $dir );
+	if ( opendir( dirHandler, $dir ) ) {
 
-	if ( $archivo = readdir( dirHandler) ) {
+		while ( $archivo = readdir( dirHandler) ) {
 
-		$dir_archivo = $dir."/".$archivo;
-		&evaluarArchivo( $dir, $archivo, \%hash) if ( -r $dir_archivo );
-	}
+			if ( $archivo !~ /[\.~]$/ and $archivo !~ /^\.\.$/ and $archivo =~ /^$ARCH_GLOBALES\./) {
 
-	closedir( dirHandler );
-
-	$orden = ( $seleccion eq 1 ) ? 1 : 0 ;
-	@refOrdenadas = &filtrarValores( 4, $orden, \%hash);
-
-	$max = $hash{@refOrdenadas[0]};
-
-	$repeticiones = 0;
-	foreach (@refOrdenadas) {
-
-		$repeticiones += 1 if ( $max eq $hash{$_} );
-	}
-
-	if ( $#refOrdenadas < 0 ) {
-
-		$mensaje = "No se hallaron coincidencias.\n";
-	}
-	
-	else {  
-
-		print "resultados:\n";
-		print "$_ $hash{$_}\n" foreach (@refOrdenadas);
-		print "\n";
-
-		print "repeticiones: $repeticiones\n";
-
-		if ( $repeticiones > 2 ) {
-
-			$mensaje = "No hay un único valor máximo.\n";
+				$dir_archivo = $dir."/".$archivo;
+				&evaluarArchivo( $dir, $archivo, \%hash) if ( -r $dir_archivo );
+			}
 		}
 
-		 else {
-			if ( $seleccion eq 1 ) {
-				$mensaje = "El valor máximo resultó ser: ".$hash{$refOrdenadas[0]}."\n";
+
+		############## BORRAR ##########################################
+
+		print "########################\n\n";
+		print "valores del hash:\n";
+		print "$_ | $hash{$_}\n" foreach ( keys( %hash) );
+		print "########################\n\n";
+
+		############## BORRAR ##########################################
+
+		closedir( dirHandler );
+
+		$orden = ( $seleccion eq 1 ) ? 1 : 0 ;
+		@refOrdenadas = &filtrarValores( 5, $orden, \%hash);
+
+		$max = $hash{@refOrdenadas[0]};
+
+		$repeticiones = 0;
+		foreach (@refOrdenadas) {
+
+			$repeticiones += 1 if ( $max eq $hash{$_} );
+		}
+
+		if ( $#refOrdenadas < 0 ) {
+
+			$mensaje = "No se hallaron coincidencias.\n";
+		}
+	
+		else { 
+			if ( $repeticiones > 1 ) {
+
+				$mensaje = "No hay un único valor máximo.\n";
 			}
 
-			else {
+			 else {
+				if ( $seleccion eq 1 ) {
+					$mensaje = "La máxima cantidad de hallazgos resultó ser: ".$hash{$refOrdenadas[0]}."\n";
 
-				if ( $hash{$refOrdenadas[0]} eq 0 ) {
+					$cadena = $refOrdenadas[0];
 
-					$mensaje = "Se encontraron registros cuyo total de hallazgos es nulo.\n";
-				} 
+					$posicion1 = index($cadena,"|",0);
+					$posicion2 = index($cadena,"_",0);
+	
+					my $pat = substr( $cadena, 0, $posicion1 );
+					my $sis = substr( $cadena, $posicion1+1, ($posicion2-$posicion1-1) );
+					my $nom = substr( $cadena, $posicion1+1);
+				
+
+					$mensaje = $mensaje."Se encontró en: ".$ARCH_GLOBALES.".".$pat." del sistema: ".$sis;
+					$mensaje = $mensaje."\nCorrespondiente al archivo: ".$nom."\n";
+				}
 
 				else {
 
-					$mensaje = "No se encontraron registros cuyo total de hallazgos sea nulo.\n";
+					if ( $hash{$refOrdenadas[0]} eq 0 ) {
+
+						$mensaje = "Se encontraron registros cuyo total de hallazgos es nulo.\n";
+					} 
+
+					else {
+
+						$mensaje = "No se encontraron registros cuyo total de hallazgos sea nulo.\n";
+					}
 				}
 			}
 		}
-	}
 
-	print $mensaje;
+		print $mensaje;
 
-	if ( $persistir eq 1 ) {
+		if ( $persistir eq 1 ) {
 
-		$nombreArchivo = nombreArchivoDeSalida();
-		open( FH, ">$nombreArchivo") || die "No se pudo crear el archivo de salida.\n";
+			$nombreArchivo = nombreArchivoDeSalida();
+			open( FH, ">$nombreArchivo") || die "No se pudo crear el archivo de salida.\n";
 
-		print FH "Consulta por mayor cantidad de hallazgos.\n" if ( $seleccion eq 1 );
-		print FH "Consulta por cantidad de hallazgos nula.\n" if ( $seleccion eq 2 );
+			print FH "Consulta por mayor cantidad de hallazgos.\n" if ( $seleccion eq 1 );
+			print FH "Consulta por cantidad de hallazgos nula.\n" if ( $seleccion eq 2 );
 
-		print FH "\nExpresión lógica: ";
+			print FH "\nExpresión lógica: ";
 
-		foreach (@operandos) {
+			foreach (@operandos) {
 
-			$_ = "sistemas" if ( $_ eq "s" );
-			$_ = "nombres de archivos" if ( $_ eq "a" );
-			$_ = "patrones" if ( $_ eq "p" );
-		}
+				$_ = "sistemas" if ( $_ eq "s" );
+				$_ = "nombres de archivos" if ( $_ eq "a" );
+				$_ = "patrones" if ( $_ eq "p" );
+			}
 
-		$expresion = $operandos[0];
+			$expresion = $operandos[0];
 
-		if ( ( $tipoExpresion eq 2 ) or ( $tipoExpresion eq 4 ) ){
+			if ( ( $tipoExpresion eq 2 ) or ( $tipoExpresion eq 4 ) ){
 
-			$expresion = $expresion." ".$flogica[0]." ".$operandos[1];
-		}
+				$expresion = $expresion." ".$flogica[0]." ".$operandos[1];
+			}
 
-		if ( $tipoExpresion eq 4 ) {
+			if ( $tipoExpresion eq 4 ) {
 			
-			$expresion = "( ".$expresion." ) ".$flogica[1]." ".$operandos[2];
+				$expresion = "( ".$expresion." ) ".$flogica[1]." ".$operandos[2];
+			}
+
+			if ( $tipoExpresion eq 3 ) {
+
+				$expresion = $expresion." ".$flogica[0]." ";
+				$expresion = $expresion."( ".$operandos[1]." ".$flogica[1]." ".$operandos[2]." )";
+			}
+
+			print FH $expresion."\n\n";
+
+			print FH "Filtros:\n";
+
+			if ( $#patrones >= 0 ) {
+				print FH "Patrones: ";
+				print FH "$_ " foreach (@patrones);
+				print FH "\n";
+			}
+
+			if ( $#sistemas >= 0 ) {
+				print FH "Sistemas: ";
+				print FH "$_ " foreach (@sistemas);
+				print FH "\n";
+			}
+
+			if ( $#archivos >= 0 ) {
+				print FH "Nombres de archivo: ";
+				print FH "$_ " foreach (@archivos);
+				print FH "\n";
+			}
+
+			print FH "\nResultado:\n";
+			print FH $mensaje;
+			close FH;
 		}
 
-		if ( $tipoExpresion eq 3 ) {
+	} else {
 
-			$expresion = $expresion." ".$flogica[0]." ";
-			$expresion = $expresion."( ".$operandos[1]." ".$flogica[1]." ".$operandos[2]." )";
-		}
-
-		print FH $expresion."\n\n";
-
-		print FH "Filtros:\n";
-
-		if ( $#patrones >= 0 ) {
-			print FH "Patrones: ";
-			print FH "$_ " foreach (@patrones);
-			print FH "\n";
-		}
-
-		if ( $#sistemas >= 0 ) {
-			print FH "Sistemas: ";
-			print FH "$_ " foreach (@sistemas);
-			print FH "\n";
-		}
-
-		if ( $#archivos >= 0 ) {
-			print FH "Nombres de archivo: ";
-			print FH "$_ " foreach (@archivos);
-			print FH "\n";
-		}
-
-		print FH "\nResultado:\n";
-		print FH $mensaje;
-		close FH;
+		print "No se encontró el directorio de la variable de ambiente PROCDIR: $dir\n";
 	}
 
 }
 
+# -----------------------------------------------------------------------------#
 sub evaluarArchivo {
 
 	my $dir     = shift(@_);	
@@ -1313,24 +1438,25 @@ sub evaluarArchivo {
 
 		if ( $evaluar_sistemas eq 1 ) {
 
-			$sistema = $archivo;
-			$sistema =~ s/^([^_])*_.*$/\1/;
-			$evaluacionDeOperandos{"s"} = (exists($archivos{ $sistema })) ? 1:0;
+			my $sistema = $campos[1];
+
+			$evaluacionDeOperandos{"s"} = 0;
+			if ( $sistema =~ s/^([^_]*)_([^_]*)$/\1/ ) {
+
+				$evaluacionDeOperandos{"s"} = (exists($sistemas{ $sistema })) ? 1:0;
+			}
 		}
 
 		# verifico si el registro cumple con la expresión lógica.
+		if ( &validarExpresionLogica( $tipoExpresion, \%evaluacionDeOperandos, \@operandos, \@flogicas) eq 1 ) {
 
-		$registroValido = &validarExpresionLogica( $tipoExpresion, \%evaluacionDeOperandos, \@operandos, \@flogicas);
-
-		if ( $registroValido eq 1 ) {
-			$hash->{$campos[1]."|".$patron} = $campos[2];
-			$hash->{$patron."|".$campos[1]} = $campos[2];
+			$hash->{$patron."|".$campos[1]} += $campos[2] ;
 		}
 	}
-
 	close( fileHandler );
 }
 
+# -----------------------------------------------------------------------------#
 sub validarExpresionLogica {
 
 	my $tipoExpresion	   = shift(@_);
