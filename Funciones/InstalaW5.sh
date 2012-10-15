@@ -59,6 +59,42 @@ function waitForYesOrNo {
 	log "waitForYesOrNo"
 }
 
+## devuelve la cantidad de espacio libre en el path actual
+function getFreeUserSpaceInMegabytes {
+	freespace=`df -Phm . | tail -1 | awk '{print $4}'`
+	echo "$freespace"
+}
+
+## Numero $1 menor o igual que $2
+function isPositiveNumberLessOrEqualThan {
+	validPositiveNumber=isValidPositiveNumber $1
+	if ["$validPositiveNumber" == "0"]; then	
+		if [[$1 -le $2 ]]; then
+			echo "0"	
+		else
+			echo "1"	
+		fi
+	else
+		echo "1"
+	fi
+}
+
+function isValidPositiveNumber {
+
+	validation=`echo $1 | grep "^[0-9][0-9]*$"`
+ 
+	if  ["$validation" != ""]; then
+		if [[ $1 -ge 1]] ; then
+     			echo "0"
+   		else
+     			echo "1"
+   		fi
+	else
+  		echo "1"
+	fi
+}
+
+
 function isValidString {
 	logOnly "Verificando si el string '$1' es valido"
 
@@ -179,7 +215,7 @@ function defineBINDir {
 
 		log "Defina el directorio de instalación de los ejecutables ($BINDIR):"; read userbindir
 		
-		if [ "$directorio" != "" ]; then
+		if [ "$userbindir" != "" ]; then
 			validInput=`isValidString $userbindir`
 			if [ "$validInput" = "1" ]; then
 				logOnly "El usuario ingreso '$GROUP$userbindir' como directorio de trabajo para 'bin'"
@@ -206,7 +242,7 @@ function defineMAEDir {
 
 		log "Defina el directorio de instalación de los archivos maestros ($MAEDIR):"; read usermaedir
 		
-		if [ "$directorio" != "" ]; then
+		if [ "$usermaedir" != "" ]; then
 			validInput=`isValidString $userbindir`
 			if [ "$validInput" = "1" ]; then
 				logOnly "El usuario ingreso '$GROUP$usermaedir' como directorio de trabajo para datos maestros"
@@ -233,7 +269,7 @@ function defineARRIDir {
 
 		log "Defina el directorio de arribo de archivos externos ($ARRIDIR):"; read userarridir
 		
-		if [ "$directorio" != "" ]; then
+		if [ "$userarridir" != "" ]; then
 			validInput=`isValidString $userarridir`
 			if [ "$validInput" = "1" ]; then
 				logOnly "El usuario ingreso '$GROUP$userarridir' como directorio de trabajo para el arribo de archivos externos"
@@ -251,7 +287,40 @@ function defineARRIDir {
 	#TODO registrar este paso en el archivo de instalacion temporal para poder reanudar el proceso
 }
 
+#STEP 8 Definir espacio libre
+function defineARRIDirSpace {
+	# Espera por que el usuario ingrese un tamaño de espacio libre valido (mayor a 1MB)
 
+	validInput="0"
+	while [ "$validInput" != "1" ] ; do
+
+		log "Defina el espacio mínimo libre (al menos 1MB) para el arribo de archivos externos en Mbytes : ($DATASIZE):"; read userdatasize
+		
+		if [ "$userdatasize" != "" ]; then
+			userfreespace=getFreeUserSpace
+			validInput=`isPositiveNumberLessOrEqualThan $userdatasize $userfreespace`
+			if [ "$validInput" = "1" ]; then
+				logOnly "El usuario ingreso '$userdatasize'MBytes como espacio minimo libre"
+				DATASIZE=$userfreespace;
+    			else
+	      			echo $validInput
+				log "El dato ingresado no es valiod"	
+	   		fi
+  		else
+    			validInput="1"
+			logOnly "El usuario quiere mantener $DATASIZE como espacio minimo libre para archivos externos"
+  		fi
+	done
+}
+
+			
+
+## Funcion que obtiene los valores por defecto de un archivo 
+function getValuesFromFile {
+	logOnly "Leyendo valor por defecto del archivo $1"
+}
+
+function getValuesFromFile
 ## Setea los valores por defecto para las variables
 function setDefaultValues {
 	BINDIR="$GROUP/bin"
@@ -297,7 +366,10 @@ function startInstallWFIVE {
 			#STEP 7 Definir ARRIDIR
 			defineARRIDir
 
-			
+			#STEP 8 Definir espacio libre
+			defineARRIDirSpace
+
+				
 		;;
 
 		"$INSTALAW5_STATE_INCOMPLETE")
