@@ -59,6 +59,18 @@ function waitForYesOrNo {
 	log "waitForYesOrNo"
 }
 
+function isValidString {
+	logOnly "Verificando si el string '$1' es valido"
+
+	validation=`echo "$1" | grep "^\(/\([A-Za-z0-9-]\+\)\)\+$"`
+
+	if  [ "$validation" != "" ] ;then
+   		echo "1"
+	else
+   		echo "0"
+	fi
+}
+
 #---------- Funciones de alto nivel ----------
 
 ## Comprueba que perl este instalado, y que la version sea igual o mayor a la requerida
@@ -165,27 +177,86 @@ function defineBINDir {
 	validInput="0"
 	while [ "$validInput" != "1" ] ; do
 
-		log "Defina el directorio ($GROUP/bin):"; read userbindir
+		log "Defina el directorio de instalación de los ejecutables ($BINDIR):"; read userbindir
 		
 		if [ "$directorio" != "" ]; then
-			validInput=`validarString $userbindir`
+			validInput=`isValidString $userbindir`
 			if [ "$validInput" = "1" ]; then
 				logOnly "El usuario ingreso '$GROUP$userbindir' como directorio de trabajo para 'bin'"
 				BINDIR=$GROUP$userbindir;
     			else
 	      			echo $validInput
-				logOnly	 "$validInput"		
+				log "El directorio ingresado no es valido"	
 	   		fi
   		else
     			validInput="1"
-			logOnly "El usuario quiere mantener $BINDIR como directorio para 'bin'"
+			logOnly "El usuario quiere mantener $BINDIR como directorio para ejecutables"
   		fi
 	done
+
+	#TODO registrar este paso en el archivo de instalacion temporal para poder reanudar el proceso
 }
+
+## STEP 6 - definir directorio de instalacion de archivos maestros
+function defineMAEDir {
+	# Espera por que el usuario ingrese un directorio valido
+
+	validInput="0"
+	while [ "$validInput" != "1" ] ; do
+
+		log "Defina el directorio de instalación de los archivos maestros ($MAEDIR):"; read usermaedir
+		
+		if [ "$directorio" != "" ]; then
+			validInput=`isValidString $userbindir`
+			if [ "$validInput" = "1" ]; then
+				logOnly "El usuario ingreso '$GROUP$usermaedir' como directorio de trabajo para datos maestros"
+				MAEDIR=$GROUP$usermaedir;
+    			else
+	      			echo $validInput
+				log "El directorio ingresado no es valido"
+	   		fi
+  		else
+    			validInput="1"
+			logOnly "El usuario quiere mantener $MAEDIR como directorio para los datos maestros"
+  		fi
+	done
+
+	#TODO registrar este paso en el archivo de instalacion temporal para poder reanudar el proceso
+}
+
+## STEP 7 - definir directorio de arribo de archivos externos
+function defineARRIDir {
+	# Espera por que el usuario ingrese un directorio valido
+
+	validInput="0"
+	while [ "$validInput" != "1" ] ; do
+
+		log "Defina el directorio de arribo de archivos externos ($ARRIDIR):"; read userarridir
+		
+		if [ "$directorio" != "" ]; then
+			validInput=`isValidString $userarridir`
+			if [ "$validInput" = "1" ]; then
+				logOnly "El usuario ingreso '$GROUP$userarridir' como directorio de trabajo para el arribo de archivos externos"
+				ARRIDIR=$GROUP$userarridir;
+    			else
+	      			echo $validInput
+				log "El directorio ingresado no es valido"	
+	   		fi
+  		else
+    			validInput="1"
+			logOnly "El usuario quiere mantener $ARRIDIR como directorio para el arribo de archivos externos"
+  		fi
+	done
+
+	#TODO registrar este paso en el archivo de instalacion temporal para poder reanudar el proceso
+}
+
 
 ## Setea los valores por defecto para las variables
 function setDefaultValues {
 	BINDIR="$GROUP/bin"
+	MAEDIR="$GROUP/mae"
+	ARRIDIR="$GROUP/arribos"
 }
 
 ## Funcion principal
@@ -219,6 +290,14 @@ function startInstallWFIVE {
 			
 			#STEP 5 Definir BINDIR
 			defineBINDir
+
+			#STEP 6 Definir MAEDIR
+			defineMAEDir
+
+			#STEP 7 Definir ARRIDIR
+			defineARRIDir
+
+			
 		;;
 
 		"$INSTALAW5_STATE_INCOMPLETE")
