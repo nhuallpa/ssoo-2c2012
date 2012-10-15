@@ -61,7 +61,7 @@ if [ $HAY_FAMILIA -eq "0" ]
 then
 	# Para calcular la secuencia <SEC> listo archivos de la misma familia (igual nombre, distinto numero de SEC)
 	# Obtengo desde el punto el nombre del archivo, me quedo solo con los numeros,
-	# ordeno por numero y obtengo el valor m?ximo de secuencia
+	# ordeno por numero y obtengo el valor máximo de secuencia
 	SEC=`ls -1 $archivosfamilia | grep -o '\.[0-9]*$' | cut -c2-10 | sort -n | tail -1`
 	let SEC=$SEC+1
 
@@ -72,5 +72,5 @@ else
 	rm $origen
 fi
 
-# Si termin? bien el script, devuelvo 0
+# Si terminó bien el script, devuelvo 0
 exit 0

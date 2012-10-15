@@ -1,10 +1,10 @@
 #!/bin/bash
-#LoguearW5 [-i|-a|-e|-se] [mensaje|código de error] [argumentos de error]
+#LoguearW5 <comando> <-i|-a|-e|-se> <[mensaje|código de error]>
 
 CARACTERES_VALIDOS=':print:'
 MODO_DE_USO="\n"\
 "Modo de Uso:\n"\
-"LoguearW5 [opción] [mensaje|código de error] [argumentos de error]\n"\
+"LoguearW5 [comando] [opción] [mensaje|código de error]\n"\
 "\n"\
 "La opción deberá ser una de las siguientes:\n"\
 "-i, -I, --info : guarda mensajes de información.\n"\
@@ -58,13 +58,15 @@ fi
 
 FECHA=`date '+%x %X '` 		#devuelve la fecha del sistema dd/MM/yy hh:mm:ss
 USUARIO=`whoami`		#devuelve usuario actual del sistema
-COMANDO=`ps -p $PPID -o comm=`	#obtengo nombre del comando que lo invoco
+COMANDO=$1			#obtengo nombre del comando que lo invoco
+echo $COMANDO
 FILE=$LOGDIR/$COMANDO.$LOGEXT	#nombre del archivo logger a generar
 echo $FILE
+
 #------------ Funciones --------------#
 
 function validar_argumento_mensaje {
-# $1 : mensaje , $2 : cant argumentos
+# $1 : mensaje, $2 : cant_arg
   if [ -z "$1" ] 
   then
     echo "Falta el argumento [Mensaje].">&2
@@ -72,16 +74,16 @@ function validar_argumento_mensaje {
     exit 1 
   fi
 
-  if [ $2 -ne 2 ] 
+  if [ $2 -ne 3 ] 
   then
-    echo "Demasiados argumentos.">&2
-    echo -e $MODO_DE_USO>&2
+    echo "Faltan argumentos.">&2
+    echo -e $MODO_DE_USO >&2
     exit 1 
   fi
 }
 
 function obtener_mensaje {
-# $1 : tipo de error
+# $2 : tipo de error
   cod_error=${argv[1]}
   declare -a args
   local i=2
@@ -135,7 +137,7 @@ function escribir_log {
   then
     str="$1-$2"
   else
-    if [ $# -eq 3 ] 
+    if [ $# -eq 4 ] 
     then
       str="$1-$2-$3"
     fi
@@ -174,13 +176,13 @@ for arg in "$@"; do
 done 
 
           
-case $1 in
+case $2 in
   -i|-I|--info )
-      validar_argumento_mensaje "$2" $#
-      escribir_log 'I' "$2" ;;
+      validar_argumento_mensaje "$3" $#
+      escribir_log 'I' "$3" ;;
   -a|-A|--alerta )
-      validar_argumento_mensaje "$2" $#
-      escribir_log 'A' "$2" ;;
+      validar_argumento_mensaje "$3" $#
+      escribir_log 'A' "$3" ;;
   -e|-E|--error )
       obtener_mensaje E
       escribir_log 'E' $cod_error "$msj_error" ;;
@@ -190,7 +192,7 @@ case $1 in
   -h|-H|--help ) 
       echo -e $MODO_DE_USO
       exit 0 ;;
-  *)  echo "$1 : Opción Inválida.">&2
+  *)  echo "$2 : Opción Inválida.">&2
       echo -e $MODO_DE_USO >&2
       exit 1 ;;
 esac
