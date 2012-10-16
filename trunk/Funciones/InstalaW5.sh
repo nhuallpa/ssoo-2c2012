@@ -24,9 +24,9 @@ INSTALAW5_STATE_COMPLETE="DONE"
 INSTALAW5_STATE_INCOMPLETE="PARTIAL"
 INSTALAW5_STATE_FRESHINSTALL="FRESH"
 
+# Variables para instalacion y reanudación
 INSTALAW5_MAEFILES=("patrones")
 INSTALAW5_BINFILES=(BuscarW5.sh IniciarW5.sh ListarW5.sh LoguearW5.sh MirarW5.sh MoverW5.sh)
-
 
 
 #---------- Funciones de bajo nivel ----------
@@ -654,10 +654,12 @@ function updateConfigFile {
 	echo "GRUPO=$GRUPO=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "CONFDIR=$CONFDIR=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "ARRIDIR=$ARRIDIR=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
+	echo "ACEPDIR=$ACEPDIR=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "RECHDIR=$RECHDIR=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "BINDIR=$BINDIR=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "MAEDIR=$MAEDIR=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "REPODIR=$REPODIR=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
+	echo "PROCDIR=$PROCDIR=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "LOGDIR=$LOGDIR=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "LOGEXT=$LOGEXT=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "LOGSIZE=$LOGSIZE=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
@@ -671,6 +673,65 @@ function updateConfigFile {
     		echo $ultimaslineas >> $CONFIGURACION
   	fi
 }
+
+## Verifica que esten todos los ejecutables
+function lookForBINFiles {
+	missingBinaries=""
+	binaryFiles=`ls $BINDIR`
+
+	for file in ${INSTALAW5_BINFILES[*]}
+	do
+		present=`echo $binaryFiles | grep $file`
+
+		if [ -z "$present" ]; then
+			missingBinaries="$missingBinaries $file"
+		fi
+	done
+	echo $missingBinaries
+}
+
+## Verifica que esten todos los archivos maestros
+function lookForMAEFiles {
+	missingMasters=""
+	masterFiles=`ls $BINDIR`
+
+	for file in ${INSTALAW5_MAEFILES[*]}
+	do
+		present=`echo $masterFiles | grep $file`
+
+		if [ -z "$present" ]; then
+			missingMasters="$missingMasters $file"
+		fi
+	done
+	echo $missingMasters
+}
+
+## Instalacion incompleta
+###	declare missingMAE=""
+###	declare missingBIN=""
+###	declare missings=""
+###	declare notMissingsCount=0
+function getMissingsFiles {
+
+	# Compruebo directorios faltantes
+	reqDirs=($ARRIDIR $RECHDIR $BINDIR $ACEPDIR $MAEDIR $REPODIR $LOGDIR $PROCDIR)
+	
+	for directory in ${reqDirs[*]}
+	do
+	    if  [ -d "$directory" ] ;then
+        	notMissingsCount=$(($notMissingsCount +1))
+	        if [ "$directory" = "$BINDIR" ] ; then
+	        	missingBIN=`lookForBINFiles`
+        	elif  [ "$directory" = "$MAEDIR" ] ; then
+          		missingMAE=`lookForMAEFiles`
+	    	else
+	      		missings=$missings" "$directory
+	    	fi
+	done
+
+	
+}
+
 
 ## Funcion que obtiene los valores por defecto de un archivo 
 function getValuesFromFile {
@@ -788,6 +849,14 @@ function startInstallWFIVE {
 
 
 		"$INSTALAW5_STATE_INCOMPLETE")
+	
+			declare missingMAE=""
+			declare missingBIN=""
+			declare missings=""
+			declare notMissingsCount=0
+
+			getMissingsFiles
+
 			# Log de archivos existentes
 
 			# Mostrar estado de la instalacion
