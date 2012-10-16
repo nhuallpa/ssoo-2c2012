@@ -63,8 +63,23 @@ function log {
 
 function logInstallStep {
 	logOnly "Se ha completado el paso $1 de la instalación"
-	echo "LAST_STEP=$1" > "$INSTALAW5_TEMPFILE"
+	infoToLog="LAST_STEP=$1
+	BINDIR=$BINDIR
+	MAEDIR=$MAEDIR
+	ARRIDIR=$ARRIDIR
+	DATASIZE=$DATASIZE
+	RECHDIR=$RECHDIR
+	ACEPDIR=$ACEPDIR
+	PROCDIR=$PROCDIR
+	LOGDIR=$LOGDIR
+	LOGEXT=$LOGEXT
+	LOGSIZE=$LOGSIZE
+	REPODIR=$REPODIR
+	"
+
+	echo "LAST_STEP=$1" >> "$INSTALAW5_TEMPFILE"
 }
+
 
 ## Funcion que verifica si existe y directorio, y sino, lo crea
 function createDirIfNotExist {
@@ -268,7 +283,7 @@ function defineBINDir {
 				logOnly "El usuario ingreso '$userbindir' como directorio de trabajo para 'bin'"
 				BINDIR=$userbindir;
     			else
-	      			echo $validInput
+#	      			#echo $validInput
 				logError "El directorio ingresado no es valido"	
 	   		fi
   		else
@@ -296,7 +311,7 @@ function defineMAEDir {
 				logOnly "El usuario ingreso '$usermaedir' como directorio de trabajo para datos maestros"
 				MAEDIR=$usermaedir;
     			else
-	      			echo $validInput
+	      			##echo $validInput
 				logError "El directorio ingresado no es valido"
 	   		fi
   		else
@@ -324,7 +339,7 @@ function defineARRIDir {
 				logOnly "El usuario ingreso '$userarridir' como directorio de trabajo para el arribo de archivos externos"
 				ARRIDIR=$userarridir;
     			else
-	      			echo $validInput
+	      			##echo $validInput
 				logError "El directorio ingresado no es valido"	
 	   		fi
   		else
@@ -355,7 +370,7 @@ function defineARRIDirSpace {
 				validInput="1"
     			else 
 				if [ "$validInput" = "1" ]; then
-	      				echo $validInput
+	      				##echo $validInput
 					logErrorOnly "El usuario esta intentando reservar $userdatasize MBytes."
 					logError "Insuficiente espacio en disco."
 					logError "Espacio disponible: $userfreespace Mb."
@@ -391,7 +406,7 @@ function defineRECHDir {
 				logOnly "El usuario ingreso '$userrechdir' como directorio de trabajo para la grabación de los archivos externos aceptados"
 				RECHDIR=$userrechdir;
     			else
-	      			echo $validInput
+	      			##echo $validInput
 				logError "El directorio ingresado no es valido"	
 	   		fi
   		else
@@ -419,7 +434,7 @@ function defineACEPDir {
 				logOnly "El usuario ingreso '$useracepdir' como directorio de trabajo para la grabación de los archivos externos aceptados"
 				ACEPDIR=$useracepdir;
     			else
-	      			echo $validInput
+	      			##echo $validInput
 				logError "El directorio ingresado no es valido"	
 	   		fi
   		else
@@ -447,7 +462,7 @@ function definePROCDir	{
 				logOnly "El usuario ingreso '$userprocdir' como directorio de trabajo para archivos procesados"
 				PROCDIR=$userprocdir;
     			else
-	      			echo $validInput
+	      			##echo $validInput
 				logError "El directorio ingresado no es valido"	
 	   		fi
   		else
@@ -475,7 +490,7 @@ function defineLOGDir {
 				logOnly "El usuario ingreso '$userlogdir' como directorio de trabajo para la grabación de los archivos de log"
 				LOGDIR=$userlogdir;
     			else
-	      			echo $validInput
+	      			##echo $validInput
 				logError "El directorio ingresado no es valido"	
 	   		fi
   		else
@@ -502,13 +517,14 @@ function defineLOGExt {
 			if [ "$validInput" = "1" ]; then
 				logOnly "El usuario ingreso '$userlogext' como extensión de los archivos de log"
 				#si la extensión no comienza con '.' entonces se lo agregamos
-				hasDot=`echo "log" | grep -c '^\.'`
+				hasDot=`echo "$userlogext" | grep -c '^\.'`
 				if [ hasDot = 0 ]; then
-					userlogext="$userlogext."
+					userlogext=".$userlogext"
 				fi
 				LOGEXT=$userlogext;
     			else
-	      			echo $validInput
+	      			#echo $validInput
+				logOnly "El usuario ingreso una extensión de log invalida: $userlogext"
 	   		fi
   		else
     			validInput="1"
@@ -565,7 +581,7 @@ lidInput=`isValidString $userrepodir`
 				logOnly "El usuario ingreso '$userrepodir' como directorio de trabajo para la grabación de los reportes de salida"
 				REPODIR=$userrepodir;
     			else
-	      			echo $validInput
+	      			#echo $validInput
 				logError "El directorio ingresado no es valido"	
 	   		fi
   		else
@@ -584,7 +600,7 @@ function showInstallParams {
 	log "Ejecutables: $BINDIR"
 	log "Archivos maestros: $MAEDIR"
 	log "Directorio de arribo de archivos externos: $ARRIDIR"
-	log "Espacio minimo libre para arribos: $DATSIZE MBytes"
+	log "Espacio minimo libre para arribos: $DATASIZE MBytes"
 	log "Archivos externos aceptados $ACEPDIR"  
 	log "Archivos externos rechazados $RECHDIR"
 	log "Archivos procesados: $PROCDIR"
@@ -593,19 +609,21 @@ function showInstallParams {
 	log "Tamaño máximo para los archivos de log del sistema: $LOGSIZE KBytes"
 	log "Estado de la instalación: $1"
 	
-	#esperar input, si es SI, salimos con codigo 0 y empezamos la instalacion
-	#si es NO, salimos con codigo 1 y volvemos al paso defineARRIDir
-	selectedOption=0
-      	while [ "$selectedOption" != "s" -a "$selectedOption" != "S" -a "$selectedOption" != "n" -a "$selectedOption" != "N" ] ; do
-		log "Los datos ingresados son correctos? (Si-No)"; read -n1 selectedOption
-		if [ "$selectedOption" = "s" -o "$selectedOption" = "S" ] ; then
-        		confirmData="0"            			        
-        	elif [ "$selectedOption" = "n" -o "$selectedOption" = "N" ] ; then
-        		confirmData="1"	
-		fi
-	done
+	if [ "$1" != "COMPLETA" ]; then
+		#esperar input, si es SI, salimos con codigo 0 y empezamos la instalacion
+		#si es NO, salimos con codigo 1 y volvemos al paso defineARRIDir
+		selectedOption=0
+	      	while [ "$selectedOption" != "s" -a "$selectedOption" != "S" -a "$selectedOption" != "n" -a "$selectedOption" != "N" ] ; do
+			log "Los datos ingresados son correctos? (Si-No)"; read -n1 selectedOption
+			if [ "$selectedOption" = "s" -o "$selectedOption" = "S" ] ; then
+	        		confirmData="0"            			        
+	        	elif [ "$selectedOption" = "n" -o "$selectedOption" = "N" ] ; then
+	        		confirmData="1"	
+			fi
+		done	
 
-	logInstallStep 12
+		logInstallStep 12
+	fi
 }
 
 ##STEP 18 crear directorios
@@ -675,6 +693,8 @@ function updateConfigFile {
 	fi
 
 	currentDate=`date +"%D %X"`
+	
+	echo "" > $INSTALAW5_SETUPFILE
 
 	echo "GRUPO=$PWD/$GRUPO=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "CONFDIR=$PWD/$CONFDIR=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
@@ -760,6 +780,52 @@ function getMissingsFiles {
 ## Funcion que obtiene los valores por defecto de un archivo 
 function getValuesFromFile {
 	logOnly "Leyendo valor por defecto del archivo $1"
+ 	
+	tGRUPO=`cat $1 | grep GRUPO | cut -s -d "=" -f2`
+	tBINDIR=`cat $1 | grep BINDIR | cut -s -d "=" -f2`  	
+	tARRIDIR=`cat $1 | grep ARRIDIR | cut -s -d "=" -f2`
+  	tRECHDIR=`cat $1 | grep RECHDIR | cut -s -d "=" -f2`
+  	tARRIDIR=`cat $1 | grep ARRIDIR | cut -s -d "=" -f2`
+  	tMAEDIR=`cat $1 | grep MAEDIR | cut -s -d "=" -f2`
+  	tREPODIR=`cat $1 | grep REPODIR | cut -s -d "=" -f2`
+  	tLOGDIR=`cat $1 | grep LOGDIR | cut -s -d "=" -f2`
+  	tLOGEXT=`cat $1 | grep LOGEXT | cut -s -d "=" -f2`
+  	tLOGSIZE=`cat $1 | grep LOGSIZE | cut -s -d "=" -f2`
+  	tDATASIZE=`cat $1 | grep DATASIZE | cut -s -d "=" -f2`
+ 	
+	if [ "$tGRUPO" != "" ]; then
+		GRUPO="$tGRUPO"
+	fi
+	if [ "$tBINDIR" != "" ]; then
+		BINDIR="$tBINDIR"
+	fi
+	if [ "$tARRIDIR" != "" ]; then
+		ARRIDIR="$tARRIDIR"
+	fi
+	if [ "$tRECHDIR" != "" ]; then
+		RECHDIR="$tRECHDIR"
+	fi
+	if [ "$tMAEDIR" != "" ]; then
+		MAEDIR="$tMAEDIR"
+	fi
+	if [ "$tREPODIR" != "" ]; then
+		REPODIR="$tREPODIR"
+	fi
+	if [ "$tLOGDIR" != "" ]; then
+		LOGDIR="$tLOGDIR"
+	fi
+	if [ "$tLOGEXT" != "" ]; then
+		LOGEXT="$tLOGEXT"
+	fi
+	if [ "$tLOGSIZE" != "" ]; then
+		LOGSIZE="$tLOGSIZE"
+	fi
+	if [ "$tDATASIZE" != "" ]; then
+		DATASIZE="$tDATASIZE"
+	fi
+
+
+
 }
 
 
@@ -875,8 +941,6 @@ function performInstallFromStep {
 			updateConfigFile
 			confirmedInstallParams="1"
 			echo -e "\nInstalación concluida"
-
-			#Obtener datos del tempfile y copiarlos a confFile
 			
 			#borrar archivo temporal
 			rm $INSTALAW5_TEMPFILE
@@ -948,6 +1012,7 @@ function startInstallWFIVE {
 				setDefaultValues
 
 				# Piso variables de default con las variables del archivo TEMP
+				getValuesFromFile $INSTALAW5_TEMPFILE
 
 				# Instalo a partir del ultimo paso realizado
 				performInstallFromStep	$instCount
@@ -959,6 +1024,9 @@ function startInstallWFIVE {
 
 
 		"$INSTALAW5_STATE_COMPLETE")
+			#Cargar parametros desde el archivo de configuracion
+			getValuesFromFile $INSTALAW5_SETUPFILE
+	
 			showInstallParams "COMPLETA"
 		;;
 
