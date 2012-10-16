@@ -636,6 +636,9 @@ sub filtroResultadosGlobales {
 		if ( $#val eq 1 ) {
 
 		    &cargarHash( 1, \%hash);
+			
+		print "$_ $hash{$_}\n" foreach ( keys(%hash) );
+
 		    &filtrarPorRango( $persistir, \%hash, $val[0], $val[1]);
 		    &filtrarPorRango( 0, \%hash, $val[0], $val[1]) if ( $persisir eq 1 );
 		}
@@ -1033,7 +1036,7 @@ sub validarExpresion {
 	my $tipoExpresion = 0;
 
 	$aux     = $comando;
-	$comando =~ s/([psa])[^psaoy]*([oy]?)[^psaoy]*([psa]?)[^psaoy]*([oy]?)[^psaoy]*([psa]?).*/\1 \2 \3 \4 \5/;
+	$comando =~ s/[^psaoy]*([psa])[^psaoy]*([oy]?)[^psaoy]*([psa]?)[^psaoy]*([oy]?)[^psaoy]*([psa]?).*/\1 \2 \3 \4 \5/;
 
 	@v = split ( " " , $comando );
 	$cant = @v;
@@ -1094,7 +1097,7 @@ sub validarPatrones {
 			$validez = 1;
 		}
 
-		if ( $patrones =~ /^*$/ ) {
+		if ( $patrones =~ /^\*$/ ) {
 
 			my $dir = $ENV{MAEDIR};
 
@@ -1205,22 +1208,32 @@ sub cargarSistemas {
 
 # -----------------------------------------------------------------------------#
 sub validarArchivos {
+
+	$todos = shift @_;
+
 	$SEP = ",";
 
+	$todos = 0;
 	$validez = 0;
 	while ( $validez eq 0 ) {
 
-		print "Ingrese una lista de archivos serparados por \"$SEP\"\n";
+		print "Ingrese una lista de archivos serparados por \"$SEP\" o \"*\" para todos los archivos.\n";
 		chop ( $archivos = <STDIN> );
 
-		@archivos = split($SEP, $archivos);
+		if ( $archivos =~ /^\*$/ ) {
 
-		foreach (@archivos) {
-			$_ =~ s/^ *([^ ].*[^ ]) *$/\1/;		
+			$validez = 1;
+			$todos = 1;
+		} else {
+
+			@archivos = split($SEP, $archivos);
+
+			foreach (@archivos) {
+				$_ =~ s/^ *([^ ].*[^ ]) *$/\1/;		
+			}
+
+			$validez = 1;
 		}
-
-		$validez = 1;
-
 	}
 
 	return @archivos;
@@ -1236,12 +1249,11 @@ sub resolverConsultaGlobal {
 	local @flogicas;
 
 	local $tipoExpresion = &evaluar_expresion(\@operandos, \@flogicas);
-
 	foreach $operando (@operandos) {
 
 		local @patrones = &validarPatrones if ( $operando eq "p" );
 		local @sistemas = &validarSistemas if ( $operando eq "s" );
-		local @archivos = &validarArchivos if ( $operando eq "a" );
+		local @archivos = &validarArchivos (\$todos) if ( $operando eq "a" );
 	}
 
 	print "\n\n";
@@ -1255,7 +1267,7 @@ sub resolverConsultaGlobal {
 			if ( $archivo !~ /[\.~]$/ and $archivo !~ /^\.\.$/ and $archivo =~ /^$ARCH_GLOBALES\./) {
 
 				$dir_archivo = $dir."/".$archivo;
-				&evaluarArchivo( $dir, $archivo, \%hash) if ( -r $dir_archivo );
+				&evaluarArchivo( $dir, $archivo, \%hash, $todos) if ( -r $dir_archivo );
 			}
 		}
 
@@ -1290,7 +1302,18 @@ sub resolverConsultaGlobal {
 		else { 
 			if ( $repeticiones > 1 ) {
 
-				$mensaje = "No hay un único valor máximo.\n";
+				$mensaje = "No hay un único valor máximo.\n" if ($seleccion eq 1);
+
+				if ( $seleccion eq 2 ) {
+
+					if ( $max eq 0 ) {
+						$mensaje = "No hay un único valor nulo.\n";
+
+					}else {
+						$mensaje = "No se encontraron registros cuyo total de hallazgos sea nulo.\n";
+					}
+				}
+				
 			}
 
 			 else {
@@ -1333,8 +1356,8 @@ sub resolverConsultaGlobal {
 			$nombreArchivo = nombreArchivoDeSalida();
 			open( FH, ">$nombreArchivo") || die "No se pudo crear el archivo de salida.\n";
 
-			print FH "Consulta por mayor cantidad de hallazgos.\n" if ( $seleccion eq 1 );
-			print FH "Consulta por cantidad de hallazgos nula.\n" if ( $seleccion eq 2 );
+			print FH "Consultar donde se produjo la mayor cantidad de hallazgos.\n" if ( $seleccion eq 1 );
+			print FH "Consultar si hubo hallazgos nulos.\n" if ( $seleccion eq 2 );
 
 			print FH "\nExpresión lógica: ";
 
@@ -1403,6 +1426,7 @@ sub evaluarArchivo {
 	my $dir     = shift(@_);	
 	my $archivo = shift(@_);
 	my $hash    = shift(@_);
+	my $todos   = shift(@_);
 
 	open( fileHandler, $dir."/".$archivo );
 
@@ -1410,7 +1434,7 @@ sub evaluarArchivo {
 
 	my $evaluar_patrones = ( $#patrones >= 0 ) ? 1:0;
 	my $evaluar_sistemas = ( $#sistemas >= 0 ) ? 1:0;
-	my $evaluar_archivos = ( $#archivos >= 0 ) ? 1:0;
+	my $evaluar_archivos = (( $#archivos >= 0) or ($todos eq 1)) ? 1:0;
 
 	if ($evaluar_patrones eq 1) {
 
@@ -1444,6 +1468,8 @@ sub evaluarArchivo {
 		if ( $evaluar_archivos eq 1 ) {
 
 			$evaluacionDeOperandos{"a"} = (exists($archivos{ $campos[1] })) ? 1:0;
+
+			$evaluacionDeOperandos{"a"} = 1 if ( $todos eq 1);
 		}
 
 		if ( $evaluar_sistemas eq 1 ) {
