@@ -759,9 +759,12 @@ sub cargarHash {
 			if ( $opcion eq 0 ) {
 
 				while ( $linea = <FH> ) {
+					chop ($linea);
 
-					@opciones = split( $SEPARADOR_GLOBALES, $linea );
-					$hash->{ $opciones[3] } += $opciones[2];
+					if ( length($linea) > 0 ) {
+						@opciones = split( $SEPARADOR_GLOBALES, $linea );
+						$hash->{ $opciones[3] } += $opciones[2];
+					}
 				}
 
 				close(FH);
@@ -869,9 +872,9 @@ sub filtrarValores {
 
 	my $cant = @claves;
 
-	$limite = $#claves if ( $cant < $limite );
-
-	for ( my $i = 1; $i <= $limite; ++$i) {
+	$limite = @claves if ( $cant < $limite );
+	
+	for ( my $i = 0; $i < $limite; ++$i) {
 		push(@vector, $claves[$i]);
 	}
 
@@ -962,10 +965,17 @@ sub evaluar_expresion {
 
 	while ( $tipoExpresion eq 0 ) { 
 
-		print "Escriba un comando a continuación: ";
+		print "Escriba un comando a continuación o -h para ayuda:";
 		chop ( $comando = <STDIN> );
 	
 		# valido un único comando
+
+		if ( $comando =~ /^ *-h *$/ ) {
+			print "\n";
+			print "El comando a ingresar puede filtrar por sistemas y/o archivos y/o patrones.\n";
+			print "Se emplean los parámetros \"s\" para sitemas, \"a\" para archivos y \"p\" para patrones.\n";
+			print "Estos variables se pueden conectar lógicamente mediante \"y\" e \"o\"\n";
+		}
 
 		if ( $comando =~ /^ *[psa] *$/ ) {
 
