@@ -1,4 +1,4 @@
-#/bin/bash
+#bin/bash
 #
 #	Se necesita las siguientes variables definidas en el ambiente
 #   antes de ejecutarse
@@ -25,17 +25,17 @@ loguear() {
 function validarProceso {
 	if [ $(ps -a | grep $1 | grep -v grep | wc -l | tr -s "\n") -gt 2 ]; then
 		MYPID=`pidof -x $1`
-		loguear "$1 ya esta siendo ejecutado [${MYPID}]"
+		$BINDIR/LoguearW5.sh BuscarW5.sh -I "$1 ya esta siendo ejecutado [${MYPID}]"
 		CORRIENDO=true
 	else 
 		# El proceso no esta corriendo
-		loguear "OK"
+		$BINDIR/LoguearW5.sh BuscarW5.sh -I "OK"
 	fi
 }
 
 marcarInicio() {
 	CANT_ARCH=$(ls -1 $ACEPDIR | wc -l)
-	loguear "Inicio BuscarW5 - Ciclo Nro.: $CICLO - Cantidad Archivos: $CANT_ARCH"
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Inicio BuscarW5 - Ciclo Nro.: $CICLO - Cantidad Archivos: $CANT_ARCH"
 }
 
 verificarIni() {
@@ -50,20 +50,20 @@ verificarIni() {
 		exit 1
 	fi
 
-	loguear "Chequeando si el proceso ya esta siendo ejecutado..."
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Chequeando si el proceso ya esta siendo ejecutado..."
 	export CORRIENDO
 	validarProceso $PROCESO
 	if $CORRIENDO; then	
-		loguear "BuscarW5 ya se esta ejecutando"
+		$BINDIR/LoguearW5.sh BuscarW5.sh -I "BuscarW5 ya se esta ejecutando"
 		exit 1
 	fi
 }
 
 finalizarProceso(){
-	loguear "Fin del Ciclo: $CICLO"
-	loguear "Cantidad de Archivos con Hallasgos: $CANT_ARCH_CON_HALLASGOS"
-	loguear "Cantidad de Archivos sin hallasgos: $CANT_ARCH_SIN_HALLASGOS"
-	loguear "Cantidad de Archivos sin Patron: $CANT_ARCH_SIN_PATRON"
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Fin del Ciclo: $CICLO"
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos con Hallasgos: $CANT_ARCH_CON_HALLASGOS"
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin hallasgos: $CANT_ARCH_SIN_HALLASGOS"
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin Patron: $CANT_ARCH_SIN_PATRON"
 	SECUENCIA2=$((SECUENCIA2+1))
 	export SECUENCIA2
 	CORRIENDO=false
@@ -96,16 +96,13 @@ grabarBloque() {
 
 	local nroReg_desde=$((nroReg+desde_relativo-1))
 	local nroReg_hasta=$((nroReg+hasta_relativo-1))
-#	echo "$nroReg $desde_relativo y $hasta_relativo : $nroReg_desde - $nroReg_hasta"
 	nroReg_actual=$nroReg_desde
 	while [ $nroReg_actual -le $nroReg_hasta ]
 	do
 		local resultado=$(head -n $nroReg_actual $ACEPDIR"/"$archivo | tail -1)
-#		echo "$nroReg_actual : $resultado"
 		registrarResultado "$archivo" $nroReg_actual "$resultado" $pat_id
 		nroReg_actual=$((nroReg_actual+1))
 	done
-
 }
 
 procesarLineas(){
@@ -134,7 +131,6 @@ procesarLineas(){
 		CANT_ARCH_CON_HALLASGOS=$((CANT_ARCH_CON_HALLASGOS+1))
 	fi
 	registrarGlobales $archivo $cantHallasgos $exp $pat_con $desde $hasta $pat_id
- 
 }
 
 procesarCaracteres(){
@@ -172,20 +168,19 @@ marcarInicio
 
 for file in $(ls $ACEPDIR)
 do
-	loguear "Archivo a procesar: $file"
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo a procesar: $file"
 	YA_PROC=$(ls -1 "$PROCDIR" | grep -c "$file")
 	if [ "$YA_PROC" -eq 1 ] 
 	then
-		loguear "Este archivo ya fue procesado: $file"	
-		#bash $BINDIR/LoguearW5.sh -i "Este archivo ya fue procesado: $file"	
-		bash $BINDIR/MoverW5.sh "$ACEPDIR/$file" "$RECHDIR"
+		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Este archivo ya fue procesado: $file"	
+		$BINDIR/MoverW5.sh "$ACEPDIR/$file" "$RECHDIR"
 	else
 		sistema=$(echo $file | cut -f1 -d'_') 
 		TIENE_PAT=$(grep -c "^[^,]*,[^,]*,$sistema,*" "$ARCHPATRONES")
 		if [ "$TIENE_PAT" -eq 0 ]
 		then
 			#loguear "No hay patrones aplicables a este archivo: $file"
-			#bash $BINDIR/LoguearW5.sh $0 -e 9 "$file"
+			bash $BINDIR/LoguearW5.sh BuscarW5.sh -E 9 "$file"
 			CANT_ARCH_SIN_PATRON=$((CANT_ARCH_SIN_PATRON+1))
 		else
 			for regMae in $(grep $sistema $ARCHPATRONES | cut -f 1,4-6 -d',')
