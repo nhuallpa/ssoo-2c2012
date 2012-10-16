@@ -1,10 +1,22 @@
-#!/bin/bash
-MAEDIR=../MAEDIR
+#/bin/bash
+#
+#	Se necesita las siguientes variables definidas en el ambiente
+#   antes de ejecutarse
+#	GRUPO : ruta absoluta del tp
+#	SECUENCIA2 : secuenciador para el ciclo buscar
+#
+MAEDIR=$GRUPO/MAEDIR
 ARCHPATRONES=$MAEDIR/patrones
-ACEPDIR=../ACEPDIR
-PROCDIR=../PROCDIR
-RECHDIR=../RECHDIR
+ACEPDIR=$GRUPO/ACEPDIR
+PROCDIR=$GRUPO/PROCDIR
+RECHDIR=$GRUPO/RECHDIR
 CICLO=$SECUENCIA2
+
+
+
+CANT_ARCH_CON_HALLASGOS=0
+CANT_ARCH_SIN_HALLASGOS=0
+CANT_ARCH_SIN_PATRON=0
 
 loguear() {
 	echo "$1"
@@ -58,12 +70,26 @@ grabarResultado(){
 
 finalizarProceso(){
 	loguear "Fin del Ciclo: $CICLO"
-	loguear "Cantidad de Archivos con Hallasgos: XXX"
-	loguear "Cantidad de Archivos sin hallasgos: ZZZ"
-	loguear "Cantidad de Archivos sin Patron: $1"
-	let SECUENCIA2=SECUENCIA2+1
+	loguear "Cantidad de Archivos con Hallasgos: $CANT_ARCH_CON_HALLASGOS"
+	loguear "Cantidad de Archivos sin hallasgos: $CANT_ARCH_SIN_HALLASGOS"
+	loguear "Cantidad de Archivos sin Patron: $CANT_ARCH_SIN_PATRON"
+	SECUENCIA2=$((SECUENCIA2+1))
 	export SECUENCIA2
+	CORRIENDO=false
 }
+registrarGlobales() {
+	local archivo=$1
+	local hallasgo=$2
+	local exp=$3
+	local contexto=$4
+	local desde=$5
+	local hasta=$6
+	local pad_id=$7
+	echo "registrar globales"
+	echo "$CICLO,$archivo,$cantHallasgos,$exp,$pat_con,$desde,$hasta" >> $PROCDIR/rglobales.$pat_id
+
+}
+
 
 procesarLineas(){
 	local archivo=$1
@@ -73,44 +99,39 @@ procesarLineas(){
 	local hasta=$5
 	echo "registrar lineas"
 }
+
 procesarCaracteres(){
 	local archivo=$1
-	local hallasgos=$2 
-	local exp=$3
-	local desde=$4
-	local hasta=$5
-	echo "registrar caracteres"
-	L_CANT_HALLASGOS=0
+	local exp=$2
+	local desde=$3
+	local hasta=$4
+	local pat_id=$5
+	local pat_con=$6
+	local cantHallasgos=0
+	nroReg=0
 	while read -r linea  
 	do
+		nroReg=$((nroReg+1))	
 		ENCONTRO=$(echo "$linea" | grep -c "$exp")
 		if [ "$ENCONTRO" -eq 1 ] 
 		then
-			echo "$desde - $hasta"
-			echo "$linea"
-			var=$linea
-			RESULTADO=${var2:desde:hasta}
-			loguear $RESULTADO
+			cantHallasgos=$((cantHallasgos+1))
+			length=$((hasta-desde+1))
+			RESULTADO=${linea:$desde:$length}
+			echo "$CICLO+-#-+$archivo+-#-+$nroReg+-#-+$RESULTADO" >> $PROCDIR/resultados.$pat_id
 		fi
 	done < $ACEPDIR"/"$archivo
-
+	if [ $cantHallasgos -eq 0 ] 
+	then
+		CANT_ARCH_SIN_HALLASGOS=$((CANT_ARCH_SIN_HALLASGOS+1))
+	else
+		CANT_ARCH_CON_HALLASGOS=$((CANT_ARCH_CON_HALLASGOS+1))
+	fi
+	registrarGlobales $archivo $cantHallasgos $exp $pat_con $desde $hasta $pat_id
 }
-registrarGlobales() {
-	local archivo=$2 
-	local hallasgo=$3 
-	local exp=$4 
-	local contexto=$5  
-	local desde=$6 
-	local hasta=$7
-	echo "registrar globales"
-}
-
 
 verificarIni
 marcarInicio
-CANT_CON_HALLASGOS=0
-CANT_SIN_HALLASGOS=0
-CANT_SIN_PATRON=0
 
 for file in $(ls $ACEPDIR)
 do
@@ -126,24 +147,22 @@ do
 		if [ "$TIENE_PAT" -eq 0 ]
 		then
 			loguear "No hay patrones aplicables a este archivo: $file"
-			let CANT_SIN_PATRON=CANT_SIN_PATRON+1		
+			CANT_ARCH_SIN_PATRON=$((CANT_ARCH_SIN_PATRON+1))
 		else
 			for regMae in $(grep $sistema $ARCHPATRONES | cut -f 1,4-6 -d',')
 			do
 				PAT_ID=$(echo "$regMae" | cut -f1 -d',')
 				PAT_CON=$(echo "$regMae" | cut -f2 -d',')
 				PAT_DESDE=$(echo "$regMae" | cut -f3 -d',')
-				PAT_HASTA=$(echo "$regMae" | cut -f4 -d',')
+				PAT_HASTA=$(echo "$regMae" | sed 's/.*,\([0-9]*\).*/\1/')   # con cut tenia eof
 				PAT_RE=$(grep "^$PAT_ID," "$ARCHPATRONES" | cut -f2 -d',' | sed 's/'\''//g' )
-				hallasgos=$(grep -c "$PAT_RE" $ACEPDIR"/"$file)
 				if [ "$PAT_CON" = "linea" ]; then 
 					procesarLineas $file $hallasgos "$PAT_RE" $PAT_DESDE $PAT_HASTA 
 				else
-					procesarCaracteres $file $hallasgos "$PAT_RE" $PAT_DESDE $PAT_HASTA 
+					procesarCaracteres $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $PAT_ID $PAT_CON
 				fi		
-				registrarGlobales $file $hallasgos $PAT_RE $PAT_CON $PAT_DESDE $PAT_HASTA
 			done
 		fi
 	fi
 done
-finalizarProceso $CANT_SIN_PATRON
+finalizarProceso
