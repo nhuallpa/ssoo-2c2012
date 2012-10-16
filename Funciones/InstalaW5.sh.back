@@ -35,8 +35,8 @@ INSTALAW5_BINFILES=(BuscarW5.sh IniciarW5.sh ListarW5.sh LoguearW5.sh MirarW5.sh
 ## Funcion de log - CONSOLIDAR CON LoguearW5+
 function logErrorFatal {
 	DATE=`date '+$x $X'`
-	echo "$DATE-$USER-$COMMAND-ES-$1" >> "$INSTALAW5_LOGFILE"
-	echo -e $1
+	echo "$DATA-$USER-$COMMAND-ES-$1" >> "$INSTALAW5_LOGFILE"
+	echo $1
 }
 
 function logErrorOnly  {
@@ -51,12 +51,12 @@ function logOnly  {
 
 function logError {
 	logErrorOnly "$1"
-	echo -e "$1"
+	echo "$1"
 }
 
 function log {
 	logOnly "$1"
-	echo -e "$1"
+	echo "$1"
 }
 
 #### Fin de las funciones de log
@@ -173,7 +173,7 @@ function getLastInstallationState {
 		lastInstallationState=$INSTALAW5_STATE_COMPLETE
 	else
 		if [ -e "$INSTALAW5_TEMPFILE" ]; then
-			
+			declare instCount="0"
 			getInstalledComponentsFromFile "$INSTALAW5_TEMPFILE"
 
 			if [ "$instCount" -eq "0" ]; then
@@ -211,46 +211,16 @@ function showInstallInformation {
 
 	log "Estado de la instalacion: $INSTALAW5_STATE
 
-	Para completar la instalación Ud. Deberá:"
-	echo ""
+	Para completar la instalación Ud. Deberá:
 	
-	if [[ $instCount -lt 1 ]]; then	
-		log "\t\tDefinir el directorio de instalación de los ejecutables"
-	fi
-
-	if [[ $instCount -lt 2 ]]; then	
-		log "\t\tDefinir el directorio de instalación de los archivos maestros"
-	fi
-
-	if [[ $instCount -lt 3 ]]; then	
-		log "\t\tDefinir el directorio de arribo de archivos externos"
-	fi
-
-	if [[ $instCount -lt 4 ]]; then
-		log "\t\tDefinir el espacio mínimo libre para el arribo de archivos externos"
-	fi
-	if [[ $instCount -lt 5 ]]; then
-		log "\t\tDefinir el directorio de grabación de los archivos externos rechazados"
-	fi
-	if [[ $instCount -lt 6 ]]; then
-		log "\t\tDefinir el directorio de grabación de los archivos externos aceptados"
-	fi
-	if [[ $instCount -lt 7 ]]; then
-		log "\t\tDefinir el directorio de grabación de los archivos procesados"
-	fi
-	if [[ $instCount -lt 8 ]]; then
-		log "\t\tDefinir el directorio de grabación de los archivos de log"
-	fi
-	if [[ $instCount -lt 9 ]]; then
-		log "\t\tDefinir la extensión de los archivos de log"
-	fi
-	if [[ $instCount -lt 10 ]]; then
-		log "\t\tDefinir el tamaño maximo del archivo de log"
-	fi
-	if [[ $instCount -lt 11 ]]; then
-		log "\t\tDefinir el directorio de grabación de los reportes de salida"
-	fi
-	echo ""
+	1) Definir el directorio de instalación de los ejecutables
+	2) Definir el directorio de instalación de los archivos maestros
+	3) Definir el directorio de arribo de archivos externos
+	4) Definir el espacio mínimo libre para el arribo de archivos externos
+	5) Definir el directorio de grabación de los archivos externos rechazados
+	6) Definir el directorio de grabación de los logs de auditoria
+	7) Definir la extensión y tamaño máximo para los archivos de log
+	8) Definir el directorio de grabación de los reportes de salida"
 }
 
 ## STEP 5 - definir directorio de instalacion de ejecutables
@@ -503,7 +473,7 @@ function defineLOGExt {
 				logOnly "El usuario ingreso '$userlogext' como extensión de los archivos de log"
 				#si la extensión no comienza con '.' entonces se lo agregamos
 				hasDot=`echo "log" | grep -c '^\.'`
-				if [ hasDot = 0 ]; then
+				if [ hasDot = 0]; then
 					userlogext="$userlogext."
 				fi
 				LOGEXT=$userlogext;
@@ -782,13 +752,10 @@ function setDefaultValues {
 function performInstallFromStep {
 	instCount=$1
 
-	echo "INSTA COUNT $instCount"
-
-	if [ "$instCount" = 0 -o "$instCount" = "" ]; then
-		INSTALAW5_STATE="PENDIENTE"
-		instCount=0
+	if [ "$instCount" = "0" ]; then
+		INSTALAW5_STATE = "PENDIENTE"
 	else
-		INSTALAW5_STATE="INCOMPLETA"
+		INSTALAW5_STATE = "INCOMPLETA"
 	fi
 
 	#STEP 3 Chequear que PERL este instalado
@@ -797,68 +764,66 @@ function performInstallFromStep {
 	#STEP 4 Brinda la informacion de la instalacion
 	showInstallInformation
 	
-	if [[ $instCount -lt 1 ]]; then		
+	if [ $instCount -l 1]; then		
 		#STEP 5 Definir BINDIR
 		defineBINDir
 	fi
 
-	if [[ $instCount -lt 2 ]]; then		
+	if [ $instCount -l 2]; then		
 		#STEP 6 Definir MAEDIR
 		defineMAEDir
 	fi
- 
+
 	confirmedInstallParams="0"
 	while [ "$confirmedInstallParams" != "1" ] ; do
 
-		if [[ $instCount -lt 3 ]]; then	
+		if [ $instCount -l 3]; then	
 			#STEP 7 Definir ARRIDIR
 			defineARRIDir
 		fi
 
-		if [[ $instCount -lt 4 ]]; then	
+		if [ $instCount -l 4]; then	
 			#STEP 8 Definir espacio libre
 			defineARRIDirSpace
 		fi
 
-		if [[ $instCount -lt 5 ]]; then	
+		if [ $instCount -l 5]; then	
 			#STEP 10 Definir RECHDIR
 			defineRECHDir
 		fi
 
-		if [[ $instCount -lt 6 ]]; then	
+		if [ $instCount -l 6]; then	
 			#STEP 11 Definir ACEPDIR
 			defineACEPDir	
 		fi
 
-		if [[ $instCount -lt 7 ]]; then	
+		if [ $instCount -l 7]; then	
 			#STEP 12 Definir PROCDIR
 			definePROCDir	
 		fi
 
-		if [[ $instCount -lt 8 ]]; then	
+		if [ $instCount -l 8]; then	
 			#STEP 13a Definir LOGDIR
 			defineLOGDir
 		fi
 
-		if [[ $instCount -lt 9 ]]; then		
+		if [ $instCount -l 9]; then		
 			#STEP 13b Definir LOGEXT
 			defineLOGExt
 		fi
 
-		if [[ $instCount -lt 10 ]]; then	
+		if [ $instCount -l 10]; then	
 			#STEP 14  Definir tamaño maximo de archivo de log
 			defineLOGSize
 		fi
 
-		if [[ $instCount -lt 11 ]]; then	
+		if [ $instCount -l 11]; then	
 			#STEP 15 Definir REPODIR
 			defineREPODir
 		fi
 
 		`clear`
 		hello
-		
-		instCount=0
 
 		declare confirmData
 		#STEP 16 Mostrar parametros de instalacion
@@ -874,15 +839,10 @@ function performInstallFromStep {
 
 			updateConfigFile
 			confirmedInstallParams="1"
-			echo -e "\nInstalación concluida"
-
-			#Obtener datos del tempfile y copiarlos a confFile
-			
-			#borrar archivo temporal
-			rm $INSTALAW5_TEMPFILE
+			echo "Instalación concluida"
 		else
 			confirmedInstallParams="0"
-			echo -e "\nInstalación cancelada"
+			echo "Instalación cancelada"
 		fi
 	done
 
@@ -904,23 +864,87 @@ function startInstallWFIVE {
 	
 	declare lastInstallationState
 	declare installedComponents
-	declare instCount=0
 
 	getLastInstallationState
 
 	case "$lastInstallationState" in
 
 		"$INSTALAW5_STATE_FRESHINSTALL")
-
+			#PRE 
 			setDefaultValues
 			
-			instCount=0
-			performInstallFromStep	$instCount
+			declare instCount=0
+			performInstallFromStep
+
+			#STEP 3 Chequear que PERL este instalado
+			isPerlIstalled  #Si no esta instalado, esta funcion sale con error 1
+			
+			#STEP 4 Brinda la informacion de la instalacion
+			showInstallInformation
+			
+			#STEP 5 Definir BINDIR
+			defineBINDir
+
+			#STEP 6 Definir MAEDIR
+			defineMAEDir
+
+			confirmedInstallParams="0"
+			while [ "$confirmedInstallParams" != "1" ] ; do
+
+				#STEP 7 Definir ARRIDIR
+				defineARRIDir
+
+				#STEP 8 Definir espacio libre
+				defineARRIDirSpace
+	
+				#STEP 10 Definir RECHDIR
+				defineRECHDir
+
+				#STEP 11 Definir ACEPDIR
+				defineACEPDir	
+
+				#STEP 12 Definir PROCDIR
+				definePROCDir	
+
+				#STEP 13a Definir LOGDIR
+				defineLOGDir	
+				#STEP 13b Definir LOGEXT
+				defineLOGExt
+	
+				#STEP 14  Definir tamaño maximo de archivo de log
+				defineLOGSize
+
+				#STEP 15 Definir REPODIR
+				defineREPODir
+
+				`clear`
+				hello
+	
+				declare confirmData
+				#STEP 16 Mostrar parametros de instalacion
+				showInstallParams "LISTA"
+
+				if [ "$confirmData" = "0" ]; then
+					# iniciar instalacion
+
+					#STEP 18				
+					createW5Directories
+					installMAEFiles
+					installBINFiles
+
+					updateConfigFile
+					confirmedInstallParams="1"
+					echo "Instalación concluida"
+				else
+					confirmedInstallParams="0"
+				fi
+			done
+			
 		;;
 
 
 		"$INSTALAW5_STATE_INCOMPLETE")
-
+	
 			declare missingMAE=""
 			declare missingBIN=""
 			declare missings=""
@@ -945,13 +969,10 @@ function startInstallWFIVE {
 			fi
 
 			if [ "$confirmData" == "0" ]; then
-				setDefaultValues
-
-				# Piso variables de default con las variables del archivo TEMP
-
 				# Instalo a partir del ultimo paso realizado
-				performInstallFromStep	$instCount
+				echo ""
 
+				perfomInstall	
 			else 
 				log "Proceso de Instalación Cancelado"
 			fi
