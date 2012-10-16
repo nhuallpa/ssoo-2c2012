@@ -319,9 +319,6 @@ sub resolverConsulta {
 		}
 	}
 
-	print "\n Resultados obtenidos:\n\n";
-	print FH "\n Resultados obtenidos:\n\n" if ( $persistir eq 1 );
-
 	foreach (@opciones) {
 
 		foreach (  split("-", $_) ) {
@@ -367,9 +364,7 @@ sub resolverConsulta {
 
 					$key = $camp[1]."\t".$camp[0];
 
-					print "$key\n";
-
-					if (( exists ( $nuevoHash{$key} ) ) and ( $camp[0] eq $elem ) ) {
+					if ( exists ( $nuevoHash{$key} ) )  {
 
 						$str = $camp[3];
 					}
