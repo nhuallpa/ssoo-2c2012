@@ -59,15 +59,6 @@ verificarIni() {
 	fi
 }
 
-grabarResultado(){
-	local nombreArchivo=$1
-	local numeroReg=$2
-	local resultado=$3
-	
-	echo "result: $resultado"
-	return 0
-}
-
 finalizarProceso(){
 	loguear "Fin del Ciclo: $CICLO"
 	loguear "Cantidad de Archivos con Hallasgos: $CANT_ARCH_CON_HALLASGOS"
@@ -77,6 +68,14 @@ finalizarProceso(){
 	export SECUENCIA2
 	CORRIENDO=false
 }
+registrarResultado() {
+	local archivo=$1
+	local nroReg=$2
+	local resultado=$3
+	local pad_id=$4
+	echo "$CICLO+-#-+$archivo+-#-+$nroReg+-#-+$resultado" >> $PROCDIR/resultados.$pat_id
+}
+
 registrarGlobales() {
 	local archivo=$1
 	local hallasgo=$2
@@ -85,19 +84,57 @@ registrarGlobales() {
 	local desde=$5
 	local hasta=$6
 	local pad_id=$7
-	echo "registrar globales"
 	echo "$CICLO,$archivo,$cantHallasgos,$exp,$pat_con,$desde,$hasta" >> $PROCDIR/rglobales.$pat_id
+}
+
+grabarBloque() {
+	local archivo=$1
+	local nroReg=$2
+	local desde_relativo=$3
+	local hasta_relativo=$4
+	local pad_id=$5
+
+	local nroReg_desde=$((nroReg+desde_relativo-1))
+	local nroReg_hasta=$((nroReg+hasta_relativo-1))
+#	echo "$nroReg $desde_relativo y $hasta_relativo : $nroReg_desde - $nroReg_hasta"
+	nroReg_actual=$nroReg_desde
+	while [ $nroReg_actual -le $nroReg_hasta ]
+	do
+		local resultado=$(head -n $nroReg_actual $ACEPDIR"/"$archivo | tail -1)
+#		echo "$nroReg_actual : $resultado"
+		registrarResultado "$archivo" $nroReg_actual "$resultado" $pat_id
+		nroReg_actual=$((nroReg_actual+1))
+	done
 
 }
 
-
 procesarLineas(){
 	local archivo=$1
-	local hallasgos=$2 
-	local exp=$3
-	local desde=$4
-	local hasta=$5
-	echo "registrar lineas"
+	local exp=$2
+	local desde=$3
+	local hasta=$4
+	local pat_id=$5
+	local pat_con=$6
+	local nroReg=0
+	local cantHallasgos=0
+	while read -r linea  
+	do
+		nroReg=$((nroReg+1))	
+		local ENCONTRO=$(echo "$linea" | grep -c "$exp")
+		if [ "$ENCONTRO" -eq 1 ] 
+		then
+			cantHallasgos=$((cantHallasgos+1))
+			grabarBloque "$archivo" $nroReg $desde $hasta $pad_id
+		fi
+	done < $ACEPDIR"/"$archivo
+	if [ $cantHallasgos -eq 0 ] 
+	then
+		CANT_ARCH_SIN_HALLASGOS=$((CANT_ARCH_SIN_HALLASGOS+1))
+	else
+		CANT_ARCH_CON_HALLASGOS=$((CANT_ARCH_CON_HALLASGOS+1))
+	fi
+	registrarGlobales $archivo $cantHallasgos $exp $pat_con $desde $hasta $pat_id
+ 
 }
 
 procesarCaracteres(){
@@ -112,13 +149,13 @@ procesarCaracteres(){
 	while read -r linea  
 	do
 		nroReg=$((nroReg+1))	
-		ENCONTRO=$(echo "$linea" | grep -c "$exp")
+		local ENCONTRO=$(echo "$linea" | grep -c "$exp")
 		if [ "$ENCONTRO" -eq 1 ] 
 		then
 			cantHallasgos=$((cantHallasgos+1))
-			length=$((hasta-desde+1))
-			RESULTADO=${linea:$desde:$length}
-			echo "$CICLO+-#-+$archivo+-#-+$nroReg+-#-+$RESULTADO" >> $PROCDIR/resultados.$pat_id
+			local length=$((hasta-desde+1))
+			local resultado=${linea:$desde:$length}
+			registrarResultado "$archivo" $nroReg "$resultado" $pat_id
 		fi
 	done < $ACEPDIR"/"$archivo
 	if [ $cantHallasgos -eq 0 ] 
@@ -140,13 +177,15 @@ do
 	if [ "$YA_PROC" -eq 1 ] 
 	then
 		loguear "Este archivo ya fue procesado: $file"	
-		./MoverW5.sh "$ACEPDIR/$file" "$RECHDIR"
+		#bash $BINDIR/LoguearW5.sh -i "Este archivo ya fue procesado: $file"	
+		bash $BINDIR/MoverW5.sh "$ACEPDIR/$file" "$RECHDIR"
 	else
 		sistema=$(echo $file | cut -f1 -d'_') 
 		TIENE_PAT=$(grep -c "^[^,]*,[^,]*,$sistema,*" "$ARCHPATRONES")
 		if [ "$TIENE_PAT" -eq 0 ]
 		then
-			loguear "No hay patrones aplicables a este archivo: $file"
+			#loguear "No hay patrones aplicables a este archivo: $file"
+			#bash $BINDIR/LoguearW5.sh $0 -e 9 "$file"
 			CANT_ARCH_SIN_PATRON=$((CANT_ARCH_SIN_PATRON+1))
 		else
 			for regMae in $(grep $sistema $ARCHPATRONES | cut -f 1,4-6 -d',')
@@ -157,11 +196,12 @@ do
 				PAT_HASTA=$(echo "$regMae" | sed 's/.*,\([0-9]*\).*/\1/')   # con cut tenia eof
 				PAT_RE=$(grep "^$PAT_ID," "$ARCHPATRONES" | cut -f2 -d',' | sed 's/'\''//g' )
 				if [ "$PAT_CON" = "linea" ]; then 
-					procesarLineas $file $hallasgos "$PAT_RE" $PAT_DESDE $PAT_HASTA 
+					procesarLineas $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $PAT_ID $PAT_CON 
 				else
 					procesarCaracteres $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $PAT_ID $PAT_CON
 				fi		
 			done
+			bash $BINDIR/MoverW5.sh "$ACEPDIR/$file" "$PROCDIR"
 		fi
 	fi
 done
