@@ -16,7 +16,7 @@ MODO_DE_USO="\n"\
 "El parámetro [mensaje] es único y obligatorio para -i y -a.\n"\
 "El parámetro [código de error] es único y obligatorio para las opciones -e y -se\n"
 
-TABLA_ERRORES="./errores.txt"
+
 
 if [ -z "$GRUPO" ]
 then 
@@ -42,6 +42,8 @@ if [ -z $LOGDIR ]
 then  
   LOGDIR="$GRUPO/LOGDIR" 
 fi
+
+TABLA_ERRORES="$LOGDIR/errores.txt"
 
 #Si el directorio no existe, se debe crear
 if [ ! -d "$LOGDIR" ]
@@ -82,12 +84,12 @@ function validar_argumento_mensaje {
 
 function obtener_mensaje {
 # $2 : tipo de error
-  cod_error=${argv[1]}
+  cod_error=${argv[2]}
   declare -a args
-  local i=2
+  local i=3
   while [ $i -lt ${#argv[@]} ]
   do
-    args[(($i-2))]=${argv[$i]}
+    args[(($i-3))]=${argv[$i]}
     let i++
   done
 
@@ -96,7 +98,7 @@ function obtener_mensaje {
   
   if [ -z "$msj_error" ] 
   then
-    echo "El codigo de error $cod_error de tipo $1 es inválido.">&2
+    echo "El codigo de error $cod_error de tipo $2 es inválido.">&2
     echo -e $MODO_DE_USO >&2
     exit 1 
   fi
@@ -106,10 +108,10 @@ function obtener_mensaje {
   do 
     let i++
   done
-
+	
   if [ $i -gt $cant_arg ] 
   then
-    echo "Demasiados argumentos de error para error $cod_error.">&2
+    echo "Demasiados argumentos $i de error para error $cod_error.">&2
     echo -e $MODO_DE_USO >&2
     exit 1 
   else 
