@@ -37,6 +37,8 @@ sub main {
 	local $SEPARADOR_MAESTRO = ',';
 	local $SEPARADOR_SISTEMAS = ",";
 
+	local $SEPARADOR_HASH = "@";
+
 	local $NOMBRE_DETALLADOS = "resultados";
 	local $ARCH_GLOBALES = "rglobales";
 
@@ -608,11 +610,13 @@ sub filtroResultadosGlobales {
 	push(@opciones,"Expresiones regulares con mayor cantidad de hallazgos.\n");
 	push(@opciones,"Expresiones regulares con menor cantidad de hallazgos.\n");
 	push(@opciones,"Archivos con hallazgos pertenecientes al intervalo xx-yy.\n");
+	push(@opciones,"Listar hallazgos encontrados para un filtro en particular.\n");
 
 	$seleccion = &seleccionarOpcion( @opciones );
 
 	&resolverConsultaGlobal($seleccion, $persistir) if ( $seleccion eq 1 );
 	&resolverConsultaGlobal($seleccion, $persistir) if ( $seleccion eq 2 );
+	&resolverConsultaGlobal($seleccion, $persistir) if ( $seleccion eq 6 );
 
 	if ( $seleccion eq 3 ) {
 
@@ -1271,17 +1275,59 @@ sub resolverConsultaGlobal {
 			}
 		}
 
+		foreach $clave ( keys ( %hash ) ) {
 
-		############## BORRAR ##########################################
+			$total = $hash{$clave};
 
-		print "########################\n\n";
-		print "valores del hash:\n";
-		print "$_ | $hash{$_}\n" foreach ( keys( %hash) );
-		print "########################\n\n";
+			my @valores;
 
-		############## BORRAR ##########################################
+			my $p = "";
+			my $a = "";
+			my $s = "";
+
+			$aux1 = index($clave,"|");
+			$aux2 = index($clave,"_");
+
+			foreach $op (@operandos) {
+
+				$p = substr( $clave, 0, $aux1) if ( $op eq "p");
+				$a = substr( $clave, $aux1+1) if ( $op eq "a" );
+				$s = substr($clave, $aux1+1, $aux2-$aux1-1) if ( $op eq "s");				
+			}
+
+			push ( @valores , $p ) if ( $p ne "" );				
+			push ( @valores , $s ) if ( $s ne "" );
+			push ( @valores , $a ) if ( $a ne "" );
+
+			$nuevaClave = join( $SEPARADOR_HASH, @valores);
+
+			delete ( $hash{$clave} );
+			$hash { $nuevaClave } += $total;
+
+		}
 
 		closedir( dirHandler );
+
+		if ( $seleccion eq 6 ) {
+
+			$hV{$_} = 1 foreach (@operandos);
+
+			print "Hallazgos\t";			
+			print "Patron\t" if ( exists($hV{"p"}));
+			print "Sistema\t" if ( exists($hV{"s"}));
+			print "Archivo\t" if ( exists($hV{"a"}));
+			print "\n";	
+
+			foreach $clave ( keys(%hash) ) {
+	
+				print $hash{$clave}."\t\t";
+				my @elementos = split($SEPARADOR_HASH,$clave);
+				print "$_\t" foreach (@elementos);
+				print "\n";
+			}
+		}
+
+		else {
 
 		$orden = ( $seleccion eq 1 ) ? 1 : 0 ;
 		@refOrdenadas = &filtrarValores( 5, $orden, \%hash);
@@ -1320,18 +1366,31 @@ sub resolverConsultaGlobal {
 				if ( $seleccion eq 1 ) {
 					$mensaje = "La máxima cantidad de hallazgos resultó ser: ".$hash{$refOrdenadas[0]}."\n";
 
-					$cadena = $refOrdenadas[0];
+					my @cadenas = split($SEPARADOR_HASH, $refOrdenadas[0]);
 
-					$posicion1 = index($cadena,"|",0);
-					$posicion2 = index($cadena,"_",0);
-	
-					my $pat = substr( $cadena, 0, $posicion1 );
-					my $sis = substr( $cadena, $posicion1+1, ($posicion2-$posicion1-1) );
-					my $nom = substr( $cadena, $posicion1+1);
-				
 
-					$mensaje = $mensaje."Se encontró en: ".$ARCH_GLOBALES.".".$pat." del sistema: ".$sis;
-					$mensaje = $mensaje."\nCorrespondiente al archivo: ".$nom."\n";
+					
+					$hV{$_} = 1 foreach (@operandos);
+					
+					foreach $cadena ( @cadenas ) {
+
+						if ( exists( $hV{"p"} )) {
+
+							$mensaje = $mensaje."En el archivo global: ".$ARCH_GLOBALES.".".$cadena."\n";
+							delete ( $hV{"p"});
+						} 
+
+						else { if ( exists( $hV{"s"} ) ) {
+
+							$mensaje = $mensaje."Correspondiente al sistema: $cadena\n";
+							delete ( $hV{"s"});
+						}
+
+						else { if ( exists( $hV{"a"} ) ) {
+							$mensaje = $mensaje."Correspondiente al archivo: $cadena\n";
+							delete ( $hV{"a"});
+						}}}
+					}
 				}
 
 				else {
@@ -1411,6 +1470,7 @@ sub resolverConsultaGlobal {
 			print FH "\nResultado:\n";
 			print FH $mensaje;
 			close FH;
+		}
 		}
 
 	} else {
