@@ -116,9 +116,9 @@ sub filtroResultadosDetallados {
 
 	push(@vector,"Filtrar por patrón.");
 	push(@vector,"Filtrar por ciclo.");
-	push(@vector,"Filtrar por archivo.");
+	push(@vector,"Filtrar por nombre de archivo.");
 
-	$seleccion = seleccionarOpcion(@vector);
+	my $seleccion = seleccionarOpcion(@vector);
 
 	filtrarPorPatron($persistir) 	if ( $seleccion == 1 );
 
@@ -255,13 +255,17 @@ sub nombreArchivoDeSalida {
 #
 # parámetro 1: indica si debe persistirse a disco.
 # parámetro 2: hash.
-# parámtero 3: mensajes a ser mostrados.
+# parámetro 3: mensajes a ser mostrados.
+# parámetro 4: tipo de consulta.
+# parámetro 5: filtro.
 
 sub resolverConsulta {
 
 	$persistir = shift(@_);
 	$hashRef   = shift(@_);
 	@mensajes  = @ { shift(@_) };
+	$tipoConsulta = shift(@_);
+	$elem      = shift(@_);
 
 	# Genero un listado de selección.
 	@claves = sort( keys(%hash) );
@@ -318,32 +322,98 @@ sub resolverConsulta {
 	print "\n Resultados obtenidos:\n\n";
 	print FH "\n Resultados obtenidos:\n\n" if ( $persistir eq 1 );
 
+	foreach (@opciones) {
+
+		foreach (  split("-", $_) ) {
+
+			$nuevaClave = $claves[$_-1];
+			$nuevoHash{ $nuevaClave } = $hashRef->{$nuevaClave};
+			$cantidadResultados += $hashRef->{$nuevaClave};
+		}
+	}
+
+	$dir = $ENV{PROCDIR};
+
+	opendir( DH, $dir );
+
+	print "\n Cantidad de resultados obtenidos: ".$cantidadResultados."\n\n";
+	print FH "\n Cantidad de resultados obtenidos: ".$cantidadResultados."\n\n";
 
 	$lineas = 0;
-	foreach $opcion (@opciones) {
+	while ( $archivo = readdir( DH ) ) {
+	
+		$valido = 1;
 
-		$posicion = index($opcion,"-",0);
+		if ( $tipoConsulta eq 1 ) {
+			$valido = ( $archivo =~ /^$NOMBRE_DETALLADOS\.$patron$/ ) ? 1:0;
+		}
 
-		if ( $posicion == -1 ) {
+		if (
+		    ($archivo !~ /^\.\.$/) and ($archivo !~ /.*[~.]$/ ) and ($valido eq 1 )
 
-			$linea = " ".$hashRef->{$claves[$opcion-1]};
+	       	and ($archivo =~ /^$NOMBRE_DETALLADOS\./) and (-r $dir."/".$archivo ) 
 
-			print $linea."\n";
-			print FH $linea."\n" if ($persistir==1);
-			++$lineas;
+		){
+			open (FILE, $dir."/".$archivo);
 
-		} else {		
-			$inicio = substr($opcion, 0, $posicion);
-			$fin = substr($opcion, $posicion + 1);
+			$lineasArchivo = 0;
+			while ( $reg = <FILE> ) {
 
-			foreach ($inicio .. $fin ) {
+				my @camp = split($SEPARADOR_DETALLADOS, $reg);
 
-				$linea = " ".$hashRef->{$claves[$_-1]};
-				print $linea."\n";
-				print FH $linea."\n" if ($persistir==1);
-				++$lineas;
+				$str = "";
+
+				if ( $tipoConsulta eq 1 ) { 
+
+					$key = $camp[1]."\t".$camp[0];
+
+					print "$key\n";
+
+					if (( exists ( $nuevoHash{$key} ) ) and ( $camp[0] eq $elem ) ) {
+
+						$str = $camp[3];
+					}
+				}
+
+				if ( ( $tipoConsulta eq 2) ) {
+
+					$pos = index($archivo,".");
+					$patron = substr($archivo,$pos+1);
+
+					$key = $camp[1]."\t".$patron;
+
+					if ( ( exists ( $nuevoHash{$key} ) ) and ( $camp[0] eq $elem) ) {
+
+						$str = $camp[3];
+					}
+				}
+			
+				if ( ( $tipoConsulta eq 3) ){
+
+					$pos = index($archivo,".");
+					$key = substr($archivo,$pos+1);
+
+					if ( exists ( $nuevoHash{$key} ) and ( $elem eq $camp[1]) ){
+
+						$str = $camp[3];
+					}
+				}
+
+				if ( length($str) > 0 ) {
+
+					++$lineas;
+					++$lineasArchivo;
+					print "  ".$lineas.") ".$str."\n";
+					print FH "  ".$lineas.") ".$str."\n";
+				}
 			}
 
+			if ( $lineasArchivo > 0 ) {
+				print " Se encontraron $lineasArchivo resultados en el archivo: $archivo\n\n";
+				print FH " Se encontraron $lineasArchivo resultados en el archivo: $archivo\n\n";
+			}
+
+			close(FILE);
 		}
 	}
 
@@ -402,7 +472,7 @@ sub filtrarPorPatron {
 					if ( length($linea) > 0 ) {
 						++$aciertos;
 						@campo = split($SEPARADOR_DETALLADOS, $linea);
-						$hash{$campo[1]."\t".$campo[0]} = $campo[3];
+						$hash{$campo[1]."\t".$campo[0]} += 1;
 					}
 				}
 				close(FH);
@@ -424,7 +494,7 @@ sub filtrarPorPatron {
 
 				push (@mensajes, "Filtrado por el patrón: ".$patron);;
 				push (@mensajes, "   Archivo\tNúmero de ciclo\n");
-				resolverConsulta( $persistir, \%hash, \@mensajes ) if ( $archivosEncontrados != 0 );
+				resolverConsulta( $persistir, \%hash, \@mensajes, 1, $patron) if ( $archivosEncontrados != 0 );
 
 			} else {
 
@@ -484,7 +554,7 @@ sub filtrarPorCiclo {
 
 						if ( $campo[0] eq $cicloBuscado ) {
 							++$aciertos;
-							$hash{$campo[1]."\t".$patron} = $campo[3];
+							$hash{$campo[1]."\t".$patron} += 1;
 						}
 					}
 				}
@@ -504,7 +574,7 @@ sub filtrarPorCiclo {
 
 				push (@mensajes, "Filtrado por el ciclo: ".$cicloBuscado);
 				push (@mensajes, "   Archivo\tPatrón\n");
-				resolverConsulta( $persistir, \%hash, \@mensajes ) if ( $archivosEncontrados != 0 );
+				resolverConsulta( $persistir, \%hash, \@mensajes, 2, $cicloBuscado) if ( $archivosEncontrados != 0 );
 
 			} else {
 
@@ -557,7 +627,7 @@ sub filtrarPorArchivo {
 
 						if ( $campo[1] eq $nombreArchivo ) {
 							++$aciertos;
-							$hash{ $patron } = $campo[3];
+							$hash{ $patron } += 1;
 						}
 					}
 				}
@@ -577,7 +647,7 @@ sub filtrarPorArchivo {
 
 				push (@mensajes, "Filtrado por el nombre de archivo: ".$nombreArchivo);
 				push(@mensajes, "   Patron\n");	
-				resolverConsulta( $persistir, \%hash, \@mensajes ) if ( $aciertos != 0 );
+				resolverConsulta( $persistir, \%hash, \@mensajes , 3, $nombreArchivo) if ( $aciertos != 0 );
 
 			} else {
 
