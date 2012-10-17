@@ -2,14 +2,10 @@
 #
 #	Se necesita las siguientes variables definidas en el ambiente
 #   antes de ejecutarse
-#	GRUPO : ruta absoluta del tp
+#	$MAEDIR $ACEPDIR $RECHDIR $PROCDIR $BINDIR $CONFDIR $GRUPO
 #	SECUENCIA2 : secuenciador para el ciclo buscar
 #
-#MAEDIR=$GRUPO/MAEDIR
 ARCHPATRONES=$MAEDIR/patrones
-#ACEPDIR=$GRUPO/ACEPDIR
-#PROCDIR=$GRUPO/PROCDIR
-#RECHDIR=$GRUPO/RECHDIR
 CICLO=2
 echo $MAEDIR
 
@@ -57,8 +53,12 @@ finalizarProceso(){
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos con Hallasgos: $CANT_ARCH_CON_HALLASGOS"
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin hallasgos: $CANT_ARCH_SIN_HALLASGOS"
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin Patron: $CANT_ARCH_SIN_PATRON"
-	SECUENCIA2=$((SECUENCIA2+1))
-	export SECUENCIA2
+	CICLO=$((CICLO+1))
+	local user=`whoami`
+	local fecha=`date '+%x %X'`
+	local nl=$(grep -n '^SECUENCIA2' $CONFDIR/InstalaW5.conf | head -1 | cut -d: -f1)
+	sed "${nl}s/.*/SECUENCIA2=$CICLO=$user=$fecha/" $CONFDIR/InstalaW5.conf > InstalaW5.conf.aux	
+	mv InstalaW5.conf.aux $CONFIR/InstalaW5.conf
 	CORRIENDO=false
 }
 registrarResultado() {
