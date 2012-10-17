@@ -27,29 +27,29 @@ fi
 #La extensión por default será “log”  (si no se definio en la configuracion o var de ambiente).
 if [ -z $LOGEXT ]
 then  
-   LOGEXT="log"
+   LOGEXT=".log"
 fi
 
 #El tamanio maximo para cada archivo de log es 100 KB (si no se definio en la configuracion o var de ambiente).
 
-if [ -z $LOGSIZE ]
+if [ -z "$LOGSIZE" ]
 then  
    LOGSIZE=102400
 fi
 
 #El directorio por default será $grupo/logdir (si no se definio en la configuracion o var de ambiente).
-if [ -z $LOGDIR ]
+if [ -z "$LOGDIR" ]
 then  
   LOGDIR="$GRUPO/LOGDIR" 
 fi
 
-TABLA_ERRORES="$LOGDIR/errores.txt"
+TABLA_ERRORES="$MAEDIR/errores.txt"
 
 #Si el directorio no existe, se debe crear
 if [ ! -d "$LOGDIR" ]
 then
-	mkdir $LOGDIR  2> /dev/null
-	echo $LOGDIR
+	mkdir "$LOGDIR"  2> /dev/null
+	echo "$LOGDIR"
 	if [ $? -ne 0 ]
 	then
 		echo "El directorio es inexistente y no se puede crear"
@@ -61,7 +61,7 @@ fi
 FECHA=`date '+%x %X '` 		#devuelve la fecha del sistema dd/MM/yy hh:mm:ss
 USUARIO=`whoami`		#devuelve usuario actual del sistema
 COMANDO=$1			#obtengo nombre del comando que lo invoco
-FILE=$LOGDIR/$COMANDO.$LOGEXT	#nombre del archivo logger a generar
+FILE="$LOGDIR/$COMANDO$LOGEXT"	#nombre del archivo logger a generar
 
 #------------ Funciones --------------#
 

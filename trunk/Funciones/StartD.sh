@@ -38,12 +38,11 @@ chequeaVariables(){
 
 chequeaArchivosMaestros(){
 
-  MAEDIR="/home/lucas/Grupo4/MAEDIR"
-  SERVICIOS=$MAEDIR/servicios
+  SERVICIOS=$MAEDIR/sistemas
   PATRONES=$MAEDIR/patrones
 
   #Chequeo que los archivos existan  
-  if [ ! -f $SERVICIOS ] ; then
+  if [ ! -f $SERVICIOS ] ; then      
       echo 1
       return
   fi
@@ -81,7 +80,6 @@ chequeaDirectorios(){
   return
 }
 
-
   # Si alguna variable no esta definida error en la instalación
   if [ `chequeaVariables` -eq 1 ] ; then
     echo 1
@@ -94,6 +92,8 @@ chequeaDirectorios(){
     echo "Error: Directorios necesarios no creados en la instalacion o no disponibles"
     exit 1
   fi
+
+  echo $MAEDIR
   
   if [ `chequeaArchivosMaestros` -eq 1 ] ; then
     echo loguearW5.sh "$COMANDO" "SE" "Archivos maestros no accesibles/disponibles"
@@ -103,9 +103,8 @@ chequeaDirectorios(){
 
 #Detecto si detectaw5 esta corriendo
   DETECTAR_PID=`chequeaProceso DetectaW5.sh $$`
-  if [ -z "$DETECTAR_PID" ]; then
-  
-    bash DetectarW5.sh &
+  if [ -z "$DETECTAR_PID" ]; then     
+    bash DetectaW5.sh &
     echo loguearW5.sh "$COMANDO" "I" "Demonio DetectaW5 corriendo bajo el numero de proceso: <`chequeaProceso DetectaW5.sh $$`>" 
   else
     echo loguearW5.sh "$COMANDO" "E" "Demonio DetectaW5 ya ejecutado bajo PID: <`chequeaProceso DetectaW5.sh $$`>" 

@@ -13,7 +13,10 @@
 USER=`whoami`		#devuelve usuario actual del sistema
 #COMMAND=`ps -p $PPID -o comm=`	#obtengo nombre del comando que lo invoco
 COMMAND="InstalaW5.sh"
-GRUPO="../deploy"
+
+## DESCOMPRIMIR ..../grupo04
+#GRUPO="."
+GRUPO="../tp"
 
 CONFDIR="$GRUPO/confdir"
 INSTALAW5_SETUPFILE="$CONFDIR/InstalaW5.conf"
@@ -26,8 +29,8 @@ INSTALAW5_STATE_FRESHINSTALL="FRESH"
 INSTALAW5_STATE="PENDIENTE"
 
 # Variables para instalacion y reanudación
-INSTALAW5_MAEFILES=("patrones")
-INSTALAW5_BINFILES=(BuscarW5.sh IniciarW5.sh ListarW5.sh LoguearW5.sh MirarW5.sh MoverW5.sh)
+INSTALAW5_MAEFILES=("patrones sistemas errores.txt")
+INSTALAW5_BINFILES=(BuscarW5.sh IniciarW5.sh ListarW5.pl LoguearW5.sh MirarW5.sh MoverW5.sh StartD.sh StopD.sh DetectaW5.sh)
 
 
 #---------- Funciones de bajo nivel ----------
@@ -64,20 +67,22 @@ function log {
 function logInstallStep {
 	logOnly "Se ha completado el paso $1 de la instalación"
 	infoToLog="LAST_STEP=$1
-	BINDIR=$BINDIR
-	MAEDIR=$MAEDIR
-	ARRIDIR=$ARRIDIR
-	DATASIZE=$DATASIZE
-	RECHDIR=$RECHDIR
-	ACEPDIR=$ACEPDIR
-	PROCDIR=$PROCDIR
-	LOGDIR=$LOGDIR
-	LOGEXT=$LOGEXT
-	LOGSIZE=$LOGSIZE
-	REPODIR=$REPODIR
-	"
+BINDIR=$BINDIR
+MAEDIR=$MAEDIR
+ARRIDIR=$ARRIDIR
+DATASIZE=$DATASIZE
+RECHDIR=$RECHDIR
+ACEPDIR=$ACEPDIR
+PROCDIR=$PROCDIR
+LOGDIR=$LOGDIR
+LOGEXT=$LOGEXT
+LOGSIZE=$LOGSIZE
+REPODIR=$REPODIR
+GRUPO=$GRUPO"
 
-	echo "LAST_STEP=$1" >> "$INSTALAW5_TEMPFILE"
+	echo "$infoToLog" > "$INSTALAW5_TEMPFILE"
+
+	#echo "LAST_STEP=$1" >> "$INSTALAW5_TEMPFILE"
 }
 
 
@@ -94,7 +99,7 @@ function hello {
 
 ## Obtiene los componentes que se han instalado
 function getInstalledComponentsFromFile {
-	instCount=`cat $INSTALAW5_TEMPFILE | grep "LAST_STEP=" | grep -oE "[0-9]"`
+	instCount=`cat $1 | grep LAST_STEP | cut -s -d "=" -f2`
 	if [ "$instCount" = "" ]; then
 		instCount="0"
 	fi
@@ -265,7 +270,6 @@ function showInstallInformation {
 	if [[ $instCount -lt 11 ]]; then
 		log "\t\tDefinir el directorio de grabación de los reportes de salida"
 	fi
-	echo ""
 }
 
 ## STEP 5 - definir directorio de instalacion de ejecutables
@@ -638,13 +642,11 @@ function createW5Directories {
 	createDirIfNotExist "$LOGDIR"
 	createDirIfNotExist "$REPODIR"
 
-	logInstallStep 13
+	#logInstallStep 13
 }
 
 ##STEP 18.2 copiar archivos maestro a MAEDIR
 function installMAEFiles {
-	log "Instalando Archivos Maestros"
-	
 	## for file in INSTALW5_MAEFILES -> copy into $MAEDIR
 	for file in ${INSTALAW5_MAEFILES[*]}
     	do
@@ -653,6 +655,7 @@ function installMAEFiles {
 			cp $file $MAEDIR
 			# seteo los permisos correspondientes
 	        	chmod 444  $MAEDIR/$file
+
         	else
 			# ERROR FATAL - Un archivo no se ha podido copiar porque no existe en el directorio de instalacion
 			logErrorFatal "El archivo $file no se ha encontrado en el directorio de instalación y no se ha podido copiar en el directorio de destino $MAEDIR"
@@ -662,8 +665,6 @@ function installMAEFiles {
 
 ##STEP 18.2 copiar programas y funciones a BINDIR
 function installBINFiles {
-	log "Instalando Programas y Funciones"
-	
 	## for element in INSTALAW5_BINDIR -> copy into $BIRDIR
 	for file in ${INSTALAW5_BINFILES[*]}
     	do
@@ -674,7 +675,7 @@ function installBINFiles {
 	        	chmod +x  $BINDIR/$file
         	else
 			# ERROR FATAL - Un archivo no se ha podido copiar porque no existe en el directorio de instalacion
-			logErrorFatal "El archivo $file no se ha encontrado en el directorio de instalación y no se ha podido copiar en el directorio de destino $MAEDIR"
+			logErrorFatal "El archivo $file no se ha encontrado en el directorio de instalación y no se ha podido copiar en el directorio de destino $BINDIR"
         	fi
     	done
 }
@@ -706,6 +707,7 @@ function updateConfigFile {
 	echo "REPODIR=$PWD/$REPODIR=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "PROCDIR=$PWD/$PROCDIR=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "LOGDIR=$PWD/$LOGDIR=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
+
 	echo "LOGEXT=$LOGEXT=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "LOGSIZE=$LOGSIZE=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
 	echo "DATASIZE=$DATASIZE=$USER=$currentDate" >> $INSTALAW5_SETUPFILE
@@ -783,8 +785,9 @@ function getValuesFromFile {
  	
 	tGRUPO=`cat $1 | grep GRUPO | cut -s -d "=" -f2`
 	tBINDIR=`cat $1 | grep BINDIR | cut -s -d "=" -f2`  	
-	tARRIDIR=`cat $1 | grep ARRIDIR | cut -s -d "=" -f2`
-  	tRECHDIR=`cat $1 | grep RECHDIR | cut -s -d "=" -f2`
+	tACEPDIR=`cat $1 | grep ACEPDIR | cut -s -d "=" -f2`
+	tPROCDIR=`cat $1 | grep PROCDIR | cut -s -d "=" -f2`  	
+	tRECHDIR=`cat $1 | grep RECHDIR | cut -s -d "=" -f2`
   	tARRIDIR=`cat $1 | grep ARRIDIR | cut -s -d "=" -f2`
   	tMAEDIR=`cat $1 | grep MAEDIR | cut -s -d "=" -f2`
   	tREPODIR=`cat $1 | grep REPODIR | cut -s -d "=" -f2`
@@ -792,13 +795,22 @@ function getValuesFromFile {
   	tLOGEXT=`cat $1 | grep LOGEXT | cut -s -d "=" -f2`
   	tLOGSIZE=`cat $1 | grep LOGSIZE | cut -s -d "=" -f2`
   	tDATASIZE=`cat $1 | grep DATASIZE | cut -s -d "=" -f2`
- 	
+ 	tCONFDIR=`cat $1 | grep CONFDIR | cut -s -d "=" -f2`
+
 	if [ "$tGRUPO" != "" ]; then
 		GRUPO="$tGRUPO"
 	fi
 	if [ "$tBINDIR" != "" ]; then
 		BINDIR="$tBINDIR"
 	fi
+
+	if [ "$tACEPDIR" != "" ]; then
+		ACEPDIR="$tACEPDIR"
+	fi
+	if [ "$tPROCDIR" != "" ]; then
+		PROCDIR="$tPROCDIR"
+	fi
+
 	if [ "$tARRIDIR" != "" ]; then
 		ARRIDIR="$tARRIDIR"
 	fi
@@ -823,14 +835,18 @@ function getValuesFromFile {
 	if [ "$tDATASIZE" != "" ]; then
 		DATASIZE="$tDATASIZE"
 	fi
+	if [ "$tCONFDIR" != "" ]; then
+		CONFDIR="$tCONFDIR"
+	fi
 
-
+	#echo "VARIABLE BINDIR $BINDIR"
 
 }
 
 
 ## Setea los valores por defecto para las variables
 function setDefaultValues {
+
 	BINDIR="$GRUPO/bin"
 	MAEDIR="$GRUPO/mae"
 	ARRIDIR="$GRUPO/arribos"
@@ -844,11 +860,28 @@ function setDefaultValues {
 	REPODIR="$GRUPO/reportes"
 }
 
+function exportVariables {
+	export BINDIR="$BINDIR"
+	export MAEDIR="$MAEDIR"
+	export ARRIDIR="$ARRIDIR"
+	export DATASIZE="$DATASIZE"
+	export RECHDIR="$RECHDIR"
+	export ACEPDIR="$ACEPDIR"
+	export PROCDIR="$PROCDIR"
+	export LOGDIR="$LOGDIR"
+	export LOGEXT="$LOGEXT"
+	export LOGSIZE="$LOGSIZE"
+	export REPODIR="$REPODIR"
+	export GRUPO="$GRUPO"
+	export CONFDIR="$CONFDIR"	
+
+	#echo "EXPORTANDO ACEPDIR $ACEPDIR"
+	#echo "EXPORTANDO RECHDIR $RECHDIR"
+}
+
 ## Funcion de Instalacion
 function performInstallFromStep {
 	instCount=$1
-
-	echo "INSTA COUNT $instCount"
 
 	if [ "$instCount" = 0 -o "$instCount" = "" ]; then
 		INSTALAW5_STATE="PENDIENTE"
@@ -920,8 +953,8 @@ function performInstallFromStep {
 			#STEP 15 Definir REPODIR
 			defineREPODir
 		fi
-
-		`clear`
+			
+		clear
 		hello
 		
 		instCount=0
@@ -935,15 +968,30 @@ function performInstallFromStep {
 
 			#STEP 18				
 			createW5Directories
-			installMAEFiles
-			installBINFiles
+			log "Instalando Archivos Maestros"
+			maeInstalled=`installMAEFiles`
+			log "Instalando Programas y Funciones"
+			binInstalled=`installBINFiles`
 
-			updateConfigFile
-			confirmedInstallParams="1"
-			echo -e "\nInstalación concluida"
-			
-			#borrar archivo temporal
-			rm $INSTALAW5_TEMPFILE
+			if [ "$maeInstalled" != "" -o "$binInstalled" != "" ]; then 
+				confirmedInstallParams="1"
+				logErrorFatal "$maeInstalled"
+				logErrorFatal "$binInstalled"
+
+				echo -e "\nInstalacion interrumpida por error severo"
+			else
+				updateConfigFile
+				confirmedInstallParams="1"
+				echo -e "\nInstalación concluida"
+
+				# Piso variables de default con las variables del archivo TEMP
+				getValuesFromFile $INSTALAW5_SETUPFILE
+
+				exportVariables
+
+				#borrar archivo temporal
+				rm $INSTALAW5_TEMPFILE
+			fi
 		else
 			confirmedInstallParams="0"
 			echo -e "\nInstalación cancelada"
@@ -972,6 +1020,8 @@ function startInstallWFIVE {
 
 	getLastInstallationState
 
+	
+
 	case "$lastInstallationState" in
 
 		"$INSTALAW5_STATE_FRESHINSTALL")
@@ -984,15 +1034,16 @@ function startInstallWFIVE {
 
 
 		"$INSTALAW5_STATE_INCOMPLETE")
-
+			
 			declare missingMAE=""
 			declare missingBIN=""
 			declare missings=""
 			declare existentDirCount=0
 
 			getMissingsFiles
-
 			# Log de archivos existentes
+
+	
 
 			# Mostrar estado de la instalacion
 			log "Estado de la instalacion: INCOMPLETA"
@@ -1026,7 +1077,9 @@ function startInstallWFIVE {
 		"$INSTALAW5_STATE_COMPLETE")
 			#Cargar parametros desde el archivo de configuracion
 			getValuesFromFile $INSTALAW5_SETUPFILE
-	
+		
+			exportVariables
+
 			showInstallParams "COMPLETA"
 		;;
 

@@ -5,13 +5,13 @@
 #	GRUPO : ruta absoluta del tp
 #	SECUENCIA2 : secuenciador para el ciclo buscar
 #
-MAEDIR=$GRUPO/MAEDIR
+#MAEDIR=$GRUPO/MAEDIR
 ARCHPATRONES=$MAEDIR/patrones
-ACEPDIR=$GRUPO/ACEPDIR
-PROCDIR=$GRUPO/PROCDIR
-RECHDIR=$GRUPO/RECHDIR
-CICLO=$SECUENCIA2
-
+#ACEPDIR=$GRUPO/ACEPDIR
+#PROCDIR=$GRUPO/PROCDIR
+#RECHDIR=$GRUPO/RECHDIR
+CICLO=2
+echo $MAEDIR
 
 
 CANT_ARCH_CON_HALLASGOS=0
@@ -42,13 +42,6 @@ verificarIni() {
 	#inicializo las variables para usarlas
 	PROCESO=`basename $0`
 	CORRIENDO=false
-
-	# Verificar q ambiente este inicializado
-	if [ -z "$SECUENCIA2" ] 
-	then
-		loguear "Sistema no instalado. Falta definir SECUENCIA2"
-		exit 1
-	fi
 
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Chequeando si el proceso ya esta siendo ejecutado..."
 	export CORRIENDO
@@ -169,6 +162,7 @@ marcarInicio
 for file in $(ls $ACEPDIR)
 do
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo a procesar: $file"
+	echo "archivo $file"
 	YA_PROC=$(ls -1 "$PROCDIR" | grep -c "$file")
 	if [ "$YA_PROC" -eq 1 ] 
 	then

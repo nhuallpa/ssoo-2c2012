@@ -20,7 +20,7 @@
 
 
 #source global.sh
-COMANDO="detectarW"
+COMANDO="DetectaW5"
 
 
 chequeaProceso(){
@@ -96,27 +96,28 @@ compararFecha(){
 # esto se va a comentar luego. Inicia afuera
 LOOP=true
 CANT_LOOP=1
-ESPERA=1
-ARRIDIR="/home/lucas/Grupo4/ARRIDIR"
-MAEDIR="/home/lucas/Grupo4/MAEDIR"
+ESPERA=5
+#ARRIDIR="/home/lucas/Grupo4/ARRIDIR"
+#MAEDIR="/home/lucas/Grupo4/MAEDIR"
 ARCHIVO="$MAEDIR/sistemas"
 HASTA=2
-grupo="/home/lucas/Grupo4"
-RECHDIR="/home/lucas/Grupo4/RECHDIR"
-PROCDIR="/home/lucas/Grupo4/ACEPDIR"
-BINDIR="/home/lucas/Grupo4/Funciones"
-GRUPO="/home/lucas/Grupo4/"
-grupo=$GRUPO
+#grupo="/home/lucas/Grupo4"
+#RECHDIR="/home/lucas/Grupo4/RECHDIR"
+#PROCDIR="/home/lucas/Grupo4/ACEPDIR"
+#BINDIR="/home/lucas/Grupo4/BINDIR"
+#export GRUPO="/home/lucas/Grupo4/"
+
+#grupo=$GRUPO
 
 if ([ ! -d $RECHDIR ]) then
 #  llamar con bash al loguear
-   echo "$COMANDO" "SE" "No existe Directorio de Rechazos $RECHDIR"
+   bash LoguearW5.sh "$COMANDO" -SE 15 $RECHDIR
    exit 1
 fi
 
 if ([ ! -d "$ARRIDIR" ]) then
 #  llamar con bash al loguear
-   echo "$COMANDO" "SE" "No existe Directorio de recibidos $ARRIDIR"
+   bash LoguearW5.sh "$COMANDO" -SE 14 $ARRIDIR
    exit 1
 fi
 
@@ -149,7 +150,7 @@ do
     	          a=`cut -f1 -d',' $ARCHIVO | grep $SISID -n | cut -f1 -d':'`
 	          if ([ $a ]) then
                      START_DATE=`head -$a $ARCHIVO | tail -1 | cut -f3 -d','`
-                     END_DATE=`head -$a $ARCHIVO | tail -1 | cut -f4 -d','` 
+                     END_DATE=`head -$a $ARCHIVO | sed 's/.*,\([0-9]*\).*/\1/' | tail -1 | cut -f4 -d','` 
 	             #FECHA ACTUAL PARA COMPARAR
                      DATE=`date +%F`
                      DATE=`echo "$DATE"`
@@ -165,27 +166,28 @@ do
   		     COMPDESDE=`compararFecha $FECHA $START_DATE`
 		     COMPHASTA=`compararFecha $FECHA $END_DATE`
  
+		     echo "$CANT_LOOP"
  		     if ( ([ "$COMPDESDE" != "-1" ]) && ([ "$COMPHASTA" != "1" ]) )then 
-#		        bash MoverW5.sh "$ARRIDIR/$PARAM"  "$PROCDIR"
-		        echo loguearW5.sh "$COMANDO" "I" "Archivo $PARAM enviado"  
+		        bash MoverW5.sh "$ARRIDIR/$PARAM"  "$PROCDIR"
+		        bash LoguearW5.sh "$COMANDO" "-I" "Archivo $PARAM enviado"  
                      else
-#		        bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"
-	 	        echo loguearW5.sh "$COMANDO" "I" "Archivo $PARAM rechazado por sistema vencido"  
+		        bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"
+	 	        bash LoguearW5.sh "$COMANDO" -E 10 $PARAM  
                      fi
 	       	  else
 		     bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"		
-		     echo loguearW5.sh "$COMANDO" "I" "Archivo $PARAM rechazado por nombre incorrecto"  
+		     bash LoguearW5.sh "$COMANDO" -E 11 $PARAM
                   fi
                else
-                 echo loguearW5.sh "No existe el archivo maestro de sistemas"
+                 bash LoguearW5.sh "$COMANDO" "-A" "No existe el archivo maestro de sistemas"
                fi
 	    else
 	      bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"		
-	      echo loguearW5.sh "$COMANDO" "I" "Archivo $PARAM rechazado por fecha incorrecta"  
+	      bash LoguearW5.sh "$COMANDO" -E 12 $PARAM
 	    fi
           else
 	    bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"
-            echo loguearW5.sh "Nombre de archivo inválido"
+            bash LoguearW5.sh "$COMANDO" -E 13 $PARAM
           fi
         done
    else
@@ -202,13 +204,12 @@ do
    if ([ $ENRECIBIDOS -gt 0 ]) then
       BUSCARW5_PID=`chequeaProceso BuscarW5.sh $$`
       if [ -z "$BUSCARW5_PID" ]; then
-	  echo BuscarW5.sh
-          echo loguearW5.sh "$COMANDO" "I" "BuscarW5 corriendo bajo el numero de proceso: <`chequeaProceso BuscarW5.sh $$`>" 
-	  #$BINDIR/LoguearW5.sh DetectaW5.sh -A "BuscaW5 corriendo bajo el numero de proceso: <`chequeaProceso BuscarW5.sh $$`>" 
+	  bash BuscarW5.sh &
+#          bash LoguearW5.sh "$COMANDO" "-I" "BuscarW5 corriendo bajo el numero de proceso: <`chequeaProceso BuscarW5.sh $$`>"
       else
-          echo loguearW5.sh "$COMANDO" "E" "Demonio BuscarW5 ya ejecutado bajo PID: <$BUSCARW5_PID>" 
-          echo "ERROR"
-         exit 1
+#          bash LoguearW5.sh "$COMANDO" "-A" "Demonio BuscarW5 ya ejecutado bajo PID: <$BUSCARW5_PID>" 
+          echo "Demonio BuscarW5 ya ejecutado bajo PID: <$BUSCARW5_PID>" 
+#          exit 1
       fi
    fi
 

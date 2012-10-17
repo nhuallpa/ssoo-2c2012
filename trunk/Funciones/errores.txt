@@ -8,3 +8,9 @@ Codigo_de_error tipo cant_argumentos mensaje
 7 SE 0 Faltan componentes para realizar la Inicialización
 8 SE 0 Faltan archivos maestros para realizar la Inicialización
 9 E 1 No hay patrones aplicables al archivo @@1
+10 E 1 Archivo @@1 rechazado por sistema vencido
+11 E 1 Archivo @@1 rechazado por nombre incorrecto
+12 E 1 Archivo @@1 rechazado por fecha incorrecta
+13 E 1 Nombre de archivo @@1 inválido
+14 SE 1 No existe Directorio de recibidos @@1
+15 SE 1 No existe Directorio de Rechazos @@1
