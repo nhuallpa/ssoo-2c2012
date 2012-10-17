@@ -103,7 +103,7 @@ ARCHIVO="$MAEDIR/sistemas"
 HASTA=2
 #grupo="/home/lucas/Grupo4"
 #RECHDIR="/home/lucas/Grupo4/RECHDIR"
-#PROCDIR="/home/lucas/Grupo4/ACEPDIR"
+#ACEPDIR="/home/lucas/Grupo4/ACEPDIR"
 #BINDIR="/home/lucas/Grupo4/BINDIR"
 #export GRUPO="/home/lucas/Grupo4/"
 
@@ -168,7 +168,7 @@ do
  
 		     echo "$CANT_LOOP"
  		     if ( ([ "$COMPDESDE" != "-1" ]) && ([ "$COMPHASTA" != "1" ]) )then 
-		        bash MoverW5.sh "$ARRIDIR/$PARAM"  "$PROCDIR"
+		        bash MoverW5.sh "$ARRIDIR/$PARAM"  "$ACEPDIR"
 		        bash LoguearW5.sh "$COMANDO" "-I" "Archivo $PARAM enviado"  
                      else
 		        bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"
@@ -198,7 +198,7 @@ do
 
 
 
-   ENRECIBIDOS=`ls -1 "$PROCDIR" | wc -l | awk '{print $1}'`
+   ENRECIBIDOS=`ls -1 "$ACEPDIR" | wc -l | awk '{print $1}'`
 
    #echo "ENRECIBIDOS $ENRECIBIDOS"
    if ([ $ENRECIBIDOS -gt 0 ]) then
