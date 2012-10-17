@@ -1,0 +1,7 @@
+1,'^Stored procedure invocation error\.',soapp1,linea,2,3
+2,'^####<\.',soapp1,caracter,6,32
+3,'BEA-',soapp1,linea,1,1
+4,'^BINDING.JCA-11811\.',soapp1,linea,1,1
+5,'Caused by',soapp1,linea,1,1
+6,'real time',sasapp,caracter,85,97
+7,'cpu time',sasapp,caracter,85,97
