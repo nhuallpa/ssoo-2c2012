@@ -5,16 +5,30 @@
 #	$MAEDIR $ACEPDIR $RECHDIR $PROCDIR $BINDIR $CONFDIR $GRUPO
 #	SECUENCIA2 : secuenciador para el ciclo buscar
 #
+#########################################
+#					
+#	Sistemas Operativos 75.08	
+#	Grupo: 	4			
+#	Nombre:	BuscarW5.sh		
+#										
+#########################################
+#
+# 1. Verificar inicialización del ambiente y que no haya otro BuscarW5 corriendo
+# 
+# 2. Por cada archivo de ACEPDIR, busca los patrones aplicar
+#
+# 3. Aplica los patrones usando contexto de linea ó caracter
+#
+# 4. Contabiliza hallasgos y guarda resultados detallados y globales
 ARCHPATRONES=$MAEDIR/patrones
-CICLO=2
-echo $MAEDIR
+CICLO=0
 
 
 CANT_ARCH_CON_HALLASGOS=0
 CANT_ARCH_SIN_HALLASGOS=0
 CANT_ARCH_SIN_PATRON=0
 
-loguear() {
+mostrar() {
 	echo "$1"
 }
 
@@ -31,7 +45,10 @@ function validarProceso {
 
 marcarInicio() {
 	CANT_ARCH=$(ls -1 $ACEPDIR | wc -l)
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "====================================================================="
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Inicio BuscarW5 - Ciclo Nro.: $CICLO - Cantidad Archivos: $CANT_ARCH"
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "====================================================================="
+	
 }
 
 verificarIni() {
@@ -39,6 +56,16 @@ verificarIni() {
 	PROCESO=`basename $0`
 	CORRIENDO=false
 
+	if [ -z "$INICIO" ]; then 
+		mostrar "BuscarW5: Variable INICIO no definida"
+		exit 1
+	fi
+	if [ "$INICIO" -ne 1 ]; then
+		mostrar "BuscarW5: Ambiente no inicializado"
+		exit 1
+	fi
+
+	CICLO=$(grep 'SECUENCIA2' $CONFDIR/InstalaW5.conf | cut -f2 -d"=")
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Chequeando si el proceso ya esta siendo ejecutado..."
 	export CORRIENDO
 	validarProceso $PROCESO
@@ -46,19 +73,21 @@ verificarIni() {
 		$BINDIR/LoguearW5.sh BuscarW5.sh -I "BuscarW5 ya se esta ejecutando"
 		exit 1
 	fi
+	# Inicio ciclo de ejecucion	
+	CICLO=$((CICLO+1))
 }
 
 finalizarProceso(){
-	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Fin del Ciclo: $CICLO"
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "============================================================="
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "					Fin del Ciclo: $CICLO"
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos con Hallasgos: $CANT_ARCH_CON_HALLASGOS"
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin hallasgos: $CANT_ARCH_SIN_HALLASGOS"
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin Patron: $CANT_ARCH_SIN_PATRON"
-	CICLO=$((CICLO+1))
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "============================================================="
+
 	local user=`whoami`
 	local fecha=`date '+%x %X'`
-	local nl=$(grep -n '^SECUENCIA2' $CONFDIR/InstalaW5.conf | head -1 | cut -d: -f1)
-	sed "${nl}s/.*/SECUENCIA2=$CICLO=$user=$fecha/" $CONFDIR/InstalaW5.conf > InstalaW5.conf.aux	
-	mv InstalaW5.conf.aux $CONFIR/InstalaW5.conf
+	sed -i s-^SECUENCIA2.*-SECUENCIA2="$CICLO"="$user"="$fecha"- "$CONFDIR/InstalaW5.conf"
 	CORRIENDO=false
 }
 registrarResultado() {
@@ -66,7 +95,7 @@ registrarResultado() {
 	local nroReg=$2
 	local resultado=$3
 	local pad_id=$4
-	echo "$CICLO+-#-+$archivo+-#-+$nroReg+-#-+$resultado" >> $PROCDIR/resultados.$pat_id
+	echo "$CICLO+-#-+$archivo+-#-+$nroReg+-#-+$resultado" >> "$PROCDIR"/resultados.$pat_id
 }
 
 registrarGlobales() {
@@ -77,9 +106,20 @@ registrarGlobales() {
 	local desde=$5
 	local hasta=$6
 	local pad_id=$7
-	echo "$CICLO,$archivo,$cantHallasgos,$exp,$pat_con,$desde,$hasta" >> $PROCDIR/rglobales.$pat_id
-}
+	if [ $hallasgo -eq 0 ] 
+	then	
+		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo:$archivo - NO tiene hallasgos con PAT_ID:$pat_id"	
+		CANT_ARCH_SIN_HALLASGOS=$((CANT_ARCH_SIN_HALLASGOS+1))
+	else
+		CANT_ARCH_CON_HALLASGOS=$((CANT_ARCH_CON_HALLASGOS+1))
+		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo:$archivo - Tiene $hallasgo hallasgos con PAT_ID:$pat_id"	
+	fi
 
+	echo "$CICLO,$archivo,$cantHallasgos,$exp,$pat_con,$desde,$hasta" >> "$PROCDIR"/rglobales.$pat_id
+}
+# Extrea un bloque de lineas de un archivo dependiendo
+# de un numero de linea de referencia, un linea desde relativo
+# y un linea hasta relativo
 grabarBloque() {
 	local archivo=$1
 	local nroReg=$2
@@ -97,7 +137,8 @@ grabarBloque() {
 		nroReg_actual=$((nroReg_actual+1))
 	done
 }
-
+# Recorre cada linea y aplica el patron
+# Por cada linea que aplica, extre un bloque de lineas en el contexto del hallago
 procesarLineas(){
 	local archivo=$1
 	local exp=$2
@@ -117,15 +158,12 @@ procesarLineas(){
 			grabarBloque "$archivo" $nroReg $desde $hasta $pad_id
 		fi
 	done < $ACEPDIR"/"$archivo
-	if [ $cantHallasgos -eq 0 ] 
-	then
-		CANT_ARCH_SIN_HALLASGOS=$((CANT_ARCH_SIN_HALLASGOS+1))
-	else
-		CANT_ARCH_CON_HALLASGOS=$((CANT_ARCH_CON_HALLASGOS+1))
-	fi
 	registrarGlobales $archivo $cantHallasgos $exp $pat_con $desde $hasta $pat_id
 }
 
+# Recorre cada linea y aplica el patron
+# Por cada linea que aplica, toma el bloque de caracteres, tomando como referencia
+# el primer caracter de la linea donde se produjo el hallasgas
 procesarCaracteres(){
 	local archivo=$1
 	local exp=$2
@@ -147,43 +185,42 @@ procesarCaracteres(){
 			registrarResultado "$archivo" $nroReg "$resultado" $pat_id
 		fi
 	done < $ACEPDIR"/"$archivo
-	if [ $cantHallasgos -eq 0 ] 
-	then
-		CANT_ARCH_SIN_HALLASGOS=$((CANT_ARCH_SIN_HALLASGOS+1))
-	else
-		CANT_ARCH_CON_HALLASGOS=$((CANT_ARCH_CON_HALLASGOS+1))
-	fi
 	registrarGlobales $archivo $cantHallasgos $exp $pat_con $desde $hasta $pat_id
 }
 
 verificarIni
 marcarInicio
-
+totalArchivosDispo=$(ls -1 $ACEPDIR | wc -l)
+nroArchivo=0
+# empezamos a leer todos los archivos del directorio de acaptados
 for file in $(ls $ACEPDIR)
 do
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo a procesar: $file"
-	echo "archivo $file"
+	# Validacmos que el archivo no este procesado
 	YA_PROC=$(ls -1 "$PROCDIR" | grep -c "$file")
 	if [ "$YA_PROC" -eq 1 ] 
 	then
 		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Este archivo ya fue procesado: $file"	
 		$BINDIR/MoverW5.sh "$ACEPDIR/$file" "$RECHDIR"
 	else
+		# Extraemos el sistema desde el nombre del archivo y validamos que tenga patrones
 		sistema=$(echo $file | cut -f1 -d'_') 
 		TIENE_PAT=$(grep -c "^[^,]*,[^,]*,$sistema,*" "$ARCHPATRONES")
+
 		if [ "$TIENE_PAT" -eq 0 ]
 		then
 			#loguear "No hay patrones aplicables a este archivo: $file"
 			bash $BINDIR/LoguearW5.sh BuscarW5.sh -E 9 "$file"
 			CANT_ARCH_SIN_PATRON=$((CANT_ARCH_SIN_PATRON+1))
 		else
+			# recorremos cada uno de los patrones encontrados
 			for regMae in $(grep $sistema $ARCHPATRONES | cut -f 1,4-6 -d',')
 			do
 				PAT_ID=$(echo "$regMae" | cut -f1 -d',')
 				PAT_CON=$(echo "$regMae" | cut -f2 -d',')
 				PAT_DESDE=$(echo "$regMae" | cut -f3 -d',')
-				PAT_HASTA=$(echo "$regMae" | sed 's/.*,\([0-9]*\).*/\1/')   # con cut tenia eof
-				PAT_RE=$(grep "^$PAT_ID," "$ARCHPATRONES" | cut -f2 -d',' | sed 's/'\''//g' )
+				PAT_HASTA=$(echo "$regMae" | sed 's/.*,\([0-9]*\).*/\1/')   # Extraemos solo los numeros
+				PAT_RE=$(grep "^$PAT_ID," "$ARCHPATRONES" | cut -f2 -d',' | sed 's/'\''//g' ) # Extraemos las expreciones regulares sin comillas simples, porque sino no funcionaba el grep
 				if [ "$PAT_CON" = "linea" ]; then 
 					procesarLineas $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $PAT_ID $PAT_CON 
 				else
@@ -193,5 +230,7 @@ do
 			bash $BINDIR/MoverW5.sh "$ACEPDIR/$file" "$PROCDIR"
 		fi
 	fi
+	nroArchivo=$((nroArchivo+1))
+	mostrar "($nroArchivo/$totalArchivosDispo) archivos leidos"	
 done
 finalizarProceso
