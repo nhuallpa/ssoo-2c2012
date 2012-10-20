@@ -1,12 +1,71 @@
-  /$$$$$$  /$$$$$$$  /$$   /$$ /$$$$$$$   /$$$$$$        /$$   /$$                     /$$$$$$$$ /$$$$$$$   /$$$$$$   /$$$$$$ 
- /$$__  $$| $$__  $$| $$  | $$| $$__  $$ /$$__  $$      | $$  | $$                    |_____ $$/| $$____/  /$$$_  $$ /$$__  $$
-| $$  \__/| $$  \ $$| $$  | $$| $$  \ $$| $$  \ $$      | $$  | $$                         /$$/ | $$      | $$$$\ $$| $$  \ $$
-| $$ /$$$$| $$$$$$$/| $$  | $$| $$$$$$$/| $$  | $$      | $$$$$$$$       /$$$$$$          /$$/  | $$$$$$$ | $$ $$ $$|  $$$$$$/
-| $$|_  $$| $$__  $$| $$  | $$| $$____/ | $$  | $$      |_____  $$      |______/         /$$/   |_____  $$| $$\ $$$$ >$$__  $$
-| $$  \ $$| $$  \ $$| $$  | $$| $$      | $$  | $$            | $$                      /$$/     /$$  \ $$| $$ \ $$$| $$  \ $$
-|  $$$$$$/| $$  | $$|  $$$$$$/| $$      |  $$$$$$/            | $$                     /$$/     |  $$$$$$/|  $$$$$$/|  $$$$$$/
- \______/ |__/  |__/ \______/ |__/       \______/             |__/                    |__/       \______/  \______/  \______/ 
-                                                                                                                              
-                                                                                                                              
-Copiar el archivo GRUPO4W5.tar.gz dentro de la carpeta "grupo04"
+README
+
+A] Requerimientos del sistema
+-----------------------------
+a. PERL	5.x
+b. GNU bash, version 4.x
+
+B] Procedimiento de Instalacion
+-------------------------------
+
+Para realizar la instalación realice los siguientes pasos
+
+
+1. Inserte el pendrive en su computadora y abra la carpeta
+2. Copie el archivo grupo04.tar.gz dentro de su directorio Home (generalmente /home/<nombre de usuario>)
+3. Descomprima el archivo grupo04.tar.gz utilizando el siguiente comando desde un Terminal
+	
+	cd ~/
+	tar -zxvf grupo04.tar.gz
+
+Esto creara una carpeta "grupo04" dentro de su directorio Home (/home/<nombre de usuario>/grupo04)
+
+4. Desde el terminal ingrese al directorio "instalacion" dentro de "grupo04"
+
+	cd grupo04
+	cd instalacion
+
+5. Ejecute el instalador con el siguiente comando
+
+	. ./InstalacionW5.sh
+
+
+C] Resultado de la instalación
+------------------------------
+
+La instalación crea un directorio "/tp/confdir" dentro de "grupo04" el cual contiene:
+	1. Un archivo de configuración generado por el instalador (InstalaW5.conf)
+	2. Un archivo de log con el resultado de la instalación (InstalaW5.log)
+	
+Tambien setea variables de ambiente, necesarias para el correcto funcionamiento del sistema. Estas son:
+
+	1. $GRUPO	directorio de trabajo
+	2. $BINDIR	directorio donde se encuentran los ejecutables
+	3. $CONFDIR	directorio de configuración del sistema
+	4. $ACEPDIR	directorio de archivos de aceptados
+	5. $RECHDIR	directorio de archivos de rechazados
+	6. $LOGDIR	directorio de archivos de log
+	7. $REPODIR	directorio de reportes
+	8. $ARRIDIR	directorio de arribo de archivos externos
+	9. $PROCDIR	directorio de archivos procesados
+	10. $MAEDIR	directorio de archivos maestros
+
+
+D] Primeros pasos
+-----------------
+
+1. Ir al directorio de trabako
+
+	cd ~/grupo04/tp
+
+2. Ingresar en la carpeta donde se encuentran los ejecutables
+
+	cd bin
+
+3. Ejecutar el comando que inicializa el sistema
+
+	. ./IniciarW5.sh
+
+4. Si este último comando devuelve "Estado del sistema: INICIALIZADO", el sistema ya se encuentra funcionamiento.
+
 
