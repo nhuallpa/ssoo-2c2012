@@ -34,13 +34,15 @@ sub main {
 	# Declaro las variables que se usan como separadores.
 	local $SEPARADOR_GLOBALES = ',';
 	local $SEPARADOR_DETALLADOS = '\+-#-\+';
-	local $SEPARADOR_MAESTRO = ',';
+	local $SEPARADOR_PATRONES = ',';
 	local $SEPARADOR_SISTEMAS = ",";
 
 	local $SEPARADOR_HASH = "@";
 
 	local $NOMBRE_DETALLADOS = "resultados";
 	local $ARCH_GLOBALES = "rglobales";
+	local $ARCHIVO_CONFIGURACION = "InstalaW5.conf";
+	local $SECUENCIA_ARCH_SALIDA = "SECUENCIA_ARCH_SALIDA=";
 
 	# Inicio del script.
 
@@ -81,6 +83,8 @@ sub main {
 	if ( $error == 1 ) {
 	 	print "Opción elegida inválida, invoque \"listarW5.pl -h\" para obtener ayuda.\n";
 	}
+
+	return $error;
 }
 
 # -----------------------------------------------------------------------------#
@@ -111,7 +115,7 @@ sub imprimirAyuda() {
 
 sub filtroResultadosDetallados {
 
-	$persistir = @_[0];
+	$persistir = $_[0];
 	print "Ingrese el filtro deseado a continuación: \n";
 
 	push(@vector,"Filtrar por patrón.");
@@ -212,41 +216,74 @@ sub seleccionarOpciones {
 # devuelve: el nombre del nuevo archivo de salida.
 
 sub nombreArchivoDeSalida {
+
+	my $numeroSecuencia = 0;
 	
 	my $directorio = $ENV{REPODIR};
 
-	my $numero = 0;
+	my $CONF_DIR = $ENV{CONFDIR};
 
-	if ( opendir(DIRH, $directorio) ) {
+	if ( opendir(DIRH, $CONF_DIR) ) {
 
-		while ( my $archivo = readdir(DIRH) ) {
-	
-			if ( $archivo =~ /^salida_[0-9][0-9][0-9]$/ ) {
+		if ( -r "$CONF_DIR/$ARCHIVO_CONFIGURACION" ) {
 
-				$archivo =~ s/salida_(.*)/\1/g;
-				$numero = $archivo if ( $archivo > $numero );
+			my $arch = $CONF_DIR."/".$ARCHIVO_CONFIGURACION;
+
+			open ( CONFHANDLER, "<$arch" );
+
+			my @lineas = <CONFHANDLER>;
+
+			my $i = -1;
+			while ( ( $i < $#lineas ) and ( $numeroSecuencia eq 0 ) ) { ++$i;
+
+				my $indice = index( $lineas[$i], $SECUENCIA_ARCH_SALIDA );
+
+				if ( $indice ne -1 ){
+		
+					my $valor = length($SECUENCIA_ARCH_SALIDA) + $indice;
+					$numeroSecuencia = substr($lineas[$i],$valor);
+					chop($numeroSecuencia);
+				}
 			}
+
+			close CONFHANDLER;
+
+
+			open ( CONFHANDLER, ">$arch" );
+
+			$numeroSecuencia = ( $numeroSecuencia eq 999 ) ? 1 : ($numeroSecuencia+1);
+	
+			if ($numeroSecuencia < 10 ) {
+				$numeroSecuencia = "00".$numeroSecuencia;
+
+			} else { if ($numeroSecuencia < 100 ) {
+				$numeroSecuencia = "0".$numeroSecuencia;
+			}}
+
+			my $salida = $SECUENCIA_ARCH_SALIDA.$numeroSecuencia."\n";
+
+			if ( $i <= $#lineas )
+				{$lineas[$i] = $salida;}
+
+			else
+				{push (@lineas, $salida);}
+
+			print CONFHANDLER @lineas;
+			close CONFHANDLER;
+
+		} else {
+
+			print "No se puede leer el archivo de configuración\n";
 		}
 
-		closedir(DIRH);
+		close(DIRH);
 
-		++$numero;
+	} else {
 
-		if ($numero < 10 ) {
-			$numero = "00".$numero;
-
-		} else { if ($numero < 100 ) {
-			$numero = "0".$numero;
-		}}
-
+		print "No se puede leer el archivo de configuración\n";
 	}
 
-	else {
-
-		print "ERROR al abrir el directorio: ".$directorio.".\n";
-	}
-
-	return $directorio."/salida_".$numero;;
+	return $directorio."/salida_".$numeroSecuencia;
 }
 
 # -----------------------------------------------------------------------------#
@@ -425,7 +462,7 @@ sub resolverConsulta {
 
 sub filtrarPorPatron {
 
-	my $persistir = @_[0];
+	my $persistir = $_[0];
 
 	# Solicita se ingrese un patrón por entrada estándar.
 
@@ -508,7 +545,7 @@ sub filtrarPorPatron {
 # -----------------------------------------------------------------------------#
 
 sub filtrarPorCiclo {
-	$persistir = @_[0];
+	$persistir = $_[0];
 
 	$valido = 0;
 	while ( $valido eq 0 ) {
@@ -588,7 +625,7 @@ sub filtrarPorCiclo {
 # -----------------------------------------------------------------------------#
 
 sub filtrarPorArchivo {
-	$persistir = @_[0];
+	$persistir = $_[0];
 
 	print "filtrar por archivo.\n";
 
@@ -705,11 +742,9 @@ sub filtroResultadosGlobales {
 		if ( $#val eq 1 ) {
 
 		    &cargarHash( 1, \%hash);
-			
-		print "$_ $hash{$_}\n" foreach ( keys(%hash) );
 
 		    &filtrarPorRango( $persistir, \%hash, $val[0], $val[1]);
-		    &filtrarPorRango( 0, \%hash, $val[0], $val[1]) if ( $persisir eq 1 );
+		    &filtrarPorRango( 0, \%hash, $val[0], $val[1]) if ( $persistir eq 1 );
 		}
 	}
 
@@ -771,7 +806,7 @@ sub determinarLimitesIntervalo {
 	my $continuar = 1;
 	while ( $continuar eq  1 ) {
 
-		print "Seleccione limites del intervalo, xx yy: ";
+		print "Seleccione los limites del intervalo, xx yy: ";
 
 		chop( $cadena = <STDIN> );
 		@val = split(" ",$cadena);
@@ -1008,8 +1043,6 @@ sub burbujeo {
 	}
 }
 
-
-
 #------------------------------------------------------------------------------#
 # EXPRESIONES GLOBALES
 
@@ -1020,13 +1053,7 @@ sub burbujeo {
 # parámetro 1: es una referencia a un arreglo de operadores.
 # parámetro 2: es una referencia a un arreglo de funciones lógicas.
 #
-# devuelve: un valor correspondiente al tipo de expresión detectada:
-#           tipo 1: x
-#           tipo 2: x o x
-#           tipo 3: x o ( x o x )
-#           tipo 4: ( x o x ) o x
-#
-# donde las x pueden valer p, a o s y las o o u y.
+# devuelve: el comando ingresado.
 
 sub evaluar_expresion {
 
@@ -1034,11 +1061,14 @@ sub evaluar_expresion {
 	my $flogicas  = shift(@_);
 
 	my $tipoExpresion = 0;
+	my $copia_comando = "";
 
 	while ( $tipoExpresion eq 0 ) { 
 
 		print "Escriba un comando a continuación o -h para ayuda:";
 		chop ( $comando = <STDIN> );
+
+		$copia_comando = $comando;
 	
 		# valido un único comando
 
@@ -1076,7 +1106,7 @@ sub evaluar_expresion {
 		print "Comnado ingresado inválido.\n" if ( $tipoExpresion eq 0 );
 	}
 
-	return $tipoExpresion;
+	return $copia_comando;
 }
 
 #------------------------------------------------------------------------------#
@@ -1099,48 +1129,70 @@ sub evaluar_expresion {
 sub validarExpresion {
 
 	my $comandos  = shift(@_);
-	my $operandos = shift(@_);
-	my $flogicas  = shift(@_);
+	my $ops = shift(@_);
+	my $f 	= shift(@_);
 
 	my $tipoExpresion = 0;
 
 	$aux     = $comando;
-	$comando =~ s/[^psaoy]*([psa])[^psaoy]*([oy]?)[^psaoy]*([psa]?)[^psaoy]*([oy]?)[^psaoy]*([psa]?).*/\1 \2 \3 \4 \5/;
+	$comando =~ s/[^psaoy]*([psa])[^psaoy]*([oy]?)[^psaoy]*([psa]?)[^psaoy]*([oy]?)[^psaoy]*([psa]?).*/$1 $2 $3 $4 $5/;
 
 	@v = split ( " " , $comando );
 	$cant = @v;
 
-	if ( $cant eq 1 ) {
+	if ( ( $cant > 0 ) and ( $cant < 6 ) ) {
 
-		$tipoExpresion = 1;
-		@{$operandos} = ($v[0]);
+		$tipoExpresion = $cant;
+		$tipoExpresion = 4 if ( $aux =~ /^ *\(.*$/ );
+
+		my $i = -1;
+		foreach $e (@v) { ++$i;
+
+			(($i % 2 ) eq 0 ) ? push(@{$ops}, $e) : push(@{$f}, $e);
+		}
+
+	} else {
+
+		print "Cantidad de operandos inválida.\n";
 	}
 
-	if ( ( $cant eq 3 ) and ( $v[0] ne $v[2] ) ) {
-			
-		$tipoExpresion = 2;
 
-		@{$operandos} = ($v[0], $v[2]);
-		@{$flogicas}  = ($v[1]);
+	# evaluo si hay elementos repetidos.
+	my $repetido = 0;
+	my %hashOps;
+	foreach $e (@{$ops} ) {
+
+		( exists( $hashOps{$e} ) ) ? $repetido++ : ( $hashOps{$e} = 1 );
 	}
 
-	if ( ( $cant eq 5 ) and
+	if ( $repetido ne 0 ) {
 
-	   ( ( $v[0] ne $v[2] ) and ( $v[2] ne $v[4] ) and ( $v[4] ne $v[0] ) ) ) {
-
-		$tipoExpresion = ( $aux =~ /^ *\(.*$/ ) ? 4 : 3;
-
-		@{$operandos}  = ($v[0], $v[2], $v[4]);
-		@{$flogicas} = ($v[1], $v[3]);
+		print "ERROR: Operandos duplicados\n";
+		$tipoExpresion = 0;
 	}
 
-	print "ERROR: Operandos duplicados\n" if ( $tipoExpresion eq 0 );
+	# genero vectores de funciones y operandos diferentes que permiten operar mejor.
+	if ( $tipoExpresion eq 3 ) {
 
+		push( @{$ops}, shift @{$ops});
+		push( @{$f}  , shift @{$f}  );
+	}
+
+
+	#agrego un valor lógico o para poder realizar las operaciones.
+	unshift( @{$f}, "o");
+
+	#devuelvo el tipo de expresión
 	return	$tipoExpresion;
 }
 
 
 # -----------------------------------------------------------------------------#
+# Valida una lista de patrones ingresada desde entrada estándar. Se verifica la
+# existencia de los patrones en el archivo maestro de patrones.
+#
+# devuelve: un arreglo de patrones válidos.
+
 sub validarPatrones {
 
 	my $validez = 0;
@@ -1157,7 +1209,7 @@ sub validarPatrones {
 
 		foreach (@patrones) {
 
-			$_ =~ s/^ *([0-9]) *$/\1/;
+			$_ =~ s/^ *([0-9]) *$/$1/;
 			++$cant if ( $_ =~ /^[0-9]*$/ );
 		}
 
@@ -1201,13 +1253,20 @@ sub validarPatrones {
 }
 
 # -----------------------------------------------------------------------------#
+# Valida una lista de sistemas ingresada desde entrada estándar y las devuelve 
+# en un arreglo de sistemas que fueron validados contra el archivo maestro de 
+# sistemas.
+#
+# devuelve: un arreglo de sistemas.
 
 sub validarSistemas {
 
 	&cargarSistemas(\%hashSistemas);
 
-	$SEP = ",";
-	$validez = 0;
+	my $SEP = ",";
+	my $validez = 0;
+	my $sistemas ="";
+
 	while ( $validez eq 0 ) {
 
 		print "Ingrese una lista de sistemas serparados por \"$SEP\" o * para todos los sistemas.\n";
@@ -1226,7 +1285,7 @@ sub validarSistemas {
 			$cant = 0;
 			foreach (@sistemas) {
 
-				$_ =~ s/^ *([^ ].*[^ ]) *$/\1/;
+				$_ =~ s/^ *([^ ].*[^ ]) *$/$1/;
 				if ( exists( $hashSistemas{$_} ) ) {
 
 					++$cant;	
@@ -1245,6 +1304,10 @@ sub validarSistemas {
 }
 
 # -----------------------------------------------------------------------------#
+# Carga los sistemas desde el archivo maestro en el hash pasado por parámetro.
+#
+# parámetro 1: referencia al hash donde se cargarán los sistemas.
+
 sub cargarSistemas {
 
 	my $hash = shift (@_);
@@ -1271,18 +1334,22 @@ sub cargarSistemas {
 		}
 
 		closedir(DH);
+	} else {
+
+		print "No se encuentra el directorio de la variable MAEDIR: ".$MAEDIR."\n";
 	}
 }
 
 
 # -----------------------------------------------------------------------------#
-sub validarArchivos {
+# Valida la lista de nombres de archivos ingresado desde la entrada estándar.
+#
+# devuelve: un arreglo con la lista de archivos.
 
-	$todos = shift @_;
+sub validarArchivos {
 
 	$SEP = ",";
 
-	$todos = 0;
 	$validez = 0;
 	while ( $validez eq 0 ) {
 
@@ -1292,13 +1359,13 @@ sub validarArchivos {
 		if ( $archivos =~ /^\*$/ ) {
 
 			$validez = 1;
-			$todos = 1;
+			push (@archivos, "*");
 		} else {
 
 			@archivos = split($SEP, $archivos);
 
 			foreach (@archivos) {
-				$_ =~ s/^ *([^ ].*[^ ]) *$/\1/;		
+				$_ =~ s/^ *([^ ].*[^ ]) *$/$1/;		
 			}
 
 			$validez = 1;
@@ -1309,25 +1376,40 @@ sub validarArchivos {
 }
 
 # -----------------------------------------------------------------------------#
+# Resuelve la consula a partir de una expresión lógica ingresada.
+#
+# parámetro 1: seleccion elegida ( son válidos los valores 1,2 y 6).
+# parámetro 2: opción de persistencia, debe valer 1 para persistirse la salida 
+#              en un archivo.
+
 sub resolverConsultaGlobal {
 
 	my $seleccion = shift (@_);
 	my $persistir = shift (@_);
 
-	local @operandos;
-	local @flogicas;
+	my @operandos;
+	my @flogicas;
 
-	local $tipoExpresion = &evaluar_expresion(\@operandos, \@flogicas);
+	my $comando = &evaluar_expresion(\@operandos, \@flogicas);
+
 	foreach $operando (@operandos) {
 
 		local @patrones = &validarPatrones if ( $operando eq "p" );
 		local @sistemas = &validarSistemas if ( $operando eq "s" );
-		local @archivos = &validarArchivos (\$todos) if ( $operando eq "a" );
+		local @archivos = &validarArchivos if ( $operando eq "a" );
 	}
 
-	print "\n\n";
-
 	my $dir = $ENV{PROCDIR};
+
+	#genero hashes por cada una de las listas.
+
+	local %patrones;
+	local %sistemas;
+	local %archivos;
+
+	$patrones{$_} = 1 foreach (@patrones);
+	$sistemas{$_} = 1 foreach (@sistemas);
+	$archivos{$_} = 1 foreach (@archivos);
 
 	if ( opendir( dirHandler, $dir ) ) {
 
@@ -1336,328 +1418,369 @@ sub resolverConsultaGlobal {
 			if ( $archivo !~ /[\.~]$/ and $archivo !~ /^\.\.$/ and $archivo =~ /^$ARCH_GLOBALES\./) {
 
 				$dir_archivo = $dir."/".$archivo;
-				&evaluarArchivo( $dir, $archivo, \%hash, $todos) if ( -r $dir_archivo );
+
+				if ( -r $dir_archivo ) 
+
+					{&evaluarArchivo( $dir, $archivo, \%hash,\@operandos, \@flogicas ) ;}
 			}
-		}
-
-		foreach $clave ( keys ( %hash ) ) {
-
-			$total = $hash{$clave};
-
-			my @valores;
-
-			my $p = "";
-			my $a = "";
-			my $s = "";
-
-			$aux1 = index($clave,"|");
-			$aux2 = index($clave,"_");
-
-			foreach $op (@operandos) {
-
-				$p = substr( $clave, 0, $aux1) if ( $op eq "p");
-				$a = substr( $clave, $aux1+1) if ( $op eq "a" );
-				$s = substr($clave, $aux1+1, $aux2-$aux1-1) if ( $op eq "s");				
-			}
-
-			push ( @valores , $p ) if ( $p ne "" );				
-			push ( @valores , $s ) if ( $s ne "" );
-			push ( @valores , $a ) if ( $a ne "" );
-
-			$nuevaClave = join( $SEPARADOR_HASH, @valores);
-
-			delete ( $hash{$clave} );
-			$hash { $nuevaClave } += $total;
-
 		}
 
 		closedir( dirHandler );
 
-		if ( $seleccion eq 6 ) {
+		if ( $seleccion eq 6 ) 
 
-			$hV{$_} = 1 foreach (@operandos);
+			{&imprimirResultadosSeleccionSeis(\%hash, $comando, $persistir);}
 
-			print "Hallazgos\t";			
-			print "Patron\t" if ( exists($hV{"p"}));
-			print "Sistema\t" if ( exists($hV{"s"}));
-			print "Archivo\t" if ( exists($hV{"a"}));
-			print "\n";	
-
-			foreach $clave ( keys(%hash) ) {
-	
-				print $hash{$clave}."\t\t";
-				my @elementos = split($SEPARADOR_HASH,$clave);
-				print "$_\t" foreach (@elementos);
-				print "\n";
-			}
-		}
-
-		else {
-
-		$orden = ( $seleccion eq 1 ) ? 1 : 0 ;
-		@refOrdenadas = &filtrarValores( 5, $orden, \%hash);
-
-		$max = $hash{@refOrdenadas[0]};
-
-		$repeticiones = 0;
-		foreach (@refOrdenadas) {
-
-			$repeticiones += 1 if ( $max eq $hash{$_} );
-		}
-
-		if ( $#refOrdenadas < 0 ) {
-
-			$mensaje = "No se hallaron coincidencias.\n";
-		}
-	
-		else { 
-			if ( $repeticiones > 1 ) {
-
-				$mensaje = "No hay un único valor máximo.\n" if ($seleccion eq 1);
-
-				if ( $seleccion eq 2 ) {
-
-					if ( $max eq 0 ) {
-						$mensaje = "No hay un único valor nulo.\n";
-
-					}else {
-						$mensaje = "No se encontraron registros cuyo total de hallazgos sea nulo.\n";
-					}
-				}
-				
-			}
-
-			 else {
-				if ( $seleccion eq 1 ) {
-					$mensaje = "La máxima cantidad de hallazgos resultó ser: ".$hash{$refOrdenadas[0]}."\n";
-
-					my @cadenas = split($SEPARADOR_HASH, $refOrdenadas[0]);
-
-
-					
-					$hV{$_} = 1 foreach (@operandos);
-					
-					foreach $cadena ( @cadenas ) {
-
-						if ( exists( $hV{"p"} )) {
-
-							$mensaje = $mensaje."En el archivo global: ".$ARCH_GLOBALES.".".$cadena."\n";
-							delete ( $hV{"p"});
-						} 
-
-						else { if ( exists( $hV{"s"} ) ) {
-
-							$mensaje = $mensaje."Correspondiente al sistema: $cadena\n";
-							delete ( $hV{"s"});
-						}
-
-						else { if ( exists( $hV{"a"} ) ) {
-							$mensaje = $mensaje."Correspondiente al archivo: $cadena\n";
-							delete ( $hV{"a"});
-						}}}
-					}
-				}
-
-				else {
-
-					if ( $hash{$refOrdenadas[0]} eq 0 ) {
-
-						$mensaje = "Se encontraron registros cuyo total de hallazgos es nulo.\n";
-					} 
-
-					else {
-
-						$mensaje = "No se encontraron registros cuyo total de hallazgos sea nulo.\n";
-					}
-				}
-			}
-		}
-
-		print $mensaje;
-
-		if ( $persistir eq 1 ) {
-
-			$nombreArchivo = nombreArchivoDeSalida();
-			open( FH, ">$nombreArchivo") || die "No se pudo crear el archivo de salida.\n";
-
-			print FH "Consultar donde se produjo la mayor cantidad de hallazgos.\n" if ( $seleccion eq 1 );
-			print FH "Consultar si hubo hallazgos nulos.\n" if ( $seleccion eq 2 );
-
-			print FH "\nExpresión lógica: ";
-
-			foreach (@operandos) {
-
-				$_ = "sistemas" if ( $_ eq "s" );
-				$_ = "nombres de archivos" if ( $_ eq "a" );
-				$_ = "patrones" if ( $_ eq "p" );
-			}
-
-			$expresion = $operandos[0];
-
-			if ( ( $tipoExpresion eq 2 ) or ( $tipoExpresion eq 4 ) ){
-
-				$expresion = $expresion." ".$flogica[0]." ".$operandos[1];
-			}
-
-			if ( $tipoExpresion eq 4 ) {
-			
-				$expresion = "( ".$expresion." ) ".$flogica[1]." ".$operandos[2];
-			}
-
-			if ( $tipoExpresion eq 3 ) {
-
-				$expresion = $expresion." ".$flogica[0]." ";
-				$expresion = $expresion."( ".$operandos[1]." ".$flogica[1]." ".$operandos[2]." )";
-			}
-
-			print FH $expresion."\n\n";
-
-			print FH "Filtros:\n";
-
-			if ( $#patrones >= 0 ) {
-				print FH "Patrones: ";
-				print FH "$_ " foreach (@patrones);
-				print FH "\n";
-			}
-
-			if ( $#sistemas >= 0 ) {
-				print FH "Sistemas: ";
-				print FH "$_ " foreach (@sistemas);
-				print FH "\n";
-			}
-
-			if ( $#archivos >= 0 ) {
-				print FH "Nombres de archivo: ";
-				print FH "$_ " foreach (@archivos);
-				print FH "\n";
-			}
-
-			print FH "\nResultado:\n";
-			print FH $mensaje;
-			close FH;
-		}
-		}
-
-	} else {
-
-		print "No se encontró el directorio de la variable de ambiente PROCDIR: $dir\n";
+		else
+			{&imprimirResultadosDeConsultaGlobal(\%hash, $seleccion, $comando, $persistir);}
 	}
+	
+	else 
+		{print "No se encontró el directorio de la variable de ambiente PROCDIR: $dir\n";}
 
 }
 
 # -----------------------------------------------------------------------------#
+# Imprime por pantalla y/o archivo los resultados de la opción 6 del menú de 
+# resolución de consultas globales.
+#
+# parámetro 1: referencia del hash cargado con los resultados.
+# parámetro 2: expresión lógica ingresada desde entrada estándar.
+# parámetro 3: opción de persistencia, debe valer 1 para habilitar la escritura
+#              del archivo en disco.
+
+sub imprimirResultadosSeleccionSeis {
+
+	my $hash      = shift @_;
+	my $comando   = shift @_;
+	my $persistir = shift @_;
+
+	my $mensaje;
+
+	$mensaje = "Hallazgos\tOperandos\t\n";	
+
+	foreach $clave ( sort( keys(%hash) ) ) {
+
+		my $i = -1;
+		my @elementos = &obtenerElementos($clave);
+
+		$mensaje = $mensaje.$hash->{$clave}."\t\t";
+		foreach $elemento (@elementos) { ++$i;
+
+			if ( length( $elemento) > 0 ) {
+
+				$mensaje = $mensaje."p: $elemento\t" if ($i eq 0);
+				$mensaje = $mensaje."s: $elemento\t" if ($i eq 1);
+				$mensaje = $mensaje."a: $elemento\t" if ($i eq 2);
+			}
+		}
+		$mensaje = $mensaje."\n";
+	}
+
+	print $mensaje;
+
+	if ( $persistir eq 1 ) {
+
+		$encabezado = "Listado de hallazgos encontrados para un filtro en particular.\n";
+		&imprimirEnArchivo($encabezado, $mensaje, $comando);
+	}
+}
+
+# -----------------------------------------------------------------------------#
+# Imprimir los resultados obtenidos en un archivo.
+#
+# parámetro 1: referencia del hash
+# parámetro 2: seleccion 
+# parámetro 3: expresión lógica ingresada
+# parámetro 4: opción de persistencia, 1 para persistir la salida
+
+sub imprimirResultadosDeConsultaGlobal {
+
+	my $hash 	= shift @_;
+	my $seleccion 	= shift @_;
+	my $comando	= shift @_;
+	my $persistir	= shift @_;
+
+	# Ordeno las claves del hash
+	my $cantValores = 3;
+	my $orden = ( $seleccion eq 1 ) ? 1 : 0 ;
+	@refOrdenadas = &filtrarValores( $cantValores, $orden, \%hash);
+
+	# Obtengo el valor máximo o mínimo y calculo si hay repeticiones.
+	$max = ( $#refOrdenadas >= 0 ) ? $hash{$refOrdenadas[0]} : -1 ;
+
+	my $repeticiones = -1;
+
+	foreach (@refOrdenadas)
+
+		{ ++$repeticiones if ( $max eq $hash{$_} ); }
+
+	# Comienzo a describir los mensajes de los resultados.
+	$mensaje = "No se hallaron coincidencias.\n" if ( $#refOrdenadas < 0 );
+
+	$mensaje = "No hay un único valor máximo.\n" if ( ( $repeticiones > 0 ) and ( $seleccion eq 1 ) );
+
+	$mensaje = "No hay un único valor nulo.\n"   if ( ( $repeticiones > 0 ) and ( $seleccion eq 2 ) );
+
+	$mensaje = "No se encontraron registros cuyo total de hallazgos sea nulo.\n" if ( ( $max ne 0 ) and ( $seleccion eq 2 ) );
+
+	$mensaje = "Se encontraron más de un registro cuyo total de hallazgos es nulo.\n" if ( ( $repeticiones > 0 ) and ( $max eq 0 ) and ( $seleccion eq 2 ) );
+
+	if ( ($#refOrdenadas >= 0 ) and ( $repeticiones eq 0 ) and ( $#refOrdenadas >= 0 ) and ( $repeticiones eq 0 ) ){
+
+		$mensaje = "La máxima cantidad de hallazgos resultó ser: $max \n" if ( $seleccion eq 1 );
+
+		$mensaje = "Se encontró un registro cuyo total de hallazgos es nulo.\n" if ( $seleccion eq 2 );			
+
+		my @elementos = obtenerElementos( $refOrdenadas[0] );
+
+		$mensaje = $mensaje."En el archivo global: ".$ARCH_GLOBALES.".".$elementos[0]."\n" if ( length($elementos[0]) > 0 );
+		$mensaje = $mensaje."Correspondiente al sistema: ".$elementos[1]."\n"if ( length($elementos[1]) > 0 );
+		$mensaje = $mensaje."Correspondiente al archivo: ".$elementos[2]."\n"if ( length($elementos[2]) > 0 );
+	}
+
+	# imprimo los mensajes por pantalla y archivo.
+	print $mensaje;
+
+	if ( $persistir eq 1 ) {
+
+		$encabezado = "Consultar donde se produjo la mayor cantidad de hallazgos.\n" if ( $seleccion eq 1 );
+		$encabezado = "Consultar si hubo hallazgos nulos.\n" if ( $seleccion eq 2 );
+
+		&imprimirEnArchivo($encabezado, $mensaje, $comando);
+	}
+}
+
+# -----------------------------------------------------------------------------#
+# Imprime el resultado obtenido en un archivo, requiere el mensaje y el comando
+# ingresado.
+#
+# parámetro 1: encabezado a imprimir.
+# parámetro 2: mensaje a imprimir.
+# parámetro 3: comando a imprimir.
+
+sub imprimirEnArchivo {
+
+	my $encabezado = shift @_;
+	my $mensaje    = shift @_;
+	my $comando    = shift @_;
+
+	$nombreArchivo = nombreArchivoDeSalida();
+	open( FH, ">$nombreArchivo") || die "No se pudo crear el archivo de salida.\n";
+
+	print FH $encabezado;
+	print FH "\nExpresión lógica: ";
+
+	$comando =~ s/o/ o /g;
+	$comando =~ s/y/ y /g;
+	$comando =~ s/a/ nombre de archivo /;
+	$comando =~ s/p/ patron /;
+	$comando =~ s/s/ sistema /;
+	$comando =~ s/ +/ /g;
+
+	print FH $comando."\n\n";
+
+	print FH "Filtros:\n\n";
+
+	if ( $#patrones >= 0 ) {
+		print FH " Patrones: ";
+		print FH "$_ " foreach (@patrones);
+		print FH "\n";
+	}
+
+	if ( $#sistemas >= 0 ) {
+		print FH " Sistemas: ";
+		print FH "$_ " foreach (@sistemas);
+		print FH "\n";
+	}
+
+	if ( $#archivos >= 0 ) {
+		print FH " Nombres de archivo: ";
+		print FH "$_ " foreach (@archivos);
+		print FH "\n";
+	}
+
+	print FH "\nResultados:\n\n";
+	print FH $mensaje;
+	close FH;
+}
+
+# -----------------------------------------------------------------------------#
+# Evalúa cada línea de un archivo para determinar si cumple las restricciones
+# ingreadas mediante una expresión lógica. De ser así se carga el hash con los
+# resultados de la cantidad de hallazgos que se encuentran dentro de cada línea.
+#
+# parámetro 1: es el path al directorio
+# parámetro 2: es el nombre del archivo a leer.
+# parámetro 3: es una referencia al hash.
+
 sub evaluarArchivo {
 
 	my $dir     = shift(@_);	
 	my $archivo = shift(@_);
 	my $hash    = shift(@_);
-	my $todos   = shift(@_);
+	my $ops	    = shift(@_);
+	my $flogicas= shift(@_);
 
 	open( fileHandler, $dir."/".$archivo );
 
-	$cantFunciones = @flogicas;
+	my $patron = substr( $archivo, index($archivo, ".")+1 );
 
-	my $evaluar_patrones = ( $#patrones >= 0 ) ? 1:0;
-	my $evaluar_sistemas = ( $#sistemas >= 0 ) ? 1:0;
-	my $evaluar_archivos = (( $#archivos >= 0) or ($todos eq 1)) ? 1:0;
+	while( ( $linea = <fileHandler>) and ( length(chop($linea)) > 0 ) ){
 
-	if ($evaluar_patrones eq 1) {
+		#obtengo algunos campos a partir de una linea.
+		my @campos = split( $SEPARADOR_GLOBALES, $linea );
 
-		$patrones{$_} = 1 foreach (@patrones);
-	}
+		my $hallazgos= $campos[2];
+		my $filename = $campos[1];
 
-	if ($evaluar_sistemas eq 1) {
-
-		$sistemas{$_} = 1 foreach (@sistemas);
-	}
-
-	if ($evaluar_archivos eq 1) {
-
-		$archivos{$_} = 1 foreach (@archivos);
-	}
-
-	$patron = $archivo;
-	$patron =~ s/^[^.]+.(.*)$/\1/;
-
-	while ( ( chop ($linea = <fileHandler>) ) and ( length($linea) > 0 ) ){
-
-		@campos = split( $SEPARADOR_GLOBALES, $linea );
+		my $a1 = index( $filename, "|" );
+		my $a2 = index( $filename, "_" );
+		my $sistema = substr($filename, $a1+1, $a2-$a1-1);
 
 		# verifico si el registro cumple con los filtros ingresados.
+		$evaluacionDeOperandos{"p"} = (exists($patrones{$patron } )) ? 1:0;
+		$evaluacionDeOperandos{"s"} = (exists($sistemas{$sistema} )) ? 1:0;
+		$evaluacionDeOperandos{"a"} = (exists($archivos{$filename}) or exists($archivos{"*"})) ? 1:0;
 
-		if ( $evaluar_patrones eq 1 ) { 
+		# genero un vector con los posibles campos de la clave del hash.
+		my @valores;
 
-			$evaluacionDeOperandos{"p"} = (exists($patrones{ $patron })) ? 1:0;
-		}
+		push( @valores, $patron  );
+		push( @valores, $sistema );
+		push( @valores, $filename);
 
-		if ( $evaluar_archivos eq 1 ) {
-
-			$evaluacionDeOperandos{"a"} = (exists($archivos{ $campos[1] })) ? 1:0;
-
-			$evaluacionDeOperandos{"a"} = 1 if ( $todos eq 1);
-		}
-
-		if ( $evaluar_sistemas eq 1 ) {
-
-			my $sistema = $campos[1];
-
-			$evaluacionDeOperandos{"s"} = 0;
-			if ( $sistema =~ s/^([^_]*)_([^_]*)$/\1/ ) {
-
-				$evaluacionDeOperandos{"s"} = (exists($sistemas{ $sistema })) ? 1:0;
-			}
-		}
-
-		# verifico si el registro cumple con la expresión lógica.
-		if ( &validarExpresionLogica( $tipoExpresion, \%evaluacionDeOperandos, \@operandos, \@flogicas) eq 1 ) {
-
-			$hash->{$patron."|".$campos[1]} += $campos[2] ;
-		}
+		# genero la clave y la agrego al hash.
+		my @claves = &generarClaves( \%evaluacionDeOperandos, $ops, $flogicas, \@valores );
+		$hash->{$_} += $hallazgos foreach ( @claves );
 	}
 	close( fileHandler );
 }
 
 # -----------------------------------------------------------------------------#
-sub validarExpresionLogica {
+# Dada una expresión lógica se encuentra descompuesta entre los operadores
+# ($ops) y los conectores lógicos ($f) se hace una validación sobre la expresión
+# y de ser válida se genera la correspondiente clave de hash a partir de los 
+# valores pasados por parámetro correspondiente a cada uno de los operandos.
+#
+# parámetro 1: es el resultado de la evaluación de cada operando.
+# parámetro 2: es el conjunto de operandos.
+# parámetro 3: es la operación lógica a aplicar sobre el i-ésimo operando.
+# parámetro 4: es el conjunto de valores correspondiente a cada operando.
 
-	my $tipoExpresion	   = shift(@_);
-	my $evaluacionDeOperandos  = shift(@_);
-	my $operandos		   = shift(@_);
-	my $flogicas		   = shift(@_);
+sub generarClaves {
 
-	$resultado = 0;
-
-	$i = 0;
-	push ( @orden, $i++ ) while ( $i < 3);
-
-	if ( $tipoExpresion eq 3 ) {
-
-		shift (@orden);
-		push  (@orden, 0);
-	}
-
-	if ( $tipoExpresion eq 1 ) {
-
-		$resultado = $evaluacionDeOperandos->{$operandos->[ $orden[0] ]};
-	}
-
-	else {
+	my $evaluacionOperando  = shift(@_);
+	my $ops			= shift(@_);
+	my $f			= shift(@_);
+	my $valores 	  	= shift(@_);
 	
-		$aux0 = $evaluacionDeOperandos->{$operandos->[$orden[0]]};
-		$aux1 = $evaluacionDeOperandos->{$operandos->[$orden[1]]};
+	my $i = -1;
+	my $ans = 0;
+	my @claves;
+ 
+	foreach $op (@{$ops}) { ++$i;
 
-		$resultado = ( $aux0 and $aux1 ) if ( $flogicas->[0] eq "y" ) ;
-		$resultado = ( $aux0 or  $aux1 ) if ( $flogicas->[0] eq "o" ) ;
+		if ( $f->[$i] eq "o" ) {
 
-		# si tengo dos funciones logicas
-		if ( ($#flogicas +1 ) eq 2 ) {
+			$ans = ( $ans or  $evaluacionOperando->{$op} );
 
-			$aux2 = $evaluacionDeOperandos->{$operandos->[$orden[2]]};
 
-			$resultado = ( $resultado and $aux2 ) if ( $flogicas->[1] eq "y" ) ;
-			$resultado = ( $resultado or  $aux2 ) if ( $flogicas->[1] eq "o" ) ;
+			if ( ( $ans eq 1 ) and ( $evaluacionOperando->{$op} eq 1 ) ) {
+
+				&generarClaveTipoO(\@claves, $valores, $op);
+			}
+		}
+
+		if ( $f->[$i] eq "y" ) {
+
+			$ans_ant = $ans;
+
+			$ans = ( $ans and $evaluacionOperando->{$op} );
+
+			if ( ( $ans eq 1 ) and ( $evaluacionOperando->{$op} eq 1 ) ) {
+
+				&generarClaveTipoY(\@claves, $valores, $op);
+			}
+
+			pop(@claves) if ( ( $ans_ant eq 1 ) and ( $ans eq 0 ) );
 		}
 	}
 
-	return ($resultado);
+	# elimino las claves si la expresión evaluada no es válida.
+	@claves = () if ( $ans eq 0 );
+
+	return @claves;
+}
+
+# -----------------------------------------------------------------------------#
+# Agrega una nueva clave con el valor del campo correspondiente al operador $op
+# al arreglo de claves pasadas por parámetros.
+#
+# parámetro 1: es una referencia a un arreglo de claves.
+# parámetro 2: es una referencia a un arreglo de valores de cada operador.
+# parámetro 3: es el operador.
+
+sub generarClaveTipoO {
+
+	my $claves  = shift(@_);
+	my $valores = shift(@_);
+	my $op	    = shift(@_);
+
+	my @clave;
+
+	push( @clave, ( $op eq "p" ) ? $valores->[0] : "" );
+	push( @clave, ( $op eq "s" ) ? $valores->[1] : "" );
+	push( @clave, ( $op eq "a" ) ? $valores->[2] : "" );
+
+	push( @{$claves}, join( $SEPARADOR_HASH, @clave) );
+}
+
+# -----------------------------------------------------------------------------#
+# Agrega el valor del campo correspondiente al operador $op al arreglo de claves
+# pasadas por parámetros.
+#
+# parámetro 1: es una referencia a un arreglo de claves.
+# parámetro 2: es una referencia a un arreglo de valores de cada operador.
+# parámetro 3: es el operador.
+
+sub generarClaveTipoY {
+
+	my $claves  = shift(@_);
+	my $valores = shift(@_);
+	my $op	    = shift(@_);
+
+	my $i = 0;
+	foreach (@{$claves} ) {
+
+		my @elementos = &obtenerElementos($_);
+
+		$clave[0] = ( $op eq "p" ) ? $valores->[0] : $elementos[0];
+		$clave[1] = ( $op eq "s" ) ? $valores->[1] : $elementos[1];
+		$clave[2] = ( $op eq "a" ) ? $valores->[2] : $elementos[2];
+
+		$claves->[$i++]= join( $SEPARADOR_HASH, @clave);
+	}
+}
+
+# -----------------------------------------------------------------------------#
+# Obtiene los elementos de una clave
+#
+# parámetro 1: clave
+#
+# devuelve: un arreglo de elementos que conforman la clave.
+
+sub obtenerElementos {
+	my $clave = shift(@_);
+
+	my @elementos;
+
+	my $a1 = index( $clave, $SEPARADOR_HASH);
+	my $a2 = index( $clave, $SEPARADOR_HASH, $a1+1);
+
+	push(@elementos, substr($clave, 0, $a1) );
+	push(@elementos, substr($clave, $a1+1, $a2-$a1-1) );
+	push(@elementos, substr($clave, $a2+1) );
+
+	return @elementos;
 }
