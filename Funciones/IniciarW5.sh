@@ -157,17 +157,22 @@ then
 
 	echo -e "Logs de Auditoria del Sistema: $LOGDIR/IniciarW5$LOGEXT \nEstado del sistema: INICIALIZADO"
 
-	
-	if [ `ps -ef | grep -c DetectaW5.sh` -eq 1 ]; #para saber si el demonio está corriendo (si vale 1 no está corriendo)
-	then 		
-		#nohup "$BINDIR/DetectaW5.sh"  > /tmp/stdoutDetecta.txt 2> /tmp/stderrDetecta.txt & #correr en background
-		 bash "$BINDIR/DetectaW5.sh"  > /tmp/stdoutDetecta.txt 2> /tmp/stderrDetecta.txt & #correr en background
-	fi 
+	if [ $(ps -a | grep DetectaW5.sh | grep -v grep | wc -l | tr -s "\n") -gt 2 ]; then
+		MYPID=`pidof -x DetectaW5.sh`
+		$BINDIR/LoguearW5.sh DetectaW5.sh -I "$1 ya esta siendo ejecutado [${MYPID}]"
+		
+	else 
+		bash "$BINDIR/DetectaW5.sh"  > /tmp/stdoutDetecta.txt 2> /tmp/stderrDetecta.txt & #correr en background
+		$BINDIR/LoguearW5.sh BuscarW5.sh -I "OK"
+	fi
+
+ 
 	
 	sleep 2s #espera
 		
 	if [ `ps -ef | grep -c DetectaW5.sh` -gt 1 ]; #para saber si se inicializo el demonio en forma correcta
 	then
+		export INICIO=1 #seteo INICIO en 1, el proceso se Inició correctamente.
 		echo "Demonio corriendo bajo el número: `ps -ef | grep DetectaW5.sh |grep -v 'grep'|grep -o '[0-9]*' |sed 1q`"
 		$BINDIR/LoguearW5.sh IniciarW5.sh -I "Demonio corriendo bajo el número: `ps -ef | grep DetectaW5.sh |grep -v grep|grep -o '[0-9]*' |sed 1q`" 
 		#para saber el número busco las lineas de ps que tengan Detecta, que no tengan grep. Me quedo con los numeros con -o y con el sed devuelve solo la primer linea
@@ -175,7 +180,7 @@ then
 
 	echo -e "Proceso de Instalación Concluido"
 	$BINDIR/LoguearW5.sh IniciarW5.sh -I "Proceso de Instalación Concluido"
-	export INICIO=1 #seteo INICIO en 1, el proceso se Inició correctamente.
+	
 	return 0	
 else
 	echo -e "No es posible reinicializar el sistema \n Proceso de Inicialización Cancelado"	# variable INICIO esta en 1
