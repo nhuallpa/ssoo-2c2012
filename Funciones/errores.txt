@@ -11,6 +11,9 @@ Codigo_de_error tipo cant_argumentos mensaje
 10 E 1 Archivo @@1 rechazado por sistema vencido
 11 E 1 Archivo @@1 rechazado por nombre incorrecto
 12 E 1 Archivo @@1 rechazado por fecha incorrecta
-13 E 1 Nombre de archivo @@1 inválido
+13 E 1 Nombre de archivo @@1 inválido 
 14 SE 1 No existe Directorio de recibidos @@1
 15 SE 1 No existe Directorio de Rechazos @@1
+16 SE 0 Archivos maestros inexistentes
+17 SE 0 Faltan directorios necesarios para correr el proceso
+18 E 0 Variables de directorios no inicializadas
