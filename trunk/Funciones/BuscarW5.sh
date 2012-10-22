@@ -49,9 +49,8 @@ verificarIni() {
 	#inicializo las variables para usarlas
 	PROCESO=`basename $0`
 	CORRIENDO=false
-
 	if [ -z "$INICIO" ]; then 
-		mostrar "BuscarW5: Variable INICIO no definida"
+		mostrar "BuscarW5: Variable INICIO=$INICIO no definida"
 		exit 1
 	fi
 	if [ "$INICIO" -ne 1 ]; then
