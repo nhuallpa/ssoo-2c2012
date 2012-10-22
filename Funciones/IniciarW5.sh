@@ -1,26 +1,23 @@
 #! /bin/bash
 
+DIRACT=`pwd`
+
+if [ -f "InstalaW5.conf" ]; then
+
+while  read -r LINEA 
+do
+	VAR=$( echo $LINEA | cut -f 1 -d '=' )
+	VALOR=$( echo $LINEA | cut -f 2 -d '=' )
+	export "$VAR=$VALOR"
+done < "$DIRACT/InstalaW5.conf"
+fi
+
 if [ ! $INICIO ]; #Valido que no haya sido Iniciado antes
 then  
-
-
-######################################################## SACAR
-#	cd ..	
-#	export MAEDIR="$PWD/MAEDIR"
-#	export BINDIR="$PWD/BINDIR"
-#	export ARRIDIR="$PWD/ARRIDIR"
-#	export RECHDIR="$PWD/RECHDIR"
-#	export ACEPDIR="$PWD/ACEPDIR"
-#	export PROCDIR="$PWD/PROCDIR"
-#	export LOGDIR="$PWD/LOGDIR"
-#	export REPODIR="$PWD/REPODIR"
-#	export GRUPO="$PWD"
-#########################################################
 
 	#cd $BINDIR
 	cd ..
 	export PATH=$PATH:$BINDIR:$MAEDIR:$ARRIDIR:$RECHDIR:$ACEPDIR:$PROCDIR:$LOGDIR:$REPODIR
-
 	
 	$BINDIR/LoguearW5.sh IniciarW5.sh -I "Inicio de Ejecución"
 	
