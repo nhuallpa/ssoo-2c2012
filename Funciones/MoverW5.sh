@@ -15,9 +15,9 @@ ERROR_PARAMETROS=1
 ERROR_ORIGEN_NO_EXISTE=2
 ERROR_DESTINO_NO_EXISTE=3
 
-origen=$1
-destino=$2
-comando=$3 #opcional
+origen="$1"
+destino="$2"
+comando="$3" #opcional
 
 # chequeo el pasaje parametros obligatorios
 if [ -z "$origen" ]
@@ -33,7 +33,7 @@ then
 fi
 
 # chequeo existencia del archivo de origen
-if [ ! -e $origen ] 
+if [ ! -e "$origen" ] 
 then
 	echo "El archivo de origen '$origen' NO existe"
 	exit $ERROR_ORIGEN_NO_EXISTE
@@ -65,11 +65,11 @@ then
 	SEC=`ls -1 $archivosfamilia | grep -o '\.[0-9]*$' | cut -c2-10 | sort -n | tail -1`
 	let SEC=$SEC+1
 
-	cp $origen $destino"/"$origenFamilia"."$SEC
-	rm $origen
+	cp "$origen" $destino"/"$origenFamilia"."$SEC
+	rm "$origen"
 else
-	cp $origen $destino"/"$origenFamilia".0"
-	rm $origen
+	cp "$origen" $destino"/"$origenFamilia".0"
+	rm "$origen"
 fi
 
 # Si terminó bien el script, devuelvo 0
