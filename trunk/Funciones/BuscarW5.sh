@@ -1,10 +1,4 @@
 #bin/bash
-#
-#	Se necesita las siguientes variables definidas en el ambiente
-#   antes de ejecutarse
-#	$MAEDIR $ACEPDIR $RECHDIR $PROCDIR $BINDIR $CONFDIR $GRUPO
-#	SECUENCIA2 : secuenciador para el ciclo buscar
-#
 #########################################
 #					
 #	Sistemas Operativos 75.08	
@@ -109,9 +103,7 @@ registrarGlobales() {
 	if [ $hallasgo -eq 0 ] 
 	then	
 		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo:$archivo - NO tiene hallasgos con PAT_ID:$pat_id"	
-		CANT_ARCH_SIN_HALLASGOS=$((CANT_ARCH_SIN_HALLASGOS+1))
 	else
-		CANT_ARCH_CON_HALLASGOS=$((CANT_ARCH_CON_HALLASGOS+1))
 		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo:$archivo - Tiene $hallasgo hallasgos con PAT_ID:$pat_id"	
 	fi
 
@@ -127,14 +119,20 @@ grabarBloque() {
 	local hasta_relativo=$4
 	local pad_id=$5
 
+	local cantLinArch=$(wc -l "$ACEPDIR/$archivo" | sed 's-\(^[0-9]*\).*-\1-')
 	local nroReg_desde=$((nroReg+desde_relativo-1))
 	local nroReg_hasta=$((nroReg+hasta_relativo-1))
 	nroReg_actual=$nroReg_desde
 	while [ $nroReg_actual -le $nroReg_hasta ]
 	do
-		local resultado=$(head -n $nroReg_actual $ACEPDIR"/"$archivo | tail -1)
-		registrarResultado "$archivo" $nroReg_actual "$resultado" $pat_id
-		nroReg_actual=$((nroReg_actual+1))
+		if [ $nroReg_actual -le $cantLinArch ]; then # Valido que no se pase de las lineas del archivo
+			local resultado=$(head -n $nroReg_actual $ACEPDIR"/"$archivo | tail -1)
+			registrarResultado "$archivo" $nroReg_actual "$resultado" $pat_id
+			nroReg_actual=$((nroReg_actual+1))
+		else
+			$BINDIR/LoguearW5.sh BuscarW5.sh -I "El bloque requerido supera las lineas totales del archivo"
+			continue
+		fi
 	done
 }
 # Recorre cada linea y aplica el patron
@@ -159,6 +157,7 @@ procesarLineas(){
 		fi
 	done < $ACEPDIR"/"$archivo
 	registrarGlobales $archivo $cantHallasgos $exp $pat_con $desde $hasta $pat_id
+	echo "$cantHallasgos"
 }
 
 # Recorre cada linea y aplica el patron
@@ -186,6 +185,7 @@ procesarCaracteres(){
 		fi
 	done < $ACEPDIR"/"$archivo
 	registrarGlobales $archivo $cantHallasgos $exp $pat_con $desde $hasta $pat_id
+	echo "$cantHallasgos"
 }
 
 verificarIni
@@ -193,6 +193,9 @@ marcarInicio
 totalArchivosDispo=$(ls -1 $ACEPDIR | wc -l)
 nroArchivo=0
 # empezamos a leer todos los archivos del directorio de acaptados
+
+$BINDIR/LoguearW5.sh BuscarW5.sh -I "Se encontraron los siguiente archivo a procesar:"
+$BINDIR/LoguearW5.sh BuscarW5.sh -I "$(ls -1 $ACEPDIR)"
 for file in $(ls $ACEPDIR)
 do
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo a procesar: $file"
@@ -213,20 +216,32 @@ do
 			bash $BINDIR/LoguearW5.sh BuscarW5.sh -E 9 "$file"
 			CANT_ARCH_SIN_PATRON=$((CANT_ARCH_SIN_PATRON+1))
 		else
+			acumHallasgos=0
+
 			# recorremos cada uno de los patrones encontrados
 			for regMae in $(grep $sistema $ARCHPATRONES | cut -f 1,4-6 -d',')
 			do
+				hallasgosParciales=0
 				PAT_ID=$(echo "$regMae" | cut -f1 -d',')
 				PAT_CON=$(echo "$regMae" | cut -f2 -d',')
 				PAT_DESDE=$(echo "$regMae" | cut -f3 -d',')
 				PAT_HASTA=$(echo "$regMae" | sed 's/.*,\([0-9]*\).*/\1/')   # Extraemos solo los numeros
 				PAT_RE=$(grep "^$PAT_ID," "$ARCHPATRONES" | cut -f2 -d',' | sed 's/'\''//g' ) # Extraemos las expreciones regulares sin comillas simples, porque sino no funcionaba el grep
 				if [ "$PAT_CON" = "linea" ]; then 
-					procesarLineas $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $PAT_ID $PAT_CON 
+					hallasgosParciales=$(procesarLineas $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $PAT_ID $PAT_CON)
 				else
-					procesarCaracteres $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $PAT_ID $PAT_CON
+					hallasgosParciales=$(procesarCaracteres $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $PAT_ID $PAT_CON)
 				fi		
+				acumHallasgos=$((acumHallasgos+hallasgosParciales))
 			done
+
+			if [ "$acumHallasgos" -eq 0 ] 
+			then	
+				CANT_ARCH_SIN_HALLASGOS=$((CANT_ARCH_SIN_HALLASGOS+1))
+			else
+				CANT_ARCH_CON_HALLASGOS=$((CANT_ARCH_CON_HALLASGOS+1))
+			fi
+			
 			bash $BINDIR/MoverW5.sh "$ACEPDIR/$file" "$PROCDIR"
 		fi
 	fi

@@ -19,9 +19,6 @@
 
 
 
-#source global.sh
-COMANDO="DetectaW5"
-
 
 chequeaProceso(){
 
@@ -94,6 +91,7 @@ compararFecha(){
 
 
 # esto se va a comentar luego. Inicia afuera
+COMANDO="DetectaW5"
 LOOP=true
 CANT_LOOP=1
 ESPERA=5
@@ -126,10 +124,10 @@ fi
 while ([ $CANT_LOOP ])
 do
    if ([ -d $ARRIDIR ]) then
+	IFS=$'\n'
         ARCHIVOS=`ls -p $ARRIDIR | grep -v '/$'`
         for PARAM in $ARCHIVOS
         do  
-	  
           case "$PARAM" in 
 	  *_*-*-*) VALNAME=`echo "correcto"`;;
           *) VALNAME=`echo "incorrecto"`;;
@@ -196,20 +194,14 @@ do
 
    let CANT_LOOP=CANT_LOOP+1
 
-
-
    ENRECIBIDOS=`ls -1 "$ACEPDIR" | wc -l | awk '{print $1}'`
 
-   #echo "ENRECIBIDOS $ENRECIBIDOS"
    if ([ $ENRECIBIDOS -gt 0 ]) then
       BUSCARW5_PID=`chequeaProceso BuscarW5.sh $$`
       if [ -z "$BUSCARW5_PID" ]; then
 	  bash BuscarW5.sh &
-#          bash LoguearW5.sh "$COMANDO" "-I" "BuscarW5 corriendo bajo el numero de proceso: <`chequeaProceso BuscarW5.sh $$`>"
       else
-#          bash LoguearW5.sh "$COMANDO" "-A" "Demonio BuscarW5 ya ejecutado bajo PID: <$BUSCARW5_PID>" 
           echo "Demonio BuscarW5 ya ejecutado bajo PID: <$BUSCARW5_PID>" 
-#          exit 1
       fi
    fi
 
