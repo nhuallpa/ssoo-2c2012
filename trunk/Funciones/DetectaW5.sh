@@ -164,7 +164,6 @@ do
   		     COMPDESDE=`compararFecha $FECHA $START_DATE`
 		     COMPHASTA=`compararFecha $FECHA $END_DATE`
  
-		     echo "$CANT_LOOP"
  		     if ( ([ "$COMPDESDE" != "-1" ]) && ([ "$COMPHASTA" != "1" ]) )then 
 		        bash MoverW5.sh "$ARRIDIR/$PARAM"  "$ACEPDIR"
 		        bash LoguearW5.sh "$COMANDO" "-I" "Archivo $PARAM enviado"  
@@ -199,7 +198,7 @@ do
    if ([ $ENRECIBIDOS -gt 0 ]) then
       BUSCARW5_PID=`chequeaProceso BuscarW5.sh $$`
       if [ -z "$BUSCARW5_PID" ]; then
-	  bash BuscarW5.sh &
+	  bash BuscarW5.sh
       else
           echo "Demonio BuscarW5 ya ejecutado bajo PID: <$BUSCARW5_PID>" 
       fi

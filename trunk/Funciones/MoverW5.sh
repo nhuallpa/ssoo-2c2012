@@ -65,10 +65,10 @@ then
 	SEC=`ls -1 $archivosfamilia | grep -o '\.[0-9]*$' | cut -c2-10 | sort -n | tail -1`
 	let SEC=$SEC+1
 
-	cp "$origen" $destino"/"$origenFamilia"."$SEC
+	cp "$origen" "$destino""/"$origenFamilia"."$SEC
 	rm "$origen"
 else
-	cp "$origen" $destino"/"$origenFamilia".0"
+	cp "$origen" "$destino""/"$origenFamilia".0"
 	rm "$origen"
 fi
 

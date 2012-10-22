@@ -160,7 +160,7 @@ function controlar_tamanio {
     local MITAD_LINEAS=`expr $LINEAS / 2`
 
     sed "1,${MITAD_LINEAS}d" $FILE>${FILE}.aux		#copio la mitad del archivo de log y logueo un mensaje de error
-    mv ${FILE}.aux $FILE
+    mv "${FILE}.aux" "$FILE"
     echo "$FECHA-$USUARIO-$COMANDO-a-Log Excedido">>$FILE
   fi
 }

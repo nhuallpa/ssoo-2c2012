@@ -550,7 +550,7 @@ function defineLOGSize {
 		log "Defina el tamaño máximo para los archivos $LOGEXT en Kbytes ($LOGSIZE):"; read userlogsize
 		
 		if [ "$userlogsize" != "" ]; then
-			validInput=`isPositiveNumber $userlogsize`
+			validInput=`isValidPositiveNumber $userlogsize`
 			if [ "$validInput" = "0" ]; then
 				logOnly "El usuario ingreso $userlogsize KBytes como tamaño maximo de archivo de log"
 				LOGSIZE=$userlogsize;

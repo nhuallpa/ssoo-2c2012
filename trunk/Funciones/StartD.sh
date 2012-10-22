@@ -26,9 +26,12 @@ chequeaProceso(){
   
 }
 
-chequeaVariables(){
+chequearVariables(){
 
-  if ( [ "$BINDIR" != "" ]  && [ "$GRUPO" != "" ] && [ "$ARRIDIR" != "" ] && [ "$RECHDIR" != "" ] && [ "$MAEDIR" != "" ] ) then
+
+
+  if ( [ "$BINDIR" != "" ]  && [ "$GRUPO" != "" ] && [ "$ARRIDIR" != "" ] && [ "$RECHDIR" != "" ] && [ "$MAEDIR" != "" ] && [ "$PROCDIR" != "" ] &&        	
+       [ "$CONFDIR" != "" ] && [ "$ACEPDIR" != "" ] && [ "$LOGDIR" != "" ]) then
     echo 0
   else
     echo 1
@@ -36,7 +39,7 @@ chequeaVariables(){
 
 }
 
-chequeaArchivosMaestros(){
+chequearMaestros(){
 
   SERVICIOS=$MAEDIR/sistemas
   PATRONES=$MAEDIR/patrones
@@ -52,52 +55,38 @@ chequeaArchivosMaestros(){
     return
   fi
   
-  #Chequeo que los archivos tengan permisos de lectura
-  if [ ! -r "$SERVICIOS" ] ; then
-    echo 1
-    return
-  fi
-  
-  if [ ! -r "$PATRONES" ] ; then
-    echo 1
-    return
-  fi
-  
-  
   echo 0
   return
 }
 
 
-chequeaDirectorios(){
+chequearDirectorios(){
 
   # Chequeo que existan los directorios
-  if ([ ! -d "$GRUPO" ] && [ ! -d "$LOGDIR" ] && [ ! -d "$MAEDIR" ] && [ ! -d "$ARRIDIR" ] && [ ! -d "$RECHDIR" ]) then
+  if ( [ ! -d "$BINDIR" ]  && [ ! -d "$GRUPO" ] && [ ! -d "$ARRIDIR" ] && [ ! -d "$RECHDIR" ] && [ ! -d "$MAEDIR" ] && [ ! -d "$PROCDIR" ] && 
+       [ ! -d "$CONFDIR" ] && [ ! -d "$ACEPDIR" ] && [ ! -d "$LOGDIR" ] ) then
     echo 1
-    return
+  else
+    echo 0
   fi
-  echo 0
-  return
 }
 
   # Si alguna variable no esta definida error en la instalación
-  if [ `chequeaVariables` -eq 1 ] ; then
-    echo 1
+  if [ `chequearVariables` -eq 1 ] ; then
+    bash LoguearW5.sh "$COMANDO" -E 18
+    exit 1
   fi
 
   #CHEQUEAR INSTALACION
 
-  if [ `chequeaDirectorios` -eq 1 ] ; then
-    echo loguearW5.sh "$COMANDO" "SE" "Directorios necesarios no creados en la instalacion o no disponibles" 
-    echo "Error: Directorios necesarios no creados en la instalacion o no disponibles"
+  if [ `chequearDirectorios` -eq 1 ] ; then
+    bash LoguearW5.sh "$COMANDO" -SE 17
     exit 1
   fi
 
-  echo $MAEDIR
-  
-  if [ `chequeaArchivosMaestros` -eq 1 ] ; then
-    echo loguearW5.sh "$COMANDO" "SE" "Archivos maestros no accesibles/disponibles"
-    echo "Error: Archivos maestros no accesibles/disponibles"
+ 
+  if [ `chequearMaestros` -eq 1 ] ; then
+    bash LoguearW5.sh "$COMANDO" -SE 16
     exit 1
   fi
 
@@ -105,9 +94,7 @@ chequeaDirectorios(){
   DETECTAR_PID=`chequeaProceso DetectaW5.sh $$`
   if [ -z "$DETECTAR_PID" ]; then     
     bash DetectaW5.sh &
-    echo loguearW5.sh "$COMANDO" "I" "Demonio DetectaW5 corriendo bajo el numero de proceso: <`chequeaProceso DetectaW5.sh $$`>" 
   else
-    echo loguearW5.sh "$COMANDO" "E" "Demonio DetectaW5 ya ejecutado bajo PID: <`chequeaProceso DetectaW5.sh $$`>" 
-    echo "Error: Demonio DetectaW5 ya ejecutado bajo PID: <`chequeaProceso DetectaW5.sh $$`>"
+    bash LoguearW5.sh "$COMANDO" -I "Demonio DetectarW5 ya ejecutado (PID: <`chequeaProceso DetectaW5.sh $$`>)" 
     exit 1
   fi

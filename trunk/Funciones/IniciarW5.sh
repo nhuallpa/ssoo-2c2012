@@ -160,7 +160,8 @@ then
 	
 	if [ `ps -ef | grep -c DetectaW5.sh` -eq 1 ]; #para saber si el demonio está corriendo (si vale 1 no está corriendo)
 	then 		
-		nohup "$BINDIR/DetectaW5.sh"  > /tmp/stdoutDetecta.txt 2> /tmp/stderrDetecta.txt & #correr en background
+		#nohup "$BINDIR/DetectaW5.sh"  > /tmp/stdoutDetecta.txt 2> /tmp/stderrDetecta.txt & #correr en background
+		 bash "$BINDIR/DetectaW5.sh"  > /tmp/stdoutDetecta.txt 2> /tmp/stderrDetecta.txt & #correr en background
 	fi 
 	
 	sleep 2s #espera
