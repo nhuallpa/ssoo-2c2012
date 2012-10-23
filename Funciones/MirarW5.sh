@@ -43,7 +43,7 @@ case $2 in
          -f|--file )
              archivo=$1           #guardo nombre del archivo
 	     ;;
-         ?)
+         *)
              echo -e $MODO_DE_USO
              exit;;
 esac
@@ -51,10 +51,10 @@ esac
 #La extensión por default será “log”  (si no se definio en la configuracion o var de ambiente).
 if [ -z $LOGEXT ]
 then  
-   LOGEXT="log"
+   LOGEXT=".log"
 fi
 
-FILE=$LOGDIR/$archivo.$LOGEXT
+FILE="$LOGDIR/$archivo$LOGEXT"
 
 if [ -z $FILE ]
 then
