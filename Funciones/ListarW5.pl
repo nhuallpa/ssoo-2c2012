@@ -912,7 +912,7 @@ sub filtrarPorRango {
 	my $hallazgos = 0;
 
 	print "Archivos con expresiones en el rango $limite_inferior - $limite_superior .\n";
-	print "\n Archivo\tHallazgos\n";
+	print "\n Archivo\t\tHallazgos\n";
 
 	foreach ( keys ( %hash ) ) {
 
@@ -935,7 +935,7 @@ sub filtrarPorRango {
 		if ( open( FH, ">$nombre_archivo") ) {
 
 			print FH "Archivos con expresiones en el rango $limite_inferior - $limite_superior .\n";
-			print FH "\n Archivo\tHallazgos\n";
+			print FH "\n Archivo\t\tHallazgos\n";
 
 			foreach ( keys ( %hash ) ) {
 
@@ -979,7 +979,7 @@ sub filtrarValores {
 
 	my $cant = @claves;
 
-	$limite = @claves if ( $cant < $limite );
+	$limite = $cant if ( $cant < $limite );
 	
 	for ( my $i = 0; $i < $limite; ++$i) {
 		push(@vector, $claves[$i]);
@@ -987,7 +987,7 @@ sub filtrarValores {
 
 	&burbujeo($orden, $hash, \@vector);
 
-	for ( my $i = $limite +1 ; $i < $cant; ++$i ) {
+	for ( my $i = $limite; $i < $cant; ++$i ) {
 
 		push(@vector, $claves[$i]);
 		&burbujeo($orden, $hash, \@vector);
