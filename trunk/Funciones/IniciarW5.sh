@@ -1,16 +1,16 @@
 #! /bin/bash
 
-#DIRACT=`pwd`
+DIRACT=`pwd`
 
-#if [ -f "InstalaW5.conf" ]; then
+if [ -f "InstalaW5.conf" ]; then
 
-#while  read -r LINEA 
-#do
-#	VAR=$( echo $LINEA | cut -f 1 -d '=' )
-#	VALOR=$( echo $LINEA | cut -f 2 -d '=' )
-#	export "$VAR=$VALOR"
-#done < "$DIRACT/InstalaW5.conf"
-#fi
+while  read -r LINEA 
+do
+	VAR=$( echo $LINEA | cut -f 1 -d '=' )
+	VALOR=$( echo $LINEA | cut -f 2 -d '=' )
+	export "$VAR=$VALOR"
+done < "$DIRACT/InstalaW5.conf"
+fi
 
 if [ ! $INICIO ]; #Valido que no haya sido Iniciado antes
 then  
