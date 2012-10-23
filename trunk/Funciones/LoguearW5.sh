@@ -153,8 +153,8 @@ function escribir_log {
 
 function controlar_tamanio {
   local filesize=`stat -c%s "$FILE"`
-
-  if [ $filesize -gt $LOGSIZE ]
+  local LOGSIZE_K=$((LOGSIZE*1024))
+  if [ $filesize -gt $LOGSIZE_K ]
   then 
     local LINEAS=`grep -c ".*" $FILE`
     local MITAD_LINEAS=`expr $LINEAS / 2`
