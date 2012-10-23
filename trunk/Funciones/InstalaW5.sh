@@ -160,7 +160,7 @@ function isValidString {
 #---------- Funciones de alto nivel ----------
 
 ## Comprueba que perl este instalado, y que la version sea igual o mayor a la requerida
-function isPerlIstalled {
+function isPerlInstalled {
 	log "Comprobando version de Perl..";
 	declare required_version=5
 	declare perl_version=`perl -v | sed -n 's/.*v\([0-9]*\)\.[0-9]*\.[0-9]*.*/\1/p'`
@@ -891,7 +891,7 @@ function performInstallFromStep {
 	fi
 
 	#STEP 3 Chequear que PERL este instalado
-	isPerlIstalled  #Si no esta instalado, esta funcion sale con error 1
+	isPerlInstalled  #Si no esta instalado, esta funcion sale con error 1
 			
 	#STEP 4 Brinda la informacion de la instalacion
 	showInstallInformation
