@@ -1515,18 +1515,7 @@ sub imprimirResultadosDeConsultaGlobal {
 
 		{ ++$repeticiones if ( $max eq $hash{$_} ); }
 
-	# Comienzo a describir los mensajes de los resultados.
-	$mensaje = "No se hallaron coincidencias.\n" if ( $#refOrdenadas < 0 );
-
-	$mensaje = "No hay un único valor máximo.\n" if ( ( $repeticiones > 0 ) and ( $seleccion eq 1 ) );
-
-	$mensaje = "No hay un único valor nulo.\n"   if ( ( $repeticiones > 0 ) and ( $seleccion eq 2 ) );
-
-	$mensaje = "No se encontraron registros cuyo total de hallazgos sea nulo.\n" if ( ( $max ne 0 ) and ( $seleccion eq 2 ) );
-
-	$mensaje = "Se encontraron más de un registro cuyo total de hallazgos es nulo.\n" if ( ( $repeticiones > 0 ) and ( $max eq 0 ) and ( $seleccion eq 2 ) );
-
-	if ( ($#refOrdenadas >= 0 ) and ( $repeticiones eq 0 ) and ( $#refOrdenadas >= 0 ) and ( $repeticiones eq 0 ) ){
+	if ( ($#refOrdenadas >= 0 ) and ( $repeticiones eq 0 ) and ( ( $seleccion eq 1 ) or ( $seleccion eq 2) and ( $max eq 0 ) ) ){
 
 		$mensaje = "La máxima cantidad de hallazgos resultó ser: $max \n" if ( $seleccion eq 1 );
 
@@ -1537,6 +1526,19 @@ sub imprimirResultadosDeConsultaGlobal {
 		$mensaje = $mensaje."En el archivo global: ".$ARCH_GLOBALES.".".$elementos[0]."\n" if ( length($elementos[0]) > 0 );
 		$mensaje = $mensaje."Correspondiente al sistema: ".$elementos[1]."\n"if ( length($elementos[1]) > 0 );
 		$mensaje = $mensaje."Correspondiente al archivo: ".$elementos[2]."\n"if ( length($elementos[2]) > 0 );
+
+	} else {
+
+		# Comienzo a describir los mensajes de los resultados.
+		$mensaje = "No se hallaron coincidencias.\n" if ( $#refOrdenadas < 0 );
+
+		$mensaje = "No hay un único valor máximo.\n" if ( ( $repeticiones > 0 ) and ( $seleccion eq 1 ) );
+
+		$mensaje = "No hay un único valor nulo.\n"   if ( ( $repeticiones > 0 ) and ( $seleccion eq 2 ) );
+
+		$mensaje = "No se encontraron registros cuyo total de hallazgos sea nulo.\n" if ( ( $max ne 0 ) and ( $seleccion eq 2 ) );
+
+		$mensaje = "Se encontraron más de un registro cuyo total de hallazgos es nulo.\n" if ( ( $repeticiones > 0 ) and ( $max eq 0 ) and ( $seleccion eq 2 ) );
 	}
 
 	# imprimo los mensajes por pantalla y archivo.
