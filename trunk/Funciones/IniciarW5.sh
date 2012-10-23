@@ -159,6 +159,7 @@ then
 		$BINDIR/LoguearW5.sh DetectaW5.sh -I "$1 ya esta siendo ejecutado [${MYPID}]"
 		
 	else 
+		export INICIO=1 #seteo INICIO en 1, el proceso se Inició correctamente.
 		bash "$BINDIR/DetectaW5.sh"  > /tmp/stdoutDetecta.txt 2> /tmp/stderrDetecta.txt & #correr en background
 		$BINDIR/LoguearW5.sh BuscarW5.sh -I "OK"
 	fi
