@@ -13,13 +13,13 @@
 #
 # 3. Aplica los patrones usando contexto de linea ó caracter
 #
-# 4. Contabiliza hallasgoz y guarda resultados detallados y globales
+# 4. Contabiliza hallazgos y guarda resultados detallados y globales
 ARCHPATRONES=$MAEDIR/patrones
 CICLO=0
 
 
-CANT_ARCH_CON_HALLASGOZ=0
-CANT_ARCH_SIN_HALLASGOZ=0
+CANT_ARCH_CON_HALLAZGOS=0
+CANT_ARCH_SIN_HALLAZGOS=0
 CANT_ARCH_SIN_PATRON=0
 
 mostrar() {
@@ -73,8 +73,8 @@ verificarIni() {
 finalizarProceso(){
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "============================================================="
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "					Fin del Ciclo: $CICLO"
-	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos con Hallasgoz: $CANT_ARCH_CON_HALLASGOZ"
-	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin hallasgoz: $CANT_ARCH_SIN_HALLASGOZ"
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos con Hallazgos: $CANT_ARCH_CON_HALLAZGOS"
+	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin hallazgos: $CANT_ARCH_SIN_HALLAZGOS"
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin Patron: $CANT_ARCH_SIN_PATRON"
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "============================================================="
 
@@ -93,7 +93,7 @@ registrarResultado() {
 
 registrarGlobales() {
 	local archivo=$1
-	local hallasgo=$2
+	local hallazgo=$2
 	local exp=$3
 	local contexto=$4
 	local desde=$5
@@ -101,12 +101,12 @@ registrarGlobales() {
 	local pad_id=$7
 	if [ $hallasgo -eq 0 ] 
 	then	
-		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo:$archivo - NO tiene hallasgoz con PAT_ID:$pat_id"	
+		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo:$archivo - NO tiene hallazgos con PAT_ID:$pat_id"	
 	else
-		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo:$archivo - Tiene $hallasgo hallasgoz con PAT_ID:$pat_id"	
+		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo:$archivo - Tiene $hallazgo hallazgos con PAT_ID:$pat_id"	
 	fi
 
-	echo "$CICLO,$archivo,$cantHallasgoz,$exp,$pat_con,$desde,$hasta" >> "$PROCDIR"/rglobales.$pat_id
+	echo "$CICLO,$archivo,$hallazgo,$exp,"$pat_con",$desde,$hasta" >> "$PROCDIR"/rglobales.$pat_id
 }
 # Extrea un bloque de lineas de un archivo dependiendo
 # de un numero de linea de referencia, un linea desde relativo
@@ -144,19 +144,19 @@ procesarLineas(){
 	local pat_id=$5
 	local pat_con=$6
 	local nroReg=0
-	local cantHallasgoz=0
+	local cantHallazgos=0
 	while read -r linea  
 	do
 		nroReg=$((nroReg+1))	
 		local ENCONTRO=$(echo "$linea" | grep -c "$exp")
 		if [ "$ENCONTRO" -eq 1 ] 
 		then
-			cantHallasgoz=$((cantHallasgoz+1))
+			cantHallazgos=$((cantHallazgos+1))
 			grabarBloque "$archivo" $nroReg $desde $hasta $pad_id
 		fi
 	done < $ACEPDIR"/"$archivo
-	registrarGlobales $archivo $cantHallasgoz $exp $pat_con $desde $hasta $pat_id
-	echo "$cantHallasgoz"
+	registrarGlobales $archivo $cantHallazgos "$exp" $pat_con $desde $hasta $pat_id
+	echo "$cantHallazgos"
 }
 
 # Recorre cada linea y aplica el patron
@@ -169,7 +169,7 @@ procesarCaracteres(){
 	local hasta=$4
 	local pat_id=$5
 	local pat_con=$6
-	local cantHallasgoz=0
+	local cantHallazgos=0
 	nroReg=0
 	while read -r linea  
 	do
@@ -177,14 +177,14 @@ procesarCaracteres(){
 		local ENCONTRO=$(echo "$linea" | grep -c "$exp")
 		if [ "$ENCONTRO" -eq 1 ] 
 		then
-			cantHallasgoz=$((cantHallasgoz+1))
+			cantHallazgos=$((cantHallazgos+1))
 			local length=$((hasta-desde+1))
 			local resultado=${linea:$desde:$length}
 			registrarResultado "$archivo" $nroReg "$resultado" $pat_id
 		fi
 	done < $ACEPDIR"/"$archivo
-	registrarGlobales $archivo $cantHallasgoz $exp $pat_con $desde $hasta $pat_id
-	echo "$cantHallasgoz"
+	registrarGlobales $archivo $cantHallazgos "$exp" $pat_con $desde $hasta $pat_id
+	echo "$cantHallazgos"
 }
 
 verificarIni
@@ -215,30 +215,30 @@ do
 			bash $BINDIR/LoguearW5.sh BuscarW5.sh -E 9 "$file"
 			CANT_ARCH_SIN_PATRON=$((CANT_ARCH_SIN_PATRON+1))
 		else
-			acumHallasgoz=0
+			acumHallazgos=0
 
 			# recorremos cada uno de los patrones encontrados
 			for regMae in $(grep $sistema $ARCHPATRONES | cut -f 1,4-6 -d',')
 			do
-				hallasgozParciales=0
+				hallazgosParciales=0
 				PAT_ID=$(echo "$regMae" | cut -f1 -d',')
 				PAT_CON=$(echo "$regMae" | cut -f2 -d',')
 				PAT_DESDE=$(echo "$regMae" | cut -f3 -d',')
 				PAT_HASTA=$(echo "$regMae" | sed 's/.*,\([0-9]*\).*/\1/')   # Extraemos solo los numeros
 				PAT_RE=$(grep "^$PAT_ID," "$ARCHPATRONES" | cut -f2 -d',' | sed 's/'\''//g' ) # Extraemos las expreciones regulares sin comillas simples, porque sino no funcionaba el grep
 				if [ "$PAT_CON" = "linea" ]; then 
-					hallasgozParciales=$(procesarLineas $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $PAT_ID $PAT_CON)
+					hallazgosParciales=$(procesarLineas $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $PAT_ID $PAT_CON)
 				else
-					hallasgozParciales=$(procesarCaracteres $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $PAT_ID $PAT_CON)
+					hallazgosParciales=$(procesarCaracteres $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $PAT_ID $PAT_CON)
 				fi		
-				acumHallasgoz=$((acumHallasgoz+hallasgozParciales))
+				acumHallazgos=$((acumHallazgos+hallazgosParciales))
 			done
 
-			if [ "$acumHallasgoz" -eq 0 ] 
+			if [ "$acumHallazgos" -eq 0 ] 
 			then	
-				CANT_ARCH_SIN_HALLASGOZ=$((CANT_ARCH_SIN_HALLASGOZ+1))
+				CANT_ARCH_SIN_HALLAZGOS=$((CANT_ARCH_SIN_HALLAZGOS+1))
 			else
-				CANT_ARCH_CON_HALLASGOZ=$((CANT_ARCH_CON_HALLASGOZ+1))
+				CANT_ARCH_CON_HALLAZGOS=$((CANT_ARCH_CON_HALLAZGOS+1))
 			fi
 			
 			bash $BINDIR/MoverW5.sh "$ACEPDIR/$file" "$PROCDIR"
