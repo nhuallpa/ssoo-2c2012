@@ -99,7 +99,7 @@ registrarGlobales() {
 	local desde=$5
 	local hasta=$6
 	local pad_id=$7
-	if [ $hallasgo -eq 0 ] 
+	if [ $hallazgo -eq 0 ] 
 	then	
 		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo:$archivo - NO tiene hallazgos con PAT_ID:$pat_id"	
 	else
@@ -179,7 +179,7 @@ procesarCaracteres(){
 		then
 			cantHallazgos=$((cantHallazgos+1))
 			local length=$((hasta-desde+1))
-			local resultado=${linea:$desde:$length}
+			local resultado=${linea:$desde-1:$length}
 			registrarResultado "$archivo" $nroReg "$resultado" $pat_id
 		fi
 	done < $ACEPDIR"/"$archivo
@@ -226,6 +226,10 @@ do
 				PAT_DESDE=$(echo "$regMae" | cut -f3 -d',')
 				PAT_HASTA=$(echo "$regMae" | sed 's/.*,\([0-9]*\).*/\1/')   # Extraemos solo los numeros
 				PAT_RE=$(grep "^$PAT_ID," "$ARCHPATRONES" | cut -f2 -d',' | sed 's/'\''//g' ) # Extraemos las expreciones regulares sin comillas simples, porque sino no funcionaba el grep
+				if [ "$PAT_DESDE" -gt "$PAT_HASTA" ]; then
+					$BINDIR/LoguearW5.sh BuscarW5.sh -I "El patron con id:$PAT_ID no es valido. Campo desde mayor que hasta"		
+						continue
+				fi
 				if [ "$PAT_CON" = "linea" ]; then 
 					hallazgosParciales=$(procesarLineas $file "$PAT_RE" $PAT_DESDE $PAT_HASTA $PAT_ID $PAT_CON)
 				else
