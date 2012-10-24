@@ -69,3 +69,163 @@ D] Primeros pasos
 4. Si este último comando devuelve "Estado del sistema: INICIALIZADO", el sistema ya se encuentra funcionamiento.
 
 
+
+
+
+
+COMANDO ListarW5
+-------------------------------
+
+
+El comando ListarW5 permite obtener informes sobre los resultados obtenidos de 
+consultas globales y detalladas generadas por el BuscarW5.
+
+
+
+A] Invocación del comando
+-------------------------------
+
+1. Ubicándose en el directorio definido en $BINDIR se invoca al siguiente
+   comando:
+
+	perl ListarW5.pl [opciones]
+
+2. Las [opciones] posibles son:
+
+	-g:	resuelve consultas sobre resultados globales.
+	-r:	resuelve consultas sobre resultados detallados.
+
+	-x:	permite persistir el reporte obtenido.
+
+	Notas:
+
+	Invocar el comando sin opciones, es equivalente a emplear el comando -g.
+	Las opciones -g y -r no pueden emplearse simultáneamente.
+
+
+
+B] Reportes de resultados detallados [ opción -r ]
+--------------------------------------------------
+
+	Al invocar el comando empleando, perl ListarW5.pl -r (-x), se accede
+	a las siguientes opciones:
+
+		1. Filtrar por patrón
+		2. Filtrar por ciclo
+		3. Filtrar por nombre de archivo	
+
+	Al elegir alguna de las opciones, se listará una conjunto de todas las
+	combinaciones posibles de resultados hallados para ese filtro empleado.
+
+	A continuación se muestra un ejemplo:
+
+		1) xxxx
+		2) xxxx
+		3) xxxx	
+		4) xxxx
+		5) xxxx
+		6) xxxx
+		7) xxxx
+
+	En este caso se puede seleccionar de a un elemento o varios, ya sea 
+	separándolos mediante coma (,) o empleando rangos.
+
+		Ej: 1,3,5-7. 
+
+	Esta opción sería equivalente a los elementos: 1,3,5,6,7.
+	
+
+
+C]  Reportes de resultados detallados [ opción -g ]
+---------------------------------------------------
+
+	Al invocar el comando empleando, perl ListarW5.pl (-g) (-x), se accede
+	a las siguientes opciones:
+
+		1. Detectar mayor cantidad de hallazgos
+		2. Detectar cantidad hallazgos nula.
+		3. Expresiones regulares con mayor cantidad de hallazgos.
+		4. Expresiones regulares con menor cantidad de hallazgos.
+		5. Archivos con hallazgos pertenecientes al intervalo xx-yy.
+		6. Listar archivos encontrados para un filtro en particular.
+
+
+
+	C.1] Las opciones 1, 2 y 6 requieren del ingreso de una expresión lógica.
+	------------------------------------------------------------------------
+
+	Los conectores lógicos son "y" e "o".
+
+	Los elementos son: "s" (sistema), "p" (patrón) y "a" (nombre de archivo).
+	
+
+	Se permiten expresiones unarias, binarias y ternarias. A continuación de
+	la expresión, de ser válida se solicita el ingreso de un listado de
+	valores correspondientes al filtro definido que se encuentra separados 
+	por ",". También es posible habilitar un consulta sobre todos los 
+	elementos empleando "*".
+
+	Por ejemplo:
+
+	1. unaria
+
+		expresión: s
+	
+		listado: *
+
+	Realiza una consulta filtrando por todos los tipos de sistemas válidos.
+
+	2. binaria
+
+		expresión: p y s
+
+
+		listado patrones: 1,2,3,4
+	
+		listado sistemas: *
+
+	Realiza una consulta filtrando por todos los archivos correspondientes
+	a los sistemas válidos y que además cumplan con los valores 1,2,3 y 4.
+
+	3. ternaria
+	
+		expresión 1: ( p o s ) y a 
+
+		expresión 2: p o ( s y a )
+
+
+		listado patrones: 1,4,5
+		listado sistemas: soapp1
+		listado archivos: *
+
+	En este caso es necesario emplear paréntesis para indicar como evaluar 
+	la expresión.
+
+	En la expresión 1, se evalúan todos los archivos que correspondan al 
+	sistema soapp1 u a los patrones 1,4,5.
+
+	En la expresión 2, se evalúan los archivos que coincidan con los
+	patrones 1,4 y 5 o que sea cualquier archivo correspondiente al sistema
+	soapp1.
+
+	C. 2] Opciones 3 y 4.
+	---------------------
+
+	Estas opciones, no requieren de ninguna información adicional para
+	generar los resultados.
+
+	C. 3] Opción 5
+	--------------
+
+	Esta opción reporta los nombres de archivo que contienen una cantidad de
+	hallazgos entre un rango numérico. Al elegirla, se solicita los límites
+	de dicho rango. Estos límites se incluyen en los resultados.
+
+	Ej:  10 20
+
+	Busca nombres de archivos con hallazgos desde 10 hasta 20 inclusive.
+
+
+	
+
+
