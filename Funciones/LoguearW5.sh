@@ -34,7 +34,7 @@ fi
 
 if [ -z "$LOGSIZE" ]
 then  
-   LOGSIZE=102400
+   LOGSIZE=100
 fi
 
 #El directorio por default será $grupo/logdir (si no se definio en la configuracion o var de ambiente).
