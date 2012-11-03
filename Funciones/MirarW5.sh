@@ -69,9 +69,9 @@ else
 	contentFile=`tail -n $ultimasLineas $FILE`
 fi
 
-if [ -z $cadenaABuscar ]
+if [ -z "$cadenaABuscar" ]
 then
 	echo "$contentFile"
 else
-	echo "$contentFile" | grep $cadenaABuscar
+	echo "$contentFile" | grep "$cadenaABuscar"
 fi
