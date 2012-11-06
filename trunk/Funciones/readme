@@ -71,6 +71,48 @@ D] Primeros pasos
 
 
 
+COMANDO StartD
+-------------------------------
+
+
+El comando StartD permite iniciar el Demonio nuevamente una vez que este fue detenido
+usando el comando StopD. Controla que el mismo no esté corriendo y que los directorios
+necesarios hayan sido creados. En caso de que falte alguno, no arranca el comando.
+Si el demonio ya se encuentra corriendo, no vuelve a iniciarlo.
+
+
+
+A] Invocación del comando
+-------------------------------
+
+   Ubicándose en el directorio definido en $BINDIR se invoca al siguiente
+   comando:
+
+	./StartD.sh 
+  
+   El comando no recibe parámetros.
+
+
+
+COMANDO StopD
+-------------------------------
+
+
+Este comando permite detener el demonio que esté en ejecución. Si el mismo se haya corriendo,
+lo detiene. Si no se encuentra en ejecución, notifica que no es posible detenerlo porque
+no estaba corriendo.
+
+
+A] Invocación del comando
+-------------------------------
+
+   Ubicándose en el directorio definido en $BINDIR se invoca al siguiente
+   comando:
+
+	./StopD.sh 
+  
+   El comando no recibe parámetros.   
+
 
 
 COMANDO ListarW5
