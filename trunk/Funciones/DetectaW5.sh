@@ -128,6 +128,7 @@ do
         ARCHIVOS=`ls -p $ARRIDIR | grep -v '/$'`
         for PARAM in $ARCHIVOS
         do  
+
           case "$PARAM" in 
 	  *_*-*-*) VALNAME=`echo "correcto"`;;
           *) VALNAME=`echo "incorrecto"`;;
@@ -140,8 +141,9 @@ do
             FECHA=`echo "$PARAM" | cut -f 2 -d '_'`
                         
 	    FECHAVALIDA=`chequeaFecha $FECHA` 
-
-	    if ([ "$FECHAVALIDA" != "" ]) then
+	    echo "FECHAVALIDA: $FECHAVALIDA"
+	    echo "FECHA: $FECHA"
+	    if ( [ "$FECHAVALIDA" == "$FECHA" ]) then
 		
 	       if ([ -f $ARCHIVO ]) then
  	          a=0
@@ -153,11 +155,16 @@ do
                      DATE=`date +%F`
                      DATE=`echo "$DATE"`
 
-		     FECHAVALIDA=`chequeaFecha $END_DATE` 
-	             
-                     if ( [ "$FECHAVALIDA" = "" ] ) then
+		      FECHAVALIDA=`chequeaFecha $END_DATE` 
+	          
+                     if ( [ "$END_DATE" = "" ] ) then
                         END_DATE=$DATE
-                     fi
+                     else
+			END_DATE=$DATE
+			if ( [ "$FECHAVALIDA" != "" ] ) then
+				END_DATE="$FECHAVALIDA"
+			fi
+		     fi
 
 
 
@@ -186,6 +193,7 @@ do
 	    bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"
             bash LoguearW5.sh "$COMANDO" -E 13 $PARAM
           fi
+          
         done
    else
      echo "No Existe $ARRIDIR!"

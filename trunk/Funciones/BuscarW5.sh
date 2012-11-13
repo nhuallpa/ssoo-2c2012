@@ -49,14 +49,11 @@ verificarIni() {
 	#inicializo las variables para usarlas
 	PROCESO=`basename $0`
 	CORRIENDO=false
-	if [ -z "$INICIO" ]; then 
-		mostrar "BuscarW5: Variable INICIO=$INICIO no definida"
+	if [ -z "$MAEDIR" ]; then 
+		mostrar "BuscarW5: Variable MERDIR=$MAEDIR no definida"
 		exit 1
 	fi
-	if [ "$INICIO" -ne 1 ]; then
-		mostrar "BuscarW5: Ambiente no inicializado"
-		exit 1
-	fi
+
 
 	CICLO=$(grep 'SECUENCIA2' $CONFDIR/InstalaW5.conf | cut -f2 -d"=")
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Chequeando si el proceso ya esta siendo ejecutado..."

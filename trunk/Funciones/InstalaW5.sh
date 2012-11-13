@@ -13,7 +13,7 @@
 USER=`whoami`		#devuelve usuario actual del sistema
 #COMMAND=`ps -p $PPID -o comm=`	#obtengo nombre del comando que lo invoco
 COMMAND="InstalaW5.sh"
-
+USER_PROFILE="/home/$USER/.bashrc"
 ## DESCOMPRIMIR ..../grupo04
 #GRUPO="."
 GRUPO="../tp"
@@ -877,7 +877,41 @@ function exportVariables {
 
 	#echo "EXPORTANDO ACEPDIR $ACEPDIR"
 	#echo "EXPORTANDO RECHDIR $RECHDIR"
-}
+#limpiarmos $USER_PROFILE de variables viejas
+
+#Exportar de forma tal que puedan persistir cross session
+	if [ -e "$USER_PROFILE" ]; then
+		#limpiar las viejas variables
+		sed -i".backedByW5" '/BINDIR=/d' "$USER_PROFILE"
+		sed -i".backedByW5" '/MAEDIR=/d' "$USER_PROFILE"
+		sed -i".backedByW5" '/ARRIDIR=/d' "$USER_PROFILE"
+		sed -i".backedByW5" '/DATASIZE=/d' "$USER_PROFILE"
+		sed -i".backedByW5" '/RECHDIR=/d' "$USER_PROFILE"
+		sed -i".backedByW5" '/ACEPDIR=/d' "$USER_PROFILE"
+		sed -i".backedByW5" '/BINDIR=/d' "$USER_PROFILE"
+		sed -i".backedByW5" '/PROCDIR=/d' "$USER_PROFILE"
+		sed -i".backedByW5" '/LOGDIR=/d' "$USER_PROFILE"
+		sed -i".backedByW5" '/LOGEXT=/d' "$USER_PROFILE"
+		sed -i".backedByW5" '/LOGSIZE=/d' "$USER_PROFILE"
+		sed -i".backedByW5" '/REPODIR=/d' "$USER_PROFILE"
+		sed -i".backedByW5" '/GRUPO=/d' "$USER_PROFILE"
+		sed -i".backedByW5" '/CONFDIR=/d' "$USER_PROFILE"
+	fi
+
+	echo "export BINDIR=$BINDIR" >> "$USER_PROFILE"
+	echo "export MAEDIR=$MAEDIR"  >> "$USER_PROFILE"
+	echo "export ARRIDIR=$ARRIDIR"  >> "$USER_PROFILE"
+	echo "export DATASIZE=$DATASIZE"  >> "$USER_PROFILE"
+	echo "export RECHDIR=$RECHDIR"  >> "$USER_PROFILE"
+	echo "export ACEPDIR=$ACEPDIR"  >> "$USER_PROFILE"
+	echo "export PROCDIR=$PROCDIR"  >> "$USER_PROFILE"
+	echo "export LOGDIR=$LOGDIR"  >> "$USER_PROFILE"
+	echo "export LOGEXT=$LOGEXT"  >> "$USER_PROFILE"
+	echo "export LOGSIZE=$LOGSIZE"  >> "$USER_PROFILE"
+	echo "export REPODIR=$REPODIR"  >> "$USER_PROFILE"
+	echo "export GRUPO=$GRUPO"  >> "$USER_PROFILE"
+	echo "export CONFDIR=$CONFDIR"  >> "$USER_PROFILE"	
+}	
 
 ## Funcion de Instalacion
 function performInstallFromStep {
@@ -987,7 +1021,13 @@ function performInstallFromStep {
 				# Piso variables de default con las variables del archivo TEMP
 				getValuesFromFile $INSTALAW5_SETUPFILE
 
-				exportVariables
+				#exportVariables
+				if [ -e "$USER_PROFILE" ]; then
+					sed -i".backedByW5" '/GRUPO04_CONFIGFILE=/d' "$USER_PROFILE"
+				fi
+			 	export GRUPO04_CONFIGFILE="$PWD/$INSTALAW5_SETUPFILE"
+				echo "export GRUPO04_CONFIGFILE=$PWD/$INSTALAW5_SETUPFILE" >> "$USER_PROFILE"
+
 
 				#borrar archivo temporal
 				rm $INSTALAW5_TEMPFILE
@@ -1078,7 +1118,13 @@ function startInstallWFIVE {
 			#Cargar parametros desde el archivo de configuracion
 			getValuesFromFile $INSTALAW5_SETUPFILE
 		
-			exportVariables
+			#exportVariables
+
+			if [ -e "$USER_PROFILE" ]; then
+				sed -i".backedByW5" '/GRUPO04_CONFIGFILE=/d' "$USER_PROFILE"
+			fi
+			export GRUPO04_CONFIGFILE="$PWD/$INSTALAW5_SETUPFILE"
+			echo "export GRUPO04_CONFIGFILE=$PWD/$INSTALAW5_SETUPFILE" >> "$USER_PROFILE"
 
 			showInstallParams "COMPLETA"
 		;;
