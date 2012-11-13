@@ -238,7 +238,7 @@ do
    if ([ $ENRECIBIDOS -gt 0 ]) then
       BUSCARW5_PID=`chequeaProceso BuscarW5.sh $$`
       if [ -z "$BUSCARW5_PID" ]; then
-	  bash BuscarW5.sh &
+	  bash BuscarW5.sh
 # 	  echo ""
       else
           echo "Demonio BuscarW5 ya ejecutado bajo PID: <$BUSCARW5_PID>" 
