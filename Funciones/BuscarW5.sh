@@ -38,7 +38,7 @@ function validarProceso {
 }
 
 marcarInicio() {
-	CANT_ARCH=$(ls -1 $ACEPDIR | wc -l)
+	CANT_ARCH=$(ls -1 "$ACEPDIR" | wc -l)
 	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "====================================================================="
 	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Inicio BuscarW5 - Ciclo Nro.: $CICLO - Cantidad Archivos: $CANT_ARCH"
 	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "====================================================================="
@@ -155,7 +155,7 @@ procesarLineas(){
 			grabarBloque "$archivo" $nroReg $desde $hasta $pad_id
 		fi
 	done < "$ACEPDIR/$archivo"
-	registrarGlobales $archivo $cantHallazgos "$exp" $pat_con $desde $hasta $pat_id
+	registrarGlobales "$archivo" $cantHallazgos "$exp" $pat_con $desde $hasta $pat_id
 	echo "$cantHallazgos"
 }
 
@@ -183,19 +183,19 @@ procesarCaracteres(){
 			registrarResultado "$archivo" $nroReg "$resultado" $pat_id
 		fi
 	done < "$ACEPDIR/$archivo"
-	registrarGlobales $archivo $cantHallazgos "$exp" $pat_con $desde $hasta $pat_id
+	registrarGlobales "$archivo" $cantHallazgos "$exp" $pat_con $desde $hasta $pat_id
 	echo "$cantHallazgos"
 }
 
 verificarIni
 marcarInicio
-totalArchivosDispo=$(ls -1 $ACEPDIR | wc -l)
+totalArchivosDispo=$(ls -1 "$ACEPDIR" | wc -l)
 nroArchivo=0
 # empezamos a leer todos los archivos del directorio de acaptados
 
 "$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Se encontraron los siguiente archivo a procesar:"
 "$BINDIR"/LoguearW5.sh BuscarW5.sh -I "$(ls -1 $ACEPDIR)"
-for file in $(ls $ACEPDIR)
+for file in $(ls "$ACEPDIR")
 do
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo a procesar: $file"
 	# Validacmos que el archivo no este procesado
