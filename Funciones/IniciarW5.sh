@@ -1,10 +1,93 @@
 #! /bin/bash
 
+function exportVariables {
+	export BINDIR="$BINDIR"
+	export MAEDIR="$MAEDIR"
+	export ARRIDIR="$ARRIDIR"
+	export DATASIZE="$DATASIZE"
+	export RECHDIR="$RECHDIR"
+	export ACEPDIR="$ACEPDIR"
+	export PROCDIR="$PROCDIR"
+	export LOGDIR="$LOGDIR"
+	export LOGEXT="$LOGEXT"
+	export LOGSIZE="$LOGSIZE"
+	export REPODIR="$REPODIR"
+	export GRUPO="$GRUPO"
+	export CONFDIR="$CONFDIR"	
+}
+
+
+## Funcion que obtiene los valores por defecto de un archivo 
+function getValuesFromFile {
+	
+	tGRUPO=`cat $1 | grep GRUPO | cut -s -d "=" -f2`
+	tBINDIR=`cat $1 | grep BINDIR | cut -s -d "=" -f2`  	
+	tACEPDIR=`cat $1 | grep ACEPDIR | cut -s -d "=" -f2`
+	tPROCDIR=`cat $1 | grep PROCDIR | cut -s -d "=" -f2`  	
+	tRECHDIR=`cat $1 | grep RECHDIR | cut -s -d "=" -f2`
+  	tARRIDIR=`cat $1 | grep ARRIDIR | cut -s -d "=" -f2`
+  	tMAEDIR=`cat $1 | grep MAEDIR | cut -s -d "=" -f2`
+  	tREPODIR=`cat $1 | grep REPODIR | cut -s -d "=" -f2`
+  	tLOGDIR=`cat $1 | grep LOGDIR | cut -s -d "=" -f2`
+  	tLOGEXT=`cat $1 | grep LOGEXT | cut -s -d "=" -f2`
+  	tLOGSIZE=`cat $1 | grep LOGSIZE | cut -s -d "=" -f2`
+  	tDATASIZE=`cat $1 | grep DATASIZE | cut -s -d "=" -f2`
+ 	tCONFDIR=`cat $1 | grep CONFDIR | cut -s -d "=" -f2`
+
+	if [ "$tGRUPO" != "" ]; then
+		GRUPO="$tGRUPO"
+	fi
+	if [ "$tBINDIR" != "" ]; then
+		BINDIR="$tBINDIR"
+	fi
+
+	if [ "$tACEPDIR" != "" ]; then
+		ACEPDIR="$tACEPDIR"
+	fi
+	if [ "$tPROCDIR" != "" ]; then
+		PROCDIR="$tPROCDIR"
+	fi
+
+	if [ "$tARRIDIR" != "" ]; then
+		ARRIDIR="$tARRIDIR"
+	fi
+	if [ "$tRECHDIR" != "" ]; then
+		RECHDIR="$tRECHDIR"
+	fi
+	if [ "$tMAEDIR" != "" ]; then
+		MAEDIR="$tMAEDIR"
+	fi
+	if [ "$tREPODIR" != "" ]; then
+		REPODIR="$tREPODIR"
+	fi
+	if [ "$tLOGDIR" != "" ]; then
+		LOGDIR="$tLOGDIR"
+	fi
+	if [ "$tLOGEXT" != "" ]; then
+		LOGEXT="$tLOGEXT"
+	fi
+	if [ "$tLOGSIZE" != "" ]; then
+		LOGSIZE="$tLOGSIZE"
+	fi
+	if [ "$tDATASIZE" != "" ]; then
+		DATASIZE="$tDATASIZE"
+	fi
+	if [ "$tCONFDIR" != "" ]; then
+		CONFDIR="$tCONFDIR"
+	fi
+
+	#echo "VARIABLE BINDIR $BINDIR"
+}
+
+
 if [ ! $INICIO ]; #Valido que no haya sido Iniciado antes
 then  
-
-        #cd $BINDIR
         cd ..
+
+	CONFIG_FILE=`cat "/home/$USER/.bashrc" | grep GRUPO04_CONFIGFILE | cut -s -d "=" -f2`
+	getValuesFromFile "$CONFIG_FILE"
+	exportVariables
+
         export PATH=$PATH:$BINDIR:$MAEDIR:$ARRIDIR:$RECHDIR:$ACEPDIR:$PROCDIR:$LOGDIR:$REPODIR
 
        
@@ -70,7 +153,7 @@ then
        
         echo -e "Archivos Maestros: "
        
-        if [ `ls -lart | grep -c '^d.*"$MAEDIR"'` -ne 0 ];
+        if [ -d "$MAEDIR" ];
         then    
                 echo -e "$MAEDIR \n"            
                 if [ -r "$MAEDIR/patrones" -a -r "$MAEDIR/sistemas" ];
@@ -132,23 +215,27 @@ then
         echo -e "Logs de Auditoria del Sistema: $LOGDIR/IniciarW5$LOGEXT \nEstado del sistema: INICIALIZADO"
 
        
+	
+       
         if [ `ps -ef | grep -c DetectaW5.sh` -eq 1 ]; #para saber si el demonio está corriendo (si vale 1 no está corriendo)
         then            
                 nohup "$BINDIR/DetectaW5.sh"  > /tmp/stdoutDetecta.txt 2> /tmp/stderrDetecta.txt & #correr en background
         fi
        
         sleep 2s #espera
-               
+              
+
+ 
         if [ `ps -ef | grep -c DetectaW5.sh` -gt 1 ]; #para saber si se inicializo el demonio en forma correcta
         then
                 echo "Demonio corriendo bajo el número: `ps -ef | grep DetectaW5.sh |grep -v 'grep'|grep -o '[0-9]*' |sed 1q`"
                 $BINDIR/LoguearW5.sh IniciarW5.sh -I "Demonio corriendo bajo el número: `ps -ef | grep DetectaW5.sh |grep -v grep|grep -o '[0-9]*' |sed 1q`"
                 #para saber el número busco las lineas de ps que tengan Detecta, que no tengan grep. Me quedo con los numeros con -o y con el sed devuelve solo la primer linea
         fi
-
+	export INICIO=1 #seteo INICIO en 1, el proceso se Inició correctamente.
         echo -e "Proceso de Instalación Concluido"
         $BINDIR/LoguearW5.sh IniciarW5.sh -I "Proceso de Instalación Concluido"
-        export INICIO=1 #seteo INICIO en 1, el proceso se Inició correctamente.
+
         return 0        
 else
         echo -e "No es posible reinicializar el sistema \n Proceso de Inicialización Cancelado" # variable INICIO esta en 1
