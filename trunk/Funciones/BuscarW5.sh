@@ -42,7 +42,10 @@ marcarInicio() {
 	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "====================================================================="
 	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Inicio BuscarW5 - Ciclo Nro.: $CICLO - Cantidad Archivos: $CANT_ARCH"
 	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "====================================================================="
-	
+	local user=`whoami`
+	local fecha=`date '+%x %X'`
+	sed -i s-^SECUENCIA2.*-SECUENCIA2="$CICLO"="$user"="$fecha"- "$CONFDIR/InstalaW5.conf"
+
 }
 
 verificarIni() {
@@ -60,7 +63,7 @@ verificarIni() {
 	export CORRIENDO
 	validarProceso $PROCESO
 	if $CORRIENDO; then	
-		$BINDIR/LoguearW5.sh BuscarW5.sh -I "BuscarW5 ya se esta ejecutando"
+		"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "BuscarW5 ya se esta ejecutando"
 		exit 1
 	fi
 	# Inicio ciclo de ejecucion	
@@ -75,9 +78,9 @@ finalizarProceso(){
 	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin Patron: $CANT_ARCH_SIN_PATRON"
 	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "============================================================="
 
-	local user=`whoami`
-	local fecha=`date '+%x %X'`
-	sed -i s-^SECUENCIA2.*-SECUENCIA2="$CICLO"="$user"="$fecha"- "$CONFDIR/InstalaW5.conf"
+#	local user=`whoami`
+#	local fecha=`date '+%x %X'`
+#	sed -i s-^SECUENCIA2.*-SECUENCIA2="$CICLO"="$user"="$fecha"- "$CONFDIR/InstalaW5.conf"
 	CORRIENDO=false
 }
 registrarResultado() {
@@ -190,8 +193,8 @@ totalArchivosDispo=$(ls -1 $ACEPDIR | wc -l)
 nroArchivo=0
 # empezamos a leer todos los archivos del directorio de acaptados
 
-$BINDIR/LoguearW5.sh BuscarW5.sh -I "Se encontraron los siguiente archivo a procesar:"
-$BINDIR/LoguearW5.sh BuscarW5.sh -I "$(ls -1 $ACEPDIR)"
+"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Se encontraron los siguiente archivo a procesar:"
+"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "$(ls -1 $ACEPDIR)"
 for file in $(ls $ACEPDIR)
 do
 	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo a procesar: $file"
@@ -199,8 +202,8 @@ do
 	YA_PROC=$(ls -1 "$PROCDIR" | grep -c "$file")
 	if [ "$YA_PROC" -eq 1 ] 
 	then
-		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Este archivo ya fue procesado: $file"	
-		$BINDIR/MoverW5.sh "$ACEPDIR/$file" "$RECHDIR"
+		"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Este archivo ya fue procesado: $file"	
+		"$BINDIR"/MoverW5.sh "$ACEPDIR/$file" "$RECHDIR"
 	else
 		# Extraemos el sistema desde el nombre del archivo y validamos que tenga patrones
 		sistema=$(echo $file | cut -f1 -d'_') 
@@ -209,7 +212,7 @@ do
 		if [ "$TIENE_PAT" -eq 0 ]
 		then
 			#loguear "No hay patrones aplicables a este archivo: $file"
-			bash $BINDIR/LoguearW5.sh BuscarW5.sh -E 9 "$file"
+			bash "$BINDIR"/LoguearW5.sh BuscarW5.sh -E 9 "$file"
 			CANT_ARCH_SIN_PATRON=$((CANT_ARCH_SIN_PATRON+1))
 		else
 			acumHallazgos=0
@@ -242,7 +245,7 @@ do
 				CANT_ARCH_CON_HALLAZGOS=$((CANT_ARCH_CON_HALLAZGOS+1))
 			fi
 			
-			bash $BINDIR/MoverW5.sh "$ACEPDIR/$file" "$PROCDIR"
+			bash "$BINDIR"/MoverW5.sh "$ACEPDIR/$file" "$PROCDIR"
 		fi
 	fi
 	nroArchivo=$((nroArchivo+1))
