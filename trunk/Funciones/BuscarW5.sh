@@ -14,7 +14,7 @@
 # 3. Aplica los patrones usando contexto de linea ó caracter
 #
 # 4. Contabiliza hallazgos y guarda resultados detallados y globales
-ARCHPATRONES=$MAEDIR/patrones
+ARCHPATRONES="$MAEDIR"/patrones
 CICLO=0
 
 
@@ -29,19 +29,19 @@ mostrar() {
 function validarProceso {
 	if [ $(ps -a | grep $1 | grep -v grep | wc -l | tr -s "\n") -gt 2 ]; then
 		MYPID=`pidof -x $1`
-		$BINDIR/LoguearW5.sh BuscarW5.sh -I "$1 ya esta siendo ejecutado [${MYPID}]"
+		"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "$1 ya esta siendo ejecutado [${MYPID}]"
 		CORRIENDO=true
 	else 
 		# El proceso no esta corriendo
-		$BINDIR/LoguearW5.sh BuscarW5.sh -I "OK"
+		"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "OK"
 	fi
 }
 
 marcarInicio() {
 	CANT_ARCH=$(ls -1 $ACEPDIR | wc -l)
-	$BINDIR/LoguearW5.sh BuscarW5.sh -I "====================================================================="
-	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Inicio BuscarW5 - Ciclo Nro.: $CICLO - Cantidad Archivos: $CANT_ARCH"
-	$BINDIR/LoguearW5.sh BuscarW5.sh -I "====================================================================="
+	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "====================================================================="
+	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Inicio BuscarW5 - Ciclo Nro.: $CICLO - Cantidad Archivos: $CANT_ARCH"
+	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "====================================================================="
 	
 }
 
@@ -55,8 +55,8 @@ verificarIni() {
 	fi
 
 
-	CICLO=$(grep 'SECUENCIA2' $CONFDIR/InstalaW5.conf | cut -f2 -d"=")
-	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Chequeando si el proceso ya esta siendo ejecutado..."
+	CICLO=$(grep 'SECUENCIA2' "$CONFDIR/InstalaW5.conf" | cut -f2 -d"=")
+	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Chequeando si el proceso ya esta siendo ejecutado..."
 	export CORRIENDO
 	validarProceso $PROCESO
 	if $CORRIENDO; then	
@@ -68,12 +68,12 @@ verificarIni() {
 }
 
 finalizarProceso(){
-	$BINDIR/LoguearW5.sh BuscarW5.sh -I "============================================================="
-	$BINDIR/LoguearW5.sh BuscarW5.sh -I "					Fin del Ciclo: $CICLO"
-	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos con Hallazgos: $CANT_ARCH_CON_HALLAZGOS"
-	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin hallazgos: $CANT_ARCH_SIN_HALLAZGOS"
-	$BINDIR/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin Patron: $CANT_ARCH_SIN_PATRON"
-	$BINDIR/LoguearW5.sh BuscarW5.sh -I "============================================================="
+	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "============================================================="
+	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "					Fin del Ciclo: $CICLO"
+	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos con Hallazgos: $CANT_ARCH_CON_HALLAZGOS"
+	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin hallazgos: $CANT_ARCH_SIN_HALLAZGOS"
+	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Cantidad de Archivos sin Patron: $CANT_ARCH_SIN_PATRON"
+	"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "============================================================="
 
 	local user=`whoami`
 	local fecha=`date '+%x %X'`
@@ -98,9 +98,9 @@ registrarGlobales() {
 	local pad_id=$7
 	if [ $hallazgo -eq 0 ] 
 	then	
-		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo:$archivo - NO tiene hallazgos con PAT_ID:$pat_id"	
+		"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Archivo:$archivo - NO tiene hallazgos con PAT_ID:$pat_id"	
 	else
-		$BINDIR/LoguearW5.sh BuscarW5.sh -I "Archivo:$archivo - Tiene $hallazgo hallazgos con PAT_ID:$pat_id"	
+		"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Archivo:$archivo - Tiene $hallazgo hallazgos con PAT_ID:$pat_id"	
 	fi
 
 	echo "$CICLO,$archivo,$hallazgo,$exp,"$pat_con",$desde,$hasta" >> "$PROCDIR"/rglobales.$pat_id
@@ -126,7 +126,7 @@ grabarBloque() {
 			registrarResultado "$archivo" $nroReg_actual "$resultado" $pat_id
 			nroReg_actual=$((nroReg_actual+1))
 		else
-			$BINDIR/LoguearW5.sh BuscarW5.sh -I "El bloque requerido supera las lineas totales del archivo"
+			"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "El bloque requerido supera las lineas totales del archivo"
 			continue
 		fi
 	done
@@ -151,7 +151,7 @@ procesarLineas(){
 			cantHallazgos=$((cantHallazgos+1))
 			grabarBloque "$archivo" $nroReg $desde $hasta $pad_id
 		fi
-	done < $ACEPDIR"/"$archivo
+	done < "$ACEPDIR/$archivo"
 	registrarGlobales $archivo $cantHallazgos "$exp" $pat_con $desde $hasta $pat_id
 	echo "$cantHallazgos"
 }
@@ -179,7 +179,7 @@ procesarCaracteres(){
 			local resultado=${linea:$desde-1:$length}
 			registrarResultado "$archivo" $nroReg "$resultado" $pat_id
 		fi
-	done < $ACEPDIR"/"$archivo
+	done < "$ACEPDIR/$archivo"
 	registrarGlobales $archivo $cantHallazgos "$exp" $pat_con $desde $hasta $pat_id
 	echo "$cantHallazgos"
 }
