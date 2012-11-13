@@ -8,7 +8,7 @@ Codigo_de_error tipo cant_argumentos mensaje
 7 SE 0 Faltan componentes para realizar la Inicialización
 8 SE 0 Faltan archivos maestros para realizar la Inicialización
 9 E 1 No hay patrones aplicables al archivo @@1
-10 E 1 Archivo @@1 rechazado por sistema vencido
+10 E 1 Archivo @@1 rechazado por sistema vencido, fecha posterior a la fecha de baja
 11 E 1 Archivo @@1 rechazado por sistema inexistente
 12 E 1 Archivo @@1 rechazado por fecha inválida
 13 E 1 Archivo @@1 rechazado por formato del nombre del archivo inválido

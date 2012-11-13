@@ -193,7 +193,7 @@ totalArchivosDispo=$(ls -1 "$ACEPDIR" | wc -l)
 nroArchivo=0
 # empezamos a leer todos los archivos del directorio de acaptados
 
-"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Se encontraron los siguiente archivo a procesar:"
+"$BINDIR"/LoguearW5.sh BuscarW5.sh -I "Se encontraron los siguientes archivos a procesar:"
 "$BINDIR"/LoguearW5.sh BuscarW5.sh -I "$(ls -1 $ACEPDIR)"
 for file in $(ls "$ACEPDIR")
 do

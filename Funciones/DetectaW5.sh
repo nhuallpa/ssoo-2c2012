@@ -50,7 +50,7 @@ chequeaFecha(){
 
 chequeaTipo(){
    ARCHIVO=$1
-   VAR=`file -ib "$ARRIDIR/$ARCHIVO" | cut -f 1 -d ';'`
+   VAR=`file -ib "$ARRIDIR/$ARCHIVO" | cut -f 1 -d' '`
    if ([ "$VAR" = "text/plain" ]) then
        echo 0
    else
