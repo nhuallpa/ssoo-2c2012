@@ -9,11 +9,14 @@ Codigo_de_error tipo cant_argumentos mensaje
 8 SE 0 Faltan archivos maestros para realizar la Inicialización
 9 E 1 No hay patrones aplicables al archivo @@1
 10 E 1 Archivo @@1 rechazado por sistema vencido
-11 E 1 Archivo @@1 rechazado por nombre incorrecto
-12 E 1 Archivo @@1 rechazado por fecha incorrecta
-13 E 1 Nombre de archivo @@1 inválido 
+11 E 1 Archivo @@1 rechazado por sistema inexistente
+12 E 1 Archivo @@1 rechazado por fecha inválida
+13 E 1 Archivo @@1 rechazado por formato del nombre del archivo inválido
 14 SE 1 No existe Directorio de recibidos @@1
 15 SE 1 No existe Directorio de Rechazos @@1
 16 SE 0 Archivos maestros inexistentes
 17 SE 0 Faltan directorios necesarios para correr el proceso
 18 E 0 Variables de directorios no inicializadas
+19 E 1 Archivo @@1 rechazado por tipo de archivo inválido ( se esperan archivos de texto no vacíos)
+20 E 1 Archivo @@1 rechazado por fecha posterior al día de hoy
+21 E 1 Archivo @@1 rechazado por fecha anterior a la fecha de alta

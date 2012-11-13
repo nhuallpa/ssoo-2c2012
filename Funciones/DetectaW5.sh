@@ -47,6 +47,17 @@ chequeaFecha(){
    echo $FECHAVAL
 }
 
+
+chequeaTipo(){
+   ARCHIVO=$1
+   VAR=`file -ib "$ARRIDIR/$ARCHIVO" | cut -f 1 -d ';'`
+   if ([ "$VAR" = "text/plain" ]) then
+       echo 0
+   else
+       echo 1
+   fi
+}
+
 compararFecha(){
   FECHAA=$1
   FECHAB=$2
@@ -129,72 +140,93 @@ do
         for PARAM in $ARCHIVOS
         do  
 
-          case "$PARAM" in 
-	  *_*-*-*) VALNAME=`echo "correcto"`;;
-          *) VALNAME=`echo "incorrecto"`;;
-          esac 
+          TIPO=`chequeaTipo "$PARAM"`
+	  echo "ARCHIVO: $PARAM ; TIPO: $TIPO"
+	  if ([ "$TIPO" != "1" ]) then
+		  case "$PARAM" in 
+		  *_*-*-*) VALNAME=`echo "correcto"`;;
+		  *) VALNAME=`echo "incorrecto"`;;
+		  esac 
 
-	  if ([ "$VALNAME" = "correcto" ]) then
+		  if ([ "$VALNAME" = "correcto" ]) then
 
-            #Obtengo Sucursal y mes
-            SISID=`echo "$PARAM" | cut -f 1 -d '_'`
-            FECHA=`echo "$PARAM" | cut -f 2 -d '_'`
-                        
-	    FECHAVALIDA=`chequeaFecha $FECHA` 
-	    echo "FECHAVALIDA: $FECHAVALIDA"
-	    echo "FECHA: $FECHA"
-	    if ( [ "$FECHAVALIDA" == "$FECHA" ]) then
-		
-	       if ([ -f $ARCHIVO ]) then
- 	          a=0
-    	          a=`cut -f1 -d',' $ARCHIVO | grep $SISID -n | cut -f1 -d':'`
-	          if ([ $a ]) then
-                     START_DATE=`head -$a $ARCHIVO | tail -1 | cut -f3 -d','`
-                     END_DATE=`head -$a $ARCHIVO | sed 's/.*,\([0-9]*\).*/\1/' | tail -1 | cut -f4 -d','` 
-	             #FECHA ACTUAL PARA COMPARAR
-                     DATE=`date +%F`
-                     DATE=`echo "$DATE"`
+		    #Obtengo Sucursal y mes
+		    SISID=`echo "$PARAM" | cut -f 1 -d '_'`
+		    FECHA=`echo "$PARAM" | cut -f 2 -d '_'`
+		                
+		    FECHAVALIDA=`chequeaFecha $FECHA` 
 
-		      FECHAVALIDA=`chequeaFecha $END_DATE` 
-	          
-                     if ( [ "$END_DATE" = "" ] ) then
-                        END_DATE=$DATE
-                     else
-			END_DATE=$DATE
-			if ( [ "$FECHAVALIDA" != "" ] ) then
-				END_DATE="$FECHAVALIDA"
-			fi
-		     fi
+		    if ([ "$FECHAVALIDA" != "" ]) then
+		       
+		       if ([ -f $ARCHIVO ]) then
+	 	          a=0
+	    	          a=`cut -f1 -d',' $ARCHIVO | grep $SISID -n | cut -f1 -d':'`
+			  if ([ $a ]) then
+		             START_DATE=`head -$a $ARCHIVO | tail -1 | cut -f3 -d','`
+		             END_DATE=`head -$a $ARCHIVO | tail -1 | cut -f4 -d',' | sed 's/.*,\([0-9]*\).*/\1/'` 
+			     #FECHA ACTUAL PARA COMPARAR
+		             DATE=`date +%F`
+		             DATE=`echo "$DATE"`
 
+			     COMPHOY=`compararFecha $FECHA $DATE`
 
+			     if ([ "$COMPHOY" != "1" ]) then
+                                 
+				     FECHAVALIDA=`chequeaFecha $END_DATE` 
+#				     echo "FECHA: $FECHA"
+#				     echo "START_DATE: $START_DATE"
+#				     echo "END_DATE: $END_DATE"    				     
+#				     echo "FECHAVALIDA: $FECHAVALIDA"
+				     if ( [ "$FECHAVALIDA" == "" ] ) then
+				        END_DATE=$DATE
+                                     else
+					END_DATE=$FECHAVALIDA
+				     fi
 
-  		     COMPDESDE=`compararFecha $FECHA $START_DATE`
-		     COMPHASTA=`compararFecha $FECHA $END_DATE`
- 
- 		     if ( ([ "$COMPDESDE" != "-1" ]) && ([ "$COMPHASTA" != "1" ]) )then 
-		        bash MoverW5.sh "$ARRIDIR/$PARAM"  "$ACEPDIR"
-		        bash LoguearW5.sh "$COMANDO" "-I" "Archivo $PARAM enviado"  
-                     else
-		        bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"
-	 	        bash LoguearW5.sh "$COMANDO" -E 10 $PARAM  
-                     fi
-	       	  else
-		     bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"		
-		     bash LoguearW5.sh "$COMANDO" -E 11 $PARAM
-                  fi
-               else
-                 bash LoguearW5.sh "$COMANDO" "-A" "No existe el archivo maestro de sistemas"
-               fi
-	    else
-	      bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"		
-	      bash LoguearW5.sh "$COMANDO" -E 12 $PARAM
-	    fi
-          else
-	    bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"
-            bash LoguearW5.sh "$COMANDO" -E 13 $PARAM
-          fi
-          
-        done
+#				     echo "FECHA: $FECHA"
+#				     echo "START_DATE: $START_DATE"
+#				     echo "END_DATE: $END_DATE"    				     
+
+		  		     COMPDESDE=`compararFecha $FECHA $START_DATE`
+				     COMPHASTA=`compararFecha $FECHA $END_DATE`
+		 
+		 		     if ([ "$COMPDESDE" != "-1" ]) then
+                                        if ([ "$COMPHASTA" != "1" ]) then 
+					   bash MoverW5.sh "$ARRIDIR/$PARAM"  "$ACEPDIR"
+					   bash LoguearW5.sh "$COMANDO" "-I" "Archivo $PARAM enviado"  
+				        else
+					   bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"
+			 	           bash LoguearW5.sh "$COMANDO" -E 10 $PARAM  
+                                        fi
+                                     else
+					bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"
+		 	                bash LoguearW5.sh "$COMANDO" -E 21 $PARAM  
+				     fi
+			     else
+				bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"		
+				bash LoguearW5.sh "$COMANDO" -E 20 $PARAM
+			     fi
+
+		       	  else
+			     bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"		
+			     bash LoguearW5.sh "$COMANDO" -E 11 $PARAM
+		          fi
+		       else
+		          bash LoguearW5.sh "$COMANDO" "-A" "No existe el archivo maestro de sistemas"
+		       fi
+		    else
+		       bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"		
+		       bash LoguearW5.sh "$COMANDO" -E 12 $PARAM
+		    fi
+		  else
+		    bash MoverW5.sh "$ARRIDIR/$PARAM"  "$RECHDIR/"
+		    bash LoguearW5.sh "$COMANDO" -E 13 $PARAM
+		  fi	
+	  else
+	     bash MoverW5.sh "$ARRIDIR/$PARAM" "$RECHDIR/"
+	     bash LoguearW5.sh "$COMANDO" -E 19 "$PARAM"
+	  fi
+	done
    else
      echo "No Existe $ARRIDIR!"
    fi
@@ -206,7 +238,8 @@ do
    if ([ $ENRECIBIDOS -gt 0 ]) then
       BUSCARW5_PID=`chequeaProceso BuscarW5.sh $$`
       if [ -z "$BUSCARW5_PID" ]; then
-	  bash BuscarW5.sh
+	  bash BuscarW5.sh &
+# 	  echo ""
       else
           echo "Demonio BuscarW5 ya ejecutado bajo PID: <$BUSCARW5_PID>" 
       fi
