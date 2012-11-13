@@ -233,8 +233,9 @@ then
                 #para saber el número busco las lineas de ps que tengan Detecta, que no tengan grep. Me quedo con los numeros con -o y con el sed devuelve solo la primer linea
         fi
 	export INICIO=1 #seteo INICIO en 1, el proceso se Inició correctamente.
-        echo -e "Proceso de Instalación Concluido"
-        $BINDIR/LoguearW5.sh IniciarW5.sh -I "Proceso de Instalación Concluido"
+	echo "export INICIO=1" >> "/home/$USER/.bashrc"
+        echo -e "Proceso de Inicialización Concluido"
+        $BINDIR/LoguearW5.sh IniciarW5.sh -I "Proceso de Inicialización Concluido"
 
         return 0        
 else
